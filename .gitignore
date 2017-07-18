@@ -17,3 +17,5 @@ target/classes/com/iot/
 target/generated-sources/
 target/generated-test-sources/
 target/test-classes/com/iot/
+/target/
+/.idea/
