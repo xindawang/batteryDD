@@ -25,7 +25,7 @@ public class DataBaseConfig {
         BasicDataSource dataSource = new BasicDataSource();
         // 数据库连接配置
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
-        dataSource.setUrl("jdbc:mysql://localhost:3306/new_schema");
+        dataSource.setUrl("jdbc:mysql://localhost:3306/batteryDD");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;

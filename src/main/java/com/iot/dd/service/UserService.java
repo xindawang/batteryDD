@@ -2,6 +2,7 @@ package com.iot.dd.service;
 
 import com.iot.dd.Dao.UserDao;
 import com.iot.dd.domain.UserMessage;
+import com.iot.dd.domain.worker.adminEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,10 +15,10 @@ public class UserService {
     @Autowired
     private UserDao userDao;
 
-
-    public String register(UserMessage user){
-        if(userDao.getOneUser(user.getName())== null){
-            userDao.setOneUser(user);
+//管理员
+    public String registerAdmin(adminEntity user){
+        if(userDao.getAdminUser(user.getName())== null){
+            userDao.setAdminUser(user);
             return "注册成功";
         }else{
             return "该用户已被使用";
@@ -26,7 +27,7 @@ public class UserService {
     }
     //用户登陆
     public String login(UserMessage user){
-        UserMessage dUser=userDao.getOneUser(user.getName());
+        adminEntity dUser=userDao.getAdminUser(user.getName());
         if(dUser==null){
             return "该用户不存在";
         }

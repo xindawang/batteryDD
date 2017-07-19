@@ -9,15 +9,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+
+import com.iot.dd.domain.worker.*;
+import com.iot.dd.service.*;
 /**
  * Created by huanglin on 2017/7/13.
  */
-@Controller
+@RestController
 //控制类，控制页面跳转，数据传输
 public class LoginController {
     //自动注入userService，用来处理业务
@@ -52,6 +56,23 @@ public class LoginController {
         return "register";
     }
 
+    @RequestMapping(value = "/qwe", method = RequestMethod.GET)
+    public String qwe(HttpServletRequest request) {
+        if(request.getParameter("role").equals("admin"))
+        {
+            adminEntity adminEntity=new adminEntity();
+            adminEntity.setName(request.getParameter("name"));
+            adminEntity.setPassword(request.getParameter("password"));
+            String result=userService.registerAdmin(adminEntity);
+        }
+        else{
+            StaffEntity staffEntity=new StaffEntity();
+            staffEntity.setName(request.getParameter("name"));
+            staffEntity.setPassword(request.getParameter("password"));
+        }
+        return "def";
+    }
+
     //Model类的作用？？
     //注册用户，使用POST，传输数据
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -61,11 +82,9 @@ public class LoginController {
                                @ModelAttribute(value = "user") UserMessage user,
                                HttpServletResponse response) {
         //使用userService处理业务
-        String result = userService.register(user);
+        //String result = userService.register(user);
         //将结果放入model中，在模板中可以取到model中的值
-        model.addAttribute("result", result);//往前台视图传参数。
-        String testString="方法有效吗";
-        model.addAttribute("testString",testString);
+        //model.addAttribute("result", result);//往前台视图传参数。
         return ("/index");
     }
 
@@ -89,7 +108,7 @@ public class LoginController {
             session.setAttribute("user",user);
         }
         model.addAttribute("result", result);//与seesion的差别
-        return response.encodeRedirectURL("/index");
+        return "index";
     }
 
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)

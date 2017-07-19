@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html >
 <head>
     <meta charset="UTF-8">
     <title>登陆</title>
 </head>
 <body>
 <h1>欢迎登陆</h1>
-<form th:action="@{/login}" th:object="${user}" method="post">
+<form  method="post">
     <label for="name">username:</label>
     <input type="text" name="name" id="name"/>
     <label for="password">password:</label>

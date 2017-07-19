@@ -1,6 +1,7 @@
 package com.iot.dd.Dao;
 
 import com.iot.dd.domain.UserMessage;
+import com.iot.dd.domain.worker.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -12,14 +13,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 //这个注解代表这是一个mybatis的操作数据库的类
 public interface UserDao {
-    // 根据username获得一个User类
-    @Select("select * from user where name=#{name} limit 1")
-    UserMessage getOneUser(String name);
+
+    // 根据admin(系统管理员表)获得一个User类
+    @Select("select * from admin where NAME=#{name} limit 1")
+    adminEntity getAdminUser(String name);
 
 
-    //插入一个User
-    @Insert("insert into user (name,password) values(#{name},#{password})")
-    boolean setOneUser(UserMessage user);
+    //在注册插入一个User名字和密码
+    @Insert("insert into admin (NAME,PASSWORD) values(#{name},#{password})")
+    boolean setAdminUser(adminEntity user);
 
     //更新经纬度
     @Update("update user latitude=#{latitude},longitude=#{longitude} where name=#{name} ")
