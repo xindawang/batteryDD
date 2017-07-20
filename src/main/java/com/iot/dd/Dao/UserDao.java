@@ -16,12 +16,24 @@ public interface UserDao {
 
     // 根据admin(系统管理员表)获得一个User类
     @Select("select * from admin where NAME=#{name} limit 1")
-    adminEntity getAdminUser(String name);
+    AdminEntity selectAdminUser(String name);
 
 
-    //在注册插入一个User名字和密码
+    //在注册插入一个系统管理员名字和密码
     @Insert("insert into admin (NAME,PASSWORD) values(#{name},#{password})")
-    boolean setAdminUser(adminEntity user);
+    boolean addAdminUser(AdminEntity user);
+
+    //在注册插入一个客服名字和密码
+    @Insert("insert into staff (NAME,PASSWORD) values(#{name},#{password})")
+    boolean addStaffUser(StaffEntity user);
+
+    // 根据satff(客服表)获得一个User类
+    @Select("select * from staff where NAME=#{name} limit 1")
+    StaffEntity selectStaffUser(String name);
+
+
+
+
 
     //更新经纬度
     @Update("update user latitude=#{latitude},longitude=#{longitude} where name=#{name} ")

@@ -4,7 +4,6 @@ package com.iot.dd.Controller;
 import com.iot.dd.domain.UserMessage;
 import com.iot.dd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +16,7 @@ import javax.servlet.http.HttpSession;
 
 
 import com.iot.dd.domain.worker.*;
-import com.iot.dd.service.*;
+
 /**
  * Created by huanglin on 2017/7/13.
  */
@@ -51,64 +50,46 @@ public class LoginController {
 
     //进入注册页面，使用Get请求，REST风格的URL能更有雅的处理问题
     //更新register网页时（get）会调用当前方式，也就是更新网页的作用。
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
-    public String registerGet() {
-        return "register";
-    }
 
-    @RequestMapping(value = "/qwe", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String qwe(HttpServletRequest request) {
+        String result=null;
         if(request.getParameter("role").equals("admin"))
         {
-            adminEntity adminEntity=new adminEntity();
+            AdminEntity adminEntity=new AdminEntity();
             adminEntity.setName(request.getParameter("name"));
             adminEntity.setPassword(request.getParameter("password"));
-            String result=userService.registerAdmin(adminEntity);
+            result=userService.registerAdmin(adminEntity);
         }
         else{
             StaffEntity staffEntity=new StaffEntity();
             staffEntity.setName(request.getParameter("name"));
             staffEntity.setPassword(request.getParameter("password"));
+            result=userService.registerStaff(staffEntity);
         }
-        return "def";
+        return result;
     }
 
-    //Model类的作用？？
-    //注册用户，使用POST，传输数据
-    @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String registerPost(Model model,
-                               //这里和模板中的th:object="${user}"对应起来,也就是就当用户注册信息并点击post后，
-                               // 调用该方法，并且将填写的user数据传给后端
-                               @ModelAttribute(value = "user") UserMessage user,
-                               HttpServletResponse response) {
-        //使用userService处理业务
-        //String result = userService.register(user);
-        //将结果放入model中，在模板中可以取到model中的值
-        //model.addAttribute("result", result);//往前台视图传参数。
-        return ("/index");
-    }
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginGet() {
-        return "login";
-    }
+
 
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public String loginPost(Model model,
-                            @ModelAttribute(value = "user") UserMessage user,
-                            HttpServletResponse response,
+    public String loginPost(HttpServletResponse response,
                             HttpServletRequest request,
                             HttpSession session) {
-        System.out.println("test");
-        String path = request.getServletContext().getRealPath("/");
-        String result = userService.login(user);
-        if (result.equals("登陆成功")) {
-            //添加到session中，session是一次会话，在本次会话中都可以取到session中的值
-            //若是session中有用户存在则会覆盖原来的user，当session中的user存在时判定用户存在
-            session.setAttribute("user",user);
+        String result=null;
+        String role=request.getParameter("role");
+        String name=request.getParameter("name");
+        String password=request.getParameter("password");
+        if(role=="staff"){//客服
+            result=userService.staffLogin(name,password);
         }
-        model.addAttribute("result", result);//与seesion的差别
-        return "index";
+        else{
+            result=userService.adminLogin(name,password);
+        }
+
+        return result;
     }
 
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)

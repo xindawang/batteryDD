@@ -3,7 +3,7 @@ package com.iot.dd.domain.worker;
 /**
  * Created by huanglin on 2017/7/19.
  */
-public class adminEntity {
+public class AdminEntity {
     private Integer id;
     private String name;
     private String password;
