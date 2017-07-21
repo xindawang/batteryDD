@@ -7,8 +7,9 @@ $(function () {
             type: "POST",
             url: '/login',
             data:$("form").serialize(),
-            //dataType:text,
+            dataType:"json",
             success:function (data) {
+                // console.log(data.result);
                 if(data.toString()=='登陆成功'){
                     window.location="index.html";
                 }else{

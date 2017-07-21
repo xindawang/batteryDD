@@ -1,7 +1,9 @@
 package com.iot.dd.Controller;
 
 
-import com.iot.dd.domain.UserMessage;
+import com.iot.dd.Dao.UserDao;
+import com.iot.dd.Tools.JsonTool;
+
 import com.iot.dd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -17,6 +19,9 @@ import javax.servlet.http.HttpSession;
 
 import com.iot.dd.domain.worker.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by huanglin on 2017/7/13.
  */
@@ -26,7 +31,8 @@ public class LoginController {
     //自动注入userService，用来处理业务
     @Autowired
     private UserService userService;
-
+    @Autowired
+    private UserDao userDao;
 
 
     //跳转链接，跳转到主页
@@ -53,7 +59,7 @@ public class LoginController {
 
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public String qwe(HttpServletRequest request) {
+    public String registerPost(HttpServletRequest request) {
         String result=null;
         if(request.getParameter("role").equals("admin"))
         {
@@ -88,8 +94,9 @@ public class LoginController {
         else{
             result=userService.adminLogin(name,password);
         }
-
-        return result;
+        Map<String,Object> re = new HashMap();
+        re.put("result",result);
+        return JsonTool.objectToJson(userDao.selectAdminUser(name));
     }
 
     @RequestMapping(value = "/loginOut", method = RequestMethod.GET)

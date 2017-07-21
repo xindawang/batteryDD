@@ -74,9 +74,9 @@ public class WeixinMessageUtil {
                 // 用户所在国家
                 weixinUserInfo.setCountry(jsonObject.getString("country"));
                 // 用户所在省份
-                weixinUserInfo.setProvince(jsonObject.getString("province"));
+                weixinUserInfo.setProvince(jsonObject.getString("ProvinceEntity"));
                 // 用户所在城市
-                weixinUserInfo.setCity(jsonObject.getString("city"));
+                weixinUserInfo.setCity(jsonObject.getString("CityEntity"));
                 // 用户的语言，简体中文为zh_CN
                 weixinUserInfo.setLanguage(jsonObject.getString("language"));
                 // 用户头像

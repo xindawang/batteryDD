@@ -1,6 +1,5 @@
 package com.iot.dd.Dao;
 
-import com.iot.dd.domain.UserMessage;
 import com.iot.dd.domain.worker.*;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
@@ -33,10 +32,5 @@ public interface UserDao {
 
 
 
-
-
-    //更新经纬度
-    @Update("update user latitude=#{latitude},longitude=#{longitude} where name=#{name} ")
-    boolean setLocation(UserMessage user);
 
 }

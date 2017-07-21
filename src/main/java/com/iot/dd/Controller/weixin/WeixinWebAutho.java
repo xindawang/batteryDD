@@ -52,9 +52,9 @@ public class WeixinWebAutho {
             model.addAttribute("openId",UserInfo.getOpenId());
             model.addAttribute("nickname",UserInfo.getNickname());
             model.addAttribute("sex",UserInfo.getSex());
-            model.addAttribute("city",UserInfo.getCity());
+            model.addAttribute("CityEntity",UserInfo.getCity());
             model.addAttribute("country",UserInfo.getCountry());
-            model.addAttribute("province",UserInfo.getProvince());
+            model.addAttribute("ProvinceEntity",UserInfo.getProvince());
             model.addAttribute("language",UserInfo.getLanguage());
             model.addAttribute("headimgurl",UserInfo.getHeadImgUrl());
             model.addAttribute("subscribe", UserInfo.getSubscribe());
