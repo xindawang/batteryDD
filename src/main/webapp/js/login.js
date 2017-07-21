@@ -6,8 +6,8 @@ $(function () {
         $.ajax({
             type: "POST",
             url: '/login',
-            data:$("form").serialize(),
-            dataType:"json",
+            data:$("#form").serialize(),
+            // dataType:"json",
             success:function (data) {
                 // console.log(data.result);
                 if(data.toString()=='登陆成功'){

@@ -1,0 +1,23 @@
+.position{
+    position: fixed;
+    left: 460px;
+    top: 150px;
+    background-color: whitesmoke;
+    width: 540px;
+    height:390px;
+    border-style: outset;
+}
+body{
+    background-image: url('../bgimg/loginbg.jpg');
+}
+
+.container{
+    width: 420px;
+    height: 80px;
+    font-size: 30px;
+    font-style: oblique;
+    font-family: '楷体';
+    border-bottom-style: inherit;
+    border-bottom-width: thin;
+
+}

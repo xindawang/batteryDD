@@ -2,23 +2,53 @@
 <html >
 <head>
     <meta charset="UTF-8">
-    <title>登陆</title>
     <script type="text/javascript" src="../js/commonplugin.js"></script>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
     <script type="text/javascript" src="../js/login.js"></script>
-
+    <link href="../css/login.css" rel="stylesheet" type="text/css" />
+    <title>登陆</title>
 </head>
 <body>
-<h1>欢迎登陆</h1>
-<form  id="form">
-    <label for="name">名字:</label>
-    <input type="text" name="name" id="name"/><br/>
-    <label for="password">密码:</label>
-    <input type="text" name="password" id="password"/><br>
-    <label >身份:</label>
-    <input type="radio" name="role" value="staff">客服
-    <input type="radio" name="role" value="admin">管理员<br/>
-    <input type="button" value="登陆" id="submit"><br/>
-    <label id="errorMsg"></label>
-</form>
+   <div class="position">
+       <div class="container">
+           <div style="margin-left: 100px;padding-top:40px; ">滴滴管理系统</div>
+       </div>
+            <div style="width: 49%;float: right">
+                  <form id="form">
+                      <div style="padding-top: 20px;">
+                          <table >
+                              <tr><td></td><td><label id="errorMsg" style="color: red "></label></td></tr>
+                              <tr>
+                                  <td><label for="name">用户名:</label></td>
+                                  <td><input style="width:130px " type="text" name="name" id="name"/>
+                              </td>
+                              </tr>
+                              <tr>
+                                  <td><label for="password">密&nbsp;码:</label></td>
+                                  <td><input style="width:130px " type="password" name="password" id="password"/></td>
+                              </tr>
+                              <tr>
+                                  <td><label >身&nbsp;份:</label></td>
+                                  <td>
+                                      &nbsp;
+                                      <input type="radio" name="role" value="staff">客服
+                                       &nbsp;
+                                      <input type="radio" name="role" value="admin">管理员
+                                  </td>
+                              </tr>
+                          </table>
+                            <div style="width: 100%;margin-left: 40px;margin-top: 10px">
+                               <input  id="submit" class="btn btn-primary" type="button" value="确定"/>
+                               <br/>
+                               <a href="register.html" style="font-size: 10px;text-decoration: none">没有账号？注册一个</a>
+                            </div>
+                      </div>
+                   </form>
+             </div>
+             <div style="width: 51%;float: left">
+                 <div style="font-style: oblique ;font-size: 20px;margin-left: 50px;margin-top: 20px;">欢迎登录</div>
+             </div>
+     </div>
 </body>
 </html>

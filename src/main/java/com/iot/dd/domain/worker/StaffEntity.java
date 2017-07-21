@@ -6,9 +6,9 @@ package com.iot.dd.domain.worker;
 
     public class StaffEntity {
         private Integer id;
+        private String loginName;
         private String name;
         private String password;
-
         private Integer sex;
         private String cellphone;
         private String telephone;
@@ -26,7 +26,15 @@ package com.iot.dd.domain.worker;
             this.id = id;
         }
 
-        public String getName() {
+    public String getLoginName() {
+        return loginName;
+    }
+
+    public void setLoginName(String loginName) {
+        this.loginName = loginName;
+    }
+
+    public String getName() {
             return name;
         }
 
@@ -74,15 +82,15 @@ package com.iot.dd.domain.worker;
             this.email = email;
         }
 
-        public String getIdNumber() {
-            return idNumber;
-        }
+    public String getIdNumber() {
+        return idNumber;
+    }
 
-        public void setIdNumber(String idNumber) {
-            this.idNumber = idNumber;
-        }
+    public void setIdNumber(String idNumber) {
+        this.idNumber = idNumber;
+    }
 
-        public String getAddress() {
+    public String getAddress() {
             return address;
         }
 

@@ -1,11 +1,12 @@
 package com.iot.dd.service;
 
 import com.iot.dd.Dao.UserDao;
-import com.iot.dd.domain.UserMessage;
 import com.iot.dd.domain.worker.StaffEntity;
 import com.iot.dd.domain.worker.AdminEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by huanglin on 2017/7/13.
@@ -64,5 +65,41 @@ public class UserService {
             return "登陆成功";
         }
 
+    }
+
+    //管理员信息完善
+    public String adminInformation(AdminEntity dUser){
+        boolean b= userDao.modifyAdminInfo(dUser);
+        if(b){
+            return "信息设置成功！";
+        }
+        else {
+            return "信息设置失败！";
+        }
+    }
+    //客服信息完善
+    public String staffInformation(StaffEntity dUser ){
+        boolean b= userDao.modifyStaffInfo(dUser);
+        if(b){
+            return "信息设置成功！";
+        }
+        else {
+            return "信息设置失败！";
+        }
+    }
+
+    //查admin返回一个记录
+    public  AdminEntity findAdminByLogin_name(String login_name){
+        AdminEntity aUser=new AdminEntity();
+
+        aUser=userDao.selectAdminUser(login_name);
+        return aUser;
+    }
+
+    //查staff返回一个记录
+    public  StaffEntity findStaffByLogin_name(String login_name){
+        StaffEntity sUser=new StaffEntity();
+        sUser=userDao.selectStaffUser(login_name);
+        return sUser;
     }
 }

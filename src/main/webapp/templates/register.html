@@ -2,24 +2,59 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>欢迎注册</title>
     <script type="text/javascript" src="../js/commonplugin.js"></script>
     <script type="text/javascript" src="../js/register.js"></script>
+    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
+    <link href="../css/register.css" rel="stylesheet" type="text/css" />
+    <title>欢迎注册</title>
 </head>
 <body>
-    <h1>欢迎注册</h1>
+<div class="position">
+    <div class="container">
+        <div style="margin-left: 100px;padding-top:40px;">滴滴管理系统</div>
+    </div>
+    <div style="width: 51%;float: right">
+        <form id="form">
+            <div style="padding-top: 20px;">
+                <table >
+                    <tr><td></td><td><label id="errorMsg"  style="color: red"></label></td></tr>
+                    <tr>
+                        <td> <label id="name1" for="name">登&nbsp;&nbsp;陆&nbsp;&nbsp;名:</label></td>
+                        <td>&nbsp;<input style="width:120px " type="text" name="name" id="name"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td> <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label></td>
+                        <td>&nbsp;<input style="width:120px " type="password" name="password" id="password"/></td>
+                    </tr>
+                    <tr>
+                       <td><label for="confirmPassword">确认密码:</label></td>
+                        <td>&nbsp;<input  style="width:120px "type="password" name="conPassword" id="ConfirmPassword"/></td>
+                    </tr>
+                    <tr>
+                        <td><label>身份类型:</label></td>
+                        <td>
+                            &nbsp;
+                            <input type="radio" name="role" value="CSA" >客服
+                            &nbsp;
+                            <input type="radio" name="role" value="admin">管理员
+                        </td>
+                    </tr>
+                </table>
+                <div style="width: 100%;margin-left: 70px;margin-top: 10px">
+                    <input class="btn btn-primary" id="submit" type="button" value="提交">
+                    <br/>
+                    <br/>
+                    <a href="login.html" style="font-size: 10px;text-decoration: none">已有账号？现在登录</a>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div style="width: 49%;float: left">
+        <div style="font-style: oblique ;font-size: 20px;margin-left: 50px;margin-top: 20px;">欢迎注册</div>
+    </div>
+</div>
 
-    <form  id="form">
-        <label id="name1" for="name">姓名:</label>
-        <input type="text" name="name"  id="name"/><label id="errorMsg"></label><br/>
-        <label for="password">密码:</label>
-        <input type="text" name="password" id="password"/><br/>
-        <label for="confirmPassword">确认密码:</label>
-        <input type="text" name="conPassword" id="ConfirmPassword"/><br/>
-        <label>身份:</label>
-        <input type="radio" name="role" value="CSA" >客服
-        <input type="radio" name="role" value="admin">管理员
-        <input id="submit" type="button" value="submit">
-    </form>
 </body>
 </html>
