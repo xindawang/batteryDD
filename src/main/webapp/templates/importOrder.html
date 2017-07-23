@@ -11,23 +11,25 @@
 </head>
 <body>
 <div>
-<form>
+<form id="form">
     <h1>订单导入</h1>
     <h3>客户信息</h3>
-    姓名：<input type="text" id="name"/>
-    微信号：<input type="text" id="weixinId"/><br/>
-    固定电话：<input type="text" id="telephone"/>
-    移动电话：<input type="text" id="cellphone"/><br/>
-    车型：<select></select>
-    车牌号：<input type="text" id="motorcycle_type"/><br/>
+    姓名：<input type="text" id="customerName" name="customerName"/>
+    微信号：<input type="text" id="wechatId" name="wechatId"/><br/>
+    固定电话：<input type="text" id="telephone" name="telephone"/>
+    移动电话：<input type="text" id="cellphone" name="cellphone"/><br/>
+    汽车品牌：<select id="automobileBrand" name="automobileBrand"></select>
+    车型：<select id="automobileType" name="automobileType"></select>
+    车牌号：<input type="text" id="licensePlateNumber" name="licensePlateNumber"/><br/>
     <h3>订单信息</h3>
-    下单时间：<input type="date"/>
+    下单时间：<input type="date" id="createTime"name="createTime"/>
     收货地址：<select id="province" name="province"></select><select id="city" name="city"></select><select id="area" name="area"></select>
-    详细地址：<input type="text" id="detailAdress" name="detailAdress"/><br/>
-    电池型号：<select></select><br/>
+    详细地址：<input type="text" id="detailAddress" name="detailAddress"/><br/>
+    电池品牌：<select id="batteryBrand" name="batteryBrand"></select>电池型号：<select id="batteryType" name="batteryType"></select><br/>
 
-    附加信息：<input type="text" id="remark">
-    订单状态：<input type="text"/>
+    附加信息：<input type="text" id="remark" name="remark"><br/>
+
+    <input type="button" id="import" value="导入订单"/>
 
 </form>
 
