@@ -15,7 +15,7 @@ public interface StockDao {
     List<Object> findBatteryStockByCity(String cityCode);
 
 
-    @Select("select b.type,c.city_name,bs.inventory from battery_stock bs,city c,battery b where bs.battery_stock=#{batteryStock} and c.city_code=bs.city_code and b.id=bs.battery_id")
+    @Select("select b.type,c.city_name,bs.inventory from battery_stock bs,city c,battery b where bs.battery_id=#{batteryId} and c.city_code=bs.city_code and b.id=bs.battery_id")
     List<Object> findBatteryStockByType(String cityCode);
 
 }

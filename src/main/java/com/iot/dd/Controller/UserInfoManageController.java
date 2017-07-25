@@ -261,7 +261,7 @@ public class UserInfoManageController {
         user.setEmail(request.getParameter("email"));
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
-        user.setLicensePlateNumber("licensePlateNumber");
+        user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
 
         if(request.getParameter("organizationId")==""||request.getParameter("organizationId")==null) {
             user.setOrganizationId(0);
