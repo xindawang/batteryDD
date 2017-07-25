@@ -3,15 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="../js/commonplugin.js"></script>
-    <link href="../bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="../bootstrap/js/bootstrap.js"></script>
-    <script type="text/javascript" src="../js/workInformation.js"></script>
-    <title>工作人员信息完善</title>
+    <script type="text/javascript" src="../js/staffInfoComplete.js"></script>
+    <script type="text/javascript" src="../js/sexStandardization.js"></script>
+    <title>客服信息完善</title>
 </head>
 <body>
 <form id="form">
     <div style="padding-left: 440px;padding-top: 20px;">
-         <h2>工作人员信息完善</h2>
+        <h2>客服信息</h2>
     </div>
     <div style="padding-left: 400px;padding-top: 20px;">
         <table>
@@ -21,15 +20,22 @@
             </tr>
             <tr>
                 <td><label>密码：</label></td>
-                <td><input id="password" name="password" type="password"  /></td>
+                <td><input id="password" name="password" type="password" /></td>
             </tr>
             <tr>
                 <td><label>姓名：</label></td>
                 <td> <input id="name" name="name" type="text"  /></td>
             </tr>
             <tr>
-                <td><label> 性别：</label></td>
-                <td><select id="sex" name="sex" type="text"></select></td>
+                <td><label>性别：</label></td>
+                <td>
+                    <div id="sex1">
+                        <input id="sex" name="sex" type="text"/>
+                    </div>
+                    <div id="sex2" style="display: none">
+                        <select id="sexType" style="width: 100px"></select>
+                    </div>
+                </td>
             </tr>
             <tr>
                 <td><label> 手机号：</label></td>
@@ -49,10 +55,29 @@
             </tr>
             <tr>
                 <td><label> 地址：</label></td>
-                <td><input id="address" name="address" type="text" /></td>
+                <td>
+                    <div id="address1">
+                        <input id="address" name="address" type="text" />
+                    </div>
+                    <div  id="address2" STYLE="display: none">
+                        省：<select id="province" name="province" style="width: 100px"></select>
+                        市：<select id="city" name="city" style="width: 100px"></select>
+                        区：<select id="area" name="area" style="width: 100px"></select>
+                        <p/>
+                        详细地址： <input type="text" id="detailAddress" name="detailAddress"/>
+                        <input type="button"  id="finish" value="完成">
+                        <input type="button"  id="cancel" value="取消">
+                    </div>
+
+                </td>
+
+                </td>
             </tr>
             <tr><td><label> 类型：</label></td>
                 <td><input id="role" name="role" type="text"  readonly="true"/></td>
+            </tr>
+            <tr><td><label> 机构编号：</label></td>
+                <td><input id="organizationId" name="organizationId" type="text"  /></td>
             </tr>
         </table>
         <label id="showMsg"></label>

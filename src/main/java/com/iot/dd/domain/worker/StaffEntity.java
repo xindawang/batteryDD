@@ -9,7 +9,7 @@ package com.iot.dd.domain.worker;
         private String loginName;
         private String name;
         private String password;
-        private Integer sex;
+        private String sex;
         private String cellphone;
         private String telephone;
         private String email;
@@ -50,15 +50,15 @@ package com.iot.dd.domain.worker;
             this.password = password;
         }
 
-    public Integer getSex() {
-            return sex;
-        }
+    public String getSex() {
+        return sex;
+    }
 
-        public void setSex(Integer sex) {
-            this.sex = sex;
-        }
+    public void setSex(String sex) {
+        this.sex = sex;
+    }
 
-        public String getCellphone() {
+    public String getCellphone() {
             return cellphone;
         }
 

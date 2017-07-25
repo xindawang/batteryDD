@@ -1,21 +1,20 @@
-package com.iot.dd.domain.worker;
+package com.iot.dd.domain.customer;
 
 /**
- * Created by huanglin on 2017/7/19.
+
+ * Created by admin on 2017/7/21.
  */
-public class TechnicianEntity {
+public class CustomerEntity {
     private Integer id;
     private String loginName;
-    private String name;
     private String password;
+    private String name;
     private String sex;
     private String cellphone;
     private String telephone;
     private String email;
-    private String idNumber;
-    private String address;//地址
-    private String licensePlateNumber;//车牌号
-    private Integer organizationId;//机构编号
+    private String address;
+    private String postcode;
 
     public Integer getId() {
         return id;
@@ -33,20 +32,20 @@ public class TechnicianEntity {
         this.loginName = loginName;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public String getPassword() {
         return password;
     }
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getSex() {
@@ -81,14 +80,6 @@ public class TechnicianEntity {
         this.email = email;
     }
 
-    public String getIdNumber() {
-        return idNumber;
-    }
-
-    public void setIdNumber(String idNumber) {
-        this.idNumber = idNumber;
-    }
-
     public String getAddress() {
         return address;
     }
@@ -97,19 +88,11 @@ public class TechnicianEntity {
         this.address = address;
     }
 
-    public String getLicensePlateNumber() {
-        return licensePlateNumber;
+    public String getPostcode() {
+        return postcode;
     }
 
-    public void setLicensePlateNumber(String licensePlateNumber) {
-        this.licensePlateNumber = licensePlateNumber;
-    }
-
-    public Integer getOrganizationId() {
-        return organizationId;
-    }
-
-    public void setOrganizationId(Integer organizationId) {
-        this.organizationId = organizationId;
+    public void setPostcode(String postcode) {
+        this.postcode = postcode;
     }
 }

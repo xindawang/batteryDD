@@ -26,7 +26,7 @@ public class DataBaseConfig {
         // 数据库连接配置
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         //设置useSSL=false
-        dataSource.setUrl("jdbc:mysql://localhost:3306/batteryDD?useUnicode=true&characterEncoding=utf-8&useSSL=false");
+        dataSource.setUrl("jdbc:mysql://10.13.54.246:3306/batteryDD?useUnicode=true&characterEncoding=utf-8&useSSL=false");
         dataSource.setUsername("root");
         dataSource.setPassword("root");
         return dataSource;

@@ -1,7 +1,7 @@
 /**
  * Created by huanglin on 2017/7/19.
  */
-$(function () {
+$(function() {
     $("#submit").click(function () {
         $.ajax({
             type: "POST",
