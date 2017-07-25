@@ -7,14 +7,14 @@
         select{width:100px;}
     </style>
     <script type="text/javascript" src="../js/commonplugin.js"></script>
-    <script type="text/javascript" src="../js/importOrder.js"></script>
+    <script type="text/javascript" src="../js/importIndent.js"></script>
 </head>
 <body>
 <div>
 <form id="form">
     <h1>订单导入</h1>
     <h3>客户信息</h3>
-    姓名：<input type="text" id="customerName" name="customerName"/>
+    姓名：<input type="text" id="customerName" name="customerName" value=""/>
     微信号：<input type="text" id="wechatId" name="wechatId"/><br/>
     固定电话：<input type="text" id="telephone" name="telephone"/>
     移动电话：<input type="text" id="cellphone" name="cellphone"/><br/>
@@ -22,7 +22,8 @@
     车型：<select id="automobileType" name="automobileType"></select>
     车牌号：<input type="text" id="licensePlateNumber" name="licensePlateNumber"/><br/>
     <h3>订单信息</h3>
-    下单时间：<input type="date" id="createTime"name="createTime"/>
+    订单编号：<input type="text" id="orderId" name="orderId">
+    下单时间：<input type="date" id="createTime"name="createTime"/><br/>
     收货地址：<select id="province" name="province"></select><select id="city" name="city"></select><select id="area" name="area"></select>
     详细地址：<input type="text" id="detailAddress" name="detailAddress"/><br/>
     电池品牌：<select id="batteryBrand" name="batteryBrand"></select>电池型号：<select id="batteryType" name="batteryType"></select><br/>

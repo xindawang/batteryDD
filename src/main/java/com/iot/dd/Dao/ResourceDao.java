@@ -37,8 +37,9 @@ public interface ResourceDao {
     @Select("select CITY_CODE  from city where CITY_NAME=#{cityName}")
     String selectCityCode(String cityName);
 
+    //选择订单状态
     @Select("select STATE from indent_state where ID=#{id}")
-    String selectId(Integer id);
+    String selectStatus(Integer id);
 
     @Select("select ID,BRAND_NAME as brandName from automobile_brand")
     List<AutomobileBrand> selectAutoBrand();
