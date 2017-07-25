@@ -18,11 +18,8 @@ $(function () {
         alert(cityCode);
 
         $("#Table").table({
-            url: '/batteryAmountCity',
+            url: '/batteryAmountCity?cityCode='+cityCode,
             type: "get",
-            data:{
-                cityCode:cityCode
-            },
             columns: [
                 {
                     title: '序号',
@@ -63,11 +60,8 @@ $(function () {
         var batteryType=$("#batteryType option:selected").val();
 
         $("#Table").table({
-            url: '/batteryAmountType',
+            url: '/batteryAmountType?batteryType='+batteryType,
             type: "get",
-            data:{
-                batteryType:batteryType
-            },
             columns: [
                 {
                     title: '序号',

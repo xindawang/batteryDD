@@ -16,9 +16,14 @@ public class StockService {
     private StockDao stockservice;
 
     //返回多表查询结果集
-    public List<Object> findStock(String cityCode){
+    public List<Object> findStockByCity(String cityCode){
 
-      return   stockservice.findBatteryStock(cityCode);
+      return   stockservice.findBatteryStockByCity(cityCode);
+
+    }
+    public List<Object> findStockByType(String batteryType){
+
+        return   stockservice.findBatteryStockByType(batteryType);
 
     }
 

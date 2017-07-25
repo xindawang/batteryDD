@@ -36,7 +36,7 @@ public class BatteryAmountController {
         System.out.println("*******"+cityCode);
         PageHelper.startPage(page, pageSize);
 
-        List<Object> list = stock.findStock(cityCode);
+        List<Object> list = stock.findStockByCity(cityCode);
         long total = ((Page<Object>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
@@ -52,7 +52,7 @@ public class BatteryAmountController {
         System.out.println("*******"+batteryType);
         PageHelper.startPage(page, pageSize);
 
-        List<Object> list = stock.findStock(batteryType);
+        List<Object> list = stock.findStockByType(batteryType);
         long total = ((Page<Object>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
