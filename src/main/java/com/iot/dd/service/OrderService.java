@@ -5,6 +5,8 @@ import com.iot.dd.domain.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by huanglin on 2017/7/21.
  */
@@ -22,5 +24,15 @@ public class OrderService {
             result="订单导入失败";
         }
         return result;
+    }
+
+    //在派发订单时调出所有未派发订单信息
+    public List<OrderEntity> selectUndoneIndentMsg(String status){
+
+        return orderDao.selectIndentMsg(status);
+    }
+
+    public List<OrderEntity> importUndoneIndentMsg(String status,String orderId){
+        return orderDao.importIndentMsg(status,orderId);
     }
 }

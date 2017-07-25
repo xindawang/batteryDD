@@ -7,6 +7,7 @@ import java.sql.Date;
  */
 public class OrderEntity {
     private Integer id;
+    private String orderId;
     private String batteryType;//电池型号
     private String customerName;
     private String customerCellphone;
@@ -27,6 +28,14 @@ public class OrderEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
     }
 
     public String getBatteryType() {

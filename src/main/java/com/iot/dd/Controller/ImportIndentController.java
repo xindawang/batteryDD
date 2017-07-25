@@ -20,13 +20,12 @@ import static com.iot.dd.Tools.TimeTool.stringToSqlDate;
  * Created by huanglin on 2017/7/21.
  */
 @RestController
-public class OrderController {
+public class ImportIndentController {
 
     @Autowired
     private OrderService orderService;
 
-    @Autowired
-    private OrderDao orderDao;
+
 
     @Autowired
     private ResourceDao resourceDao;
@@ -37,6 +36,7 @@ public class OrderController {
         String result=null;
 
         OrderEntity orderEntity=new OrderEntity();
+        orderEntity.setOrderId(request.getParameter("orderId"));
         Integer batteryTypeId=Integer.valueOf(request.getParameter("batteryType"));
         String BatteryTypeName=resourceDao.selectBatteryTypeName(batteryTypeId);
         orderEntity.setBatteryType(BatteryTypeName);
@@ -70,7 +70,7 @@ public class OrderController {
         }
         orderEntity.setCreateTime(createTime);
 
-        String status=resourceDao.selectId(1);//状态：已录入
+        String status=resourceDao.selectStatus(1);//状态：已录入
         orderEntity.setStatus(status);
         orderEntity.setRemark(request.getParameter("remark"));
 

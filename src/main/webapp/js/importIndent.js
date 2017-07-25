@@ -28,7 +28,7 @@ $(function () {
            dataType: 'json',
            success: function (data) {
                $('#city').empty();//清空下拉列表
-               $('#city').append("<option value= 0>---请选择--</option>")
+               $('#city').append("<option value= 0>---请选择--</option>");
                for (var i in data) {
                    var cityCode = data[i].cityCode;
                    var cityName = data[i].cityName;
