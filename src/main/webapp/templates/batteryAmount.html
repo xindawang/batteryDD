@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../js/commonplugin.js"></script>
+    <script type="text/javascript" src="../js/importOrder.js"></script>
+    <script type="text/javascript" src="../js/batteryAmount.js"></script>
+    <title>电池数量监控</title>
+</head>
+<body>
+  <div style="margin-top: 50px;margin-left: 100px;">
+    <label>省份</label><select id="province" name="province" style="width: 150px;"></select>
+    <label>城市</label><select id="city" name="city"  style="width: 150px;"></select>
+      <br/>
+      <br/>
+      电池品牌：<select id="batteryBrand" name="batteryBrand" style="width: 150px;"></select>
+      电池型号：<select id="batteryType" name="batteryType" style="width: 150px;"></select>
+      <br/>
+      <br/>
+      <div id="Table" class="body">
+          <table class="table table-hover  table-condensed">
+          </table>
+      </div>
+  </div>
+</body>
+</html>
