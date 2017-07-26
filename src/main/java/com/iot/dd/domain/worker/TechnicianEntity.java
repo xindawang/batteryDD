@@ -5,6 +5,7 @@ package com.iot.dd.domain.worker;
  */
 public class TechnicianEntity {
     private Integer id;
+    private String technicianId;
     private String loginName;
     private String name;
     private String password;
@@ -23,6 +24,14 @@ public class TechnicianEntity {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    public String getTechnicianId() {
+        return technicianId;
+    }
+
+    public void setTechnicianId(String technicianId) {
+        this.technicianId = technicianId;
     }
 
     public String getLoginName() {

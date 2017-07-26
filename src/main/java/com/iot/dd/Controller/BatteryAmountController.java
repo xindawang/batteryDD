@@ -3,6 +3,7 @@ package com.iot.dd.Controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.domain.resource.BatteryStockEntity;
 import com.iot.dd.domain.worker.StaffEntity;
 import com.iot.dd.service.StockService;
 import org.apache.ibatis.annotations.Param;
@@ -36,8 +37,8 @@ public class BatteryAmountController {
         System.out.println("*******"+cityCode);
         PageHelper.startPage(page, pageSize);
 
-        List<Object> list = stock.findStockByCity(cityCode);
-        long total = ((Page<Object>) list).getTotal();
+        List<BatteryStockEntity> list = stock.findStockByCity(cityCode);
+        long total = ((Page<BatteryStockEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
         map.put("total", total);
@@ -52,8 +53,8 @@ public class BatteryAmountController {
         System.out.println("*******"+batteryType);
         PageHelper.startPage(page, pageSize);
 
-        List<Object> list = stock.findStockByType(batteryType);
-        long total = ((Page<Object>) list).getTotal();
+        List<BatteryStockEntity> list = stock.findStockByType(batteryType);
+        long total = ((Page<BatteryStockEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
         map.put("total", total);

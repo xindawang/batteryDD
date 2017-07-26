@@ -1,6 +1,6 @@
 package com.iot.dd.Dao;
-
-import org.apache.ibatis.annotations.Select;
+import com.iot.dd.domain.resource.BatteryStockEntity;
+import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -8,14 +8,12 @@ import java.util.List;
 /**
  * Created by admin on 2017/7/24.
  */
-@Repository
+@Mapper
 public interface StockDao {
 
-    @Select("select b.type,c.city_name,bs.inventory from battery_stock bs,city c,battery b where bs.city_code=#{cityCode} and c.city_code=bs.city_code and b.id=bs.battery_id")
-    List<Object> findBatteryStockByCity(String cityCode);
 
+    List<BatteryStockEntity> findBatteryStockByCity(String cityCode);
 
-    @Select("select b.type,c.city_name,bs.inventory from battery_stock bs,city c,battery b where bs.battery_id=#{batteryId} and c.city_code=bs.city_code and b.id=bs.battery_id")
-    List<Object> findBatteryStockByType(String cityCode);
+    List<BatteryStockEntity> findBatteryStockByType(String batteryType);
 
 }

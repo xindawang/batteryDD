@@ -109,7 +109,7 @@ public interface UserManagementDao {
     @Update("update customer set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},postcode=#{postcode} where login_name=#{loginName}")
     boolean modifyCustomerInfo(CustomerEntity user);
 
-    @Update("update technician set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},id_number=#{idNumber}, organization_id=#{organizationId} ,license_plate_number=#{licensePlateNumber}  where login_name=#{loginName}")
+    @Update("update technician set technician_id={technicianId} password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},id_number=#{idNumber}, organization_id=#{organizationId} ,license_plate_number=#{licensePlateNumber}  where login_name=#{loginName}")
     boolean modifyTechnicianInfo(TechnicianEntity user);
 
 

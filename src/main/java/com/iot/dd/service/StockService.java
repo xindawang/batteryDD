@@ -1,6 +1,8 @@
 package com.iot.dd.service;
 
 import com.iot.dd.Dao.StockDao;
+import com.iot.dd.Dao.StockRepository;
+import com.iot.dd.domain.resource.BatteryStockEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,17 +15,17 @@ import java.util.List;
 public class StockService {
 
     @Autowired
-    private StockDao stockservice;
+    private StockDao stockDao;
 
     //返回多表查询结果集
-    public List<Object> findStockByCity(String cityCode){
+    public List<BatteryStockEntity> findStockByCity(String cityCode){
 
-      return   stockservice.findBatteryStockByCity(cityCode);
+      return   stockDao.findBatteryStockByCity(cityCode);
 
     }
-    public List<Object> findStockByType(String batteryType){
+    public List<BatteryStockEntity> findStockByType(String batteryType){
 
-        return   stockservice.findBatteryStockByType(batteryType);
+        return   stockDao.findBatteryStockByType(batteryType);
 
     }
 

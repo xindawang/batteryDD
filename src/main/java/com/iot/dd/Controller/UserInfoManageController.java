@@ -251,7 +251,7 @@ public class UserInfoManageController {
     public String technicianmodify(HttpServletRequest request){
 
         TechnicianEntity user=new TechnicianEntity();
-
+        user.setTechnicianId(request.getParameter("technicianId"));
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));

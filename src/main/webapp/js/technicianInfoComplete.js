@@ -13,7 +13,7 @@ $(function () {
         },
         dataType: "json",
         success:function(data) {
-
+            $("#technicianId").val(data.technicianId);
             $("#loginName").val(data.loginName);
             $("#password").val(data.password);
             $("#name").val(data.name);
