@@ -24,7 +24,6 @@
     </select>
 
 
-
     <resultMap id="BatteryStock" type="com.iot.dd.dao.entity.resource.BatteryStockEntity">
         <result property="inventory" column="inventory" />
         <association property="batteryEntity" javaType="com.iot.dd.dao.entity.resource.BatteryEntity">
