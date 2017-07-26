@@ -1,10 +1,10 @@
 package com.iot.dd.service;
 
-import com.iot.dd.Dao.UserManagementDao;
-import com.iot.dd.domain.customer.CustomerEntity;
-import com.iot.dd.domain.worker.AdminEntity;
-import com.iot.dd.domain.worker.StaffEntity;
-import com.iot.dd.domain.worker.TechnicianEntity;
+import com.iot.dd.dao.mapper.UserManagementMapper;
+import com.iot.dd.dao.entity.customer.CustomerEntity;
+import com.iot.dd.dao.entity.worker.AdminEntity;
+import com.iot.dd.dao.entity.worker.StaffEntity;
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +16,7 @@ import java.util.List;
 @Service
 public class UserManageService {
     @Autowired
-    private UserManagementDao usermanage;
+    private UserManagementMapper usermanage;
 
     //查询所有信息
     public List<AdminEntity> findAdminall(){

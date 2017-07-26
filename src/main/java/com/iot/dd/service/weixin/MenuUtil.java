@@ -1,7 +1,6 @@
 package com.iot.dd.service.weixin;
 
-import com.iot.dd.domain.*;
-import com.iot.dd.domain.weixin.*;
+import com.iot.dd.dao.entity.weixin.*;
 
 
 import java.io.IOException;

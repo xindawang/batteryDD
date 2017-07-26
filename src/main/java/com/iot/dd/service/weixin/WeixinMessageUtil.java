@@ -1,6 +1,6 @@
 package com.iot.dd.service.weixin;
 
-import com.iot.dd.domain.weixin.WeixinUserBaseMessage;
+import com.iot.dd.dao.entity.weixin.WeixinUserBaseMessage;
 import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

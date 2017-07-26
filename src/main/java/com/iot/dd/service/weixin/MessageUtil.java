@@ -1,6 +1,6 @@
 package com.iot.dd.service.weixin;
 
-import com.iot.dd.domain.weixin.TextMessage;
+import com.iot.dd.dao.entity.weixin.TextMessage;
 import com.thoughtworks.xstream.XStream;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;

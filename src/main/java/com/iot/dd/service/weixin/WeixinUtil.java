@@ -27,7 +27,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-import com.iot.dd.domain.weixin.AccessToken;
+import com.iot.dd.dao.entity.weixin.AccessToken;
 
 
 /**

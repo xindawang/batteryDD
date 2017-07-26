@@ -1,7 +1,7 @@
 package com.iot.dd.service;
 
-import com.iot.dd.Dao.IndentStatesDao;
-import com.iot.dd.domain.IndentStatesEntity;
+import com.iot.dd.dao.mapper.IndentStatesMapper;
+import com.iot.dd.dao.entity.IndentStatesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class indentStatesService {
     @Autowired
-    private IndentStatesDao statedao;
+    private IndentStatesMapper statedao;
 
     public List<IndentStatesEntity> findState(){
         return statedao.find();

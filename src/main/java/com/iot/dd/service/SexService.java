@@ -1,7 +1,7 @@
 package com.iot.dd.service;
 
-import com.iot.dd.Dao.SexDao;
-import com.iot.dd.domain.resource.SexEntity;
+import com.iot.dd.dao.mapper.SexMapper;
+import com.iot.dd.dao.entity.resource.SexEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +13,7 @@ import java.util.List;
 @Service
 public class SexService {
     @Autowired
-    private SexDao sexdao;
+    private SexMapper sexdao;
 
     public List<SexEntity> find(){
 
