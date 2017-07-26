@@ -14,7 +14,7 @@
     </select>
     
     <select id="findBatteryStockByCity" resultMap="BatteryStock">
-         select b.type,c.city_name,bs.inventory
+         select b.type batteryType,c.city_name cityName,bs.inventory betteryInventory
           from battery_stock bs
           left join city c
           on c.city_code=bs.city_code
@@ -26,12 +26,12 @@
 
 
     <resultMap id="BatteryStock" type="BatteryStockEntity">
-        <result property="inventory" column="inventory" />
+        <result property="inventory" column="betteryInventory" />
         <association property="BatteryType" javaType="BatteryEntity">
-            <result property="type" column="type" />
+            <result property="type" column="batteryType" />
         </association>
         <association property="City" javaType="CityEntity">
-            <result property="cityName" column="city_name" />
+            <result property="cityName" column="cityName" />
         </association>
     </resultMap>
 </mapper>

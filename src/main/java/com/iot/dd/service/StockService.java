@@ -1,9 +1,7 @@
 package com.iot.dd.service;
 
 import com.iot.dd.Dao.StockDao;
-import com.iot.dd.Dao.StockRepository;
 import com.iot.dd.domain.resource.BatteryStockEntity;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,7 +12,7 @@ import java.util.List;
 @Service
 public class StockService {
 
-    @Autowired
+
     private StockDao stockDao;
 
     //返回多表查询结果集

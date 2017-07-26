@@ -2,13 +2,18 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <script type="text/javascript" src="../js/commonplugin.js"></script>
+    <script type="text/javascript" src="../js/importIndent.js"></script>
+    <script type="text/javascript" src="../js/indentState.js"></script>
+    <script type="text/javascript" src="../js/indentManage.js"></script>
+
     <title>订单监控</title>
 </head>
 <body>
    <label>省份</label><select id="province" name="province" style="width: 150px;"></select>
    <label>城市</label><select id="city" name="city"  style="width: 150px;"></select>
    <br>
-   <label>订单状态</label><select id="orderState" name="orderState"></select>
+   <label>订单状态</label><select id="indentState" style="width: 150px;" name="indentState"></select>
    <div>
         <table border="1" cellspacing="0">
             <thead>

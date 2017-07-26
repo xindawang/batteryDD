@@ -52,4 +52,38 @@ public interface  OrderDao {
     })
     List<OrderEntity> importIndentMsg(String status,String orderId);
 
+
+    //根据订单所在城市查询所有订单
+    @Select("select * from indent where CITY_CODE=#{cityCode} ")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property="batteryType",column="battery_type"),
+            @Result(property ="customerName",column="customer_name"),
+            @Result(property = "cityCode",column="city_code"),
+            @Result(property = "customerCellphone",column="customer_cellphone"),
+            @Result(property = "customerTelephone",column="customer_telephone"),
+            @Result(property = "wechatId",column="wechat_id"),
+            @Result(property = "automobileType",column="automobile_type"),
+            @Result(property = "licensePlateNumber",column="license_plate_number"),
+            @Result(property = "createTime",column="create_time"),
+    })
+    List<OrderEntity> selectIndentByCity(String cityCode);
+
+    //根据订单所在城市和订单状态查询所有订单
+    @Select("select * from indent where STATUS=#{status} and CITY_CODE=#{cityCode} ")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property="batteryType",column="battery_type"),
+            @Result(property ="customerName",column="customer_name"),
+            @Result(property = "cityCode",column="city_code"),
+            @Result(property = "customerCellphone",column="customer_cellphone"),
+            @Result(property = "customerTelephone",column="customer_telephone"),
+            @Result(property = "wechatId",column="wechat_id"),
+            @Result(property = "automobileType",column="automobile_type"),
+            @Result(property = "licensePlateNumber",column="license_plate_number"),
+            @Result(property = "createTime",column="create_time"),
+    })
+    List<OrderEntity> selectIndentByStatusAndCity(String status,String cityCode);
+
+
 }
