@@ -113,4 +113,8 @@ public interface UserManagementDao {
     boolean modifyTechnicianInfo(TechnicianEntity user);
 
 
+    @Update("update technnician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
+    boolean updateTechnicianAddress(String technicianId,Float technicianLongitude,Float technicianLatitude);
+
+
 }

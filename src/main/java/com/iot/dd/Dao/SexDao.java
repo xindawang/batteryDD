@@ -1,6 +1,6 @@
 package com.iot.dd.Dao;
 
-import com.iot.dd.domain.SexEntity;
+import com.iot.dd.domain.resource.SexEntity;
 import org.apache.ibatis.annotations.Select;
 import org.springframework.stereotype.Repository;
 

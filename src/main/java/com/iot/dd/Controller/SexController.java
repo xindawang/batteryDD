@@ -1,7 +1,7 @@
 package com.iot.dd.Controller;
 
 import com.iot.dd.Tools.JsonTool;
-import com.iot.dd.domain.SexEntity;
+import com.iot.dd.domain.resource.SexEntity;
 import com.iot.dd.service.SexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -1,11 +1,10 @@
 package com.iot.dd.Dao;
 
-import com.iot.dd.domain.OrderEntity;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import com.iot.dd.domain.Indent.IndentAllocationEntity;
+import com.iot.dd.domain.Indent.OrderEntity;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -38,7 +37,7 @@ public interface  OrderDao {
 
 
     //根据订单号查询所有未派发订单信息
-    @Select("select * from indent where STATUS=#{0} AND ORDER_ID=#{1}")
+    @Select("select * from indent where STATUS=#{status} AND ORDER_ID=#{orderId}")
     @Results({
             @Result(property = "orderId", column = "order_id"),
             @Result(property="batteryType",column="battery_type"),
@@ -50,7 +49,7 @@ public interface  OrderDao {
             @Result(property = "licensePlateNumber",column="license_plate_number"),
             @Result(property = "createTime",column="create_time"),
     })
-    List<OrderEntity> importIndentMsg(String status,String orderId);
+    List<OrderEntity> importIndentMsg(@Param("status") String status,@Param("orderId") String orderId);
 
 
     //根据订单所在城市查询所有订单
@@ -70,7 +69,7 @@ public interface  OrderDao {
     List<OrderEntity> selectIndentByCity(String cityCode);
 
     //根据订单所在城市和订单状态查询所有订单
-    @Select("select * from indent where STATUS=#{status} and CITY_CODE=#{cityCode} ")
+    @Select("select * from indent where STATUS=#{0} and CITY_CODE=#{1} ")
     @Results({
             @Result(property = "orderId", column = "order_id"),
             @Result(property="batteryType",column="battery_type"),
@@ -85,5 +84,12 @@ public interface  OrderDao {
     })
     List<OrderEntity> selectIndentByStatusAndCity(String status,String cityCode);
 
+
+    @Select("select ORDER_ID as orderId,TECHNICIAN_ID as technicianId,ACCEPT_TIME as acceptTime,TECHNICIAN_LONGITUDE as technicianLongitude,TECHNICIAN_LATITUDE as technicianLatitude,CUSTOMER_LONGITUDE as customerLongitude,CUSTOMER_LATITUDE as customerLatitude from indent_allocation where ORDER_ID=#{orderId}")
+    IndentAllocationEntity selectIndentAllocationMsg(String orderId);
+
+
+    @Insert("insert into  indent_allocation (ORDER_ID) values (#{orderId})")
+    boolean insertAllocationOderId(String orderId);
 
 }

@@ -1,9 +1,8 @@
 package com.iot.dd.Controller;
 
-import com.iot.dd.Dao.OrderDao;
 import com.iot.dd.Dao.ResourceDao;
 import com.iot.dd.Tools.JsonTool;
-import com.iot.dd.domain.OrderEntity;
+import com.iot.dd.domain.Indent.OrderEntity;
 import com.iot.dd.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -46,7 +45,12 @@ public class distribIndentController {
         String orderId=request.getParameter("indentId");
         String undoneIndentState=resourceDao.selectStatus(1);
         List<OrderEntity> undoneIndentMessage=orderService.importUndoneIndentMsg(undoneIndentState,orderId);
+
+        orderService.InsertOrderId(orderId);
+
         return JsonTool.objectToJson(undoneIndentMessage);
     }
-
+//
+//    @RequestMapping(value="/importMapMessage" ,method=RequestMethod.POST)
+//    String
 }

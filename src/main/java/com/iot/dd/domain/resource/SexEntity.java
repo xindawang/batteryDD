@@ -1,4 +1,4 @@
-package com.iot.dd.domain;
+package com.iot.dd.domain.resource;
 
 /**
  * Created by admin on 2017/7/25.

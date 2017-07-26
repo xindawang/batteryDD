@@ -1,9 +1,8 @@
 package com.iot.dd.Controller;
 
-import com.iot.dd.Dao.OrderDao;
 import com.iot.dd.Dao.ResourceDao;
 import com.iot.dd.Tools.TimeTool;
-import com.iot.dd.domain.OrderEntity;
+import com.iot.dd.domain.Indent.OrderEntity;
 import com.iot.dd.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,8 +12,6 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.text.ParseException;
-
-import static com.iot.dd.Tools.TimeTool.stringToSqlDate;
 
 /**
  * Created by huanglin on 2017/7/21.

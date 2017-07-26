@@ -1,7 +1,7 @@
 package com.iot.dd.service;
 
 import com.iot.dd.Dao.OrderDao;
-import com.iot.dd.domain.OrderEntity;
+import com.iot.dd.domain.Indent.OrderEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,4 +35,15 @@ public class OrderService {
     public List<OrderEntity> importUndoneIndentMsg(String status,String orderId){
         return orderDao.importIndentMsg(status,orderId);
     }
+
+    //在订单派发开始时选中某一未派发订单时将订单编号存入
+    public String InsertOrderId(String orderId) {
+        if (orderDao.selectIndentAllocationMsg(orderId) == null) {
+            orderDao.insertAllocationOderId(orderId);
+        } else {
+            return "订单编号已导入";
+        }
+        return "订单编号成功导入订单转发表";
+    }
+
 }

@@ -1,10 +1,11 @@
-package com.iot.dd.domain;
+package com.iot.dd.domain.Indent;
 
 import java.sql.Date;
 
 /**
  * Created by huanglin on 2017/7/21.
  */
+//订单实体类
 public class OrderEntity {
     private Integer id;
     private String orderId;

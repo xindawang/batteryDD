@@ -1,19 +1,16 @@
 /**
  * Created by huanglin on 2017/7/25.
  */
+//技师地图
 //地图初始化时，在地图上添加一个marker标记,鼠标点击marker可弹出自定义的信息窗体
-function distributeMap(conMap,longitude,latitude) {
+function distributeTechMap(map,longitude,latitude,titleMsg,detailedMsg) {
 
-    var map = new AMap.Map(conMap, {
-        resizeEnable: true,
-        center: [longitude, latitude],
-        zoom: 16
-    });
+
     addMarker();
 
-//添加marker标记
+    //添加marker标记
     function addMarker() {
-        map.clearMap();
+        //map.clearMap();
         var marker = new AMap.Marker({
             map: map,
             position: [longitude, latitude]
@@ -25,10 +22,10 @@ function distributeMap(conMap,longitude,latitude) {
     }
 
 //实例化信息窗体
-    var title = '方恒假日酒店<span style="font-size:11px;color:#F00;">价格:318</span>',
+    var title = titleMsg,
         content = [];
-    content.push("<img src='https://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
-    content.push("电话：010-64733333");
+    //content.push("<img src='https://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
+    content.push(detailedMsg);
     content.push("<a href='https://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
     var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体

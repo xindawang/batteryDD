@@ -1,7 +1,7 @@
 package com.iot.dd.service;
 
 import com.iot.dd.Dao.SexDao;
-import com.iot.dd.domain.SexEntity;
+import com.iot.dd.domain.resource.SexEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
