@@ -109,11 +109,11 @@ public interface UserManagementMapper {
     @Update("update customer set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},postcode=#{postcode} where login_name=#{loginName}")
     boolean modifyCustomerInfo(CustomerEntity user);
 
-    @Update("update technician set technician_id={technicianId} password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},id_number=#{idNumber}, organization_id=#{organizationId} ,license_plate_number=#{licensePlateNumber}  where login_name=#{loginName}")
+    @Update("update technician set technician_id=#{technicianId}, password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},id_number=#{idNumber}, organization_id=#{organizationId} ,license_plate_number=#{licensePlateNumber}  where login_name=#{loginName}")
     boolean modifyTechnicianInfo(TechnicianEntity user);
 
 
-    @Update("update technnician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
+    @Update("update technician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
     boolean updateTechnicianAddress(String technicianId,Float technicianLongitude,Float technicianLatitude);
 
 
