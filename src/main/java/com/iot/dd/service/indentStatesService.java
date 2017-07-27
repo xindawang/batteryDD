@@ -1,7 +1,7 @@
 package com.iot.dd.service;
 
 import com.iot.dd.dao.mapper.IndentStatesMapper;
-import com.iot.dd.dao.entity.IndentStatesEntity;
+import com.iot.dd.dao.entity.Indent.IndentStatesEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

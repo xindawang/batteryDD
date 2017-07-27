@@ -13,7 +13,7 @@ $(function () {
             for (var i in data) {
                 var id = data[i].id;
                 var state = data[i].state;
-                $('#indentState').append("<option value=" + id+ ">" + state + "</option>");
+                $('#indentState').append("<option value=" +id+ ">" + state + "</option>");
             }
         }
 

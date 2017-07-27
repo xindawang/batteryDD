@@ -2,58 +2,81 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <script type="text/javascript" src="../js/commonPlugin.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <script type="text/javascript" src="../plugin/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../plugin/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="../js/register.js"></script>
-    <link href="../plugin/bootstrap/css/bootstrap.css" rel="stylesheet" type="text/css" />
-    <script type="text/javascript" src="../plugin/bootstrap/js/bootstrap.js"></script>
-    <link href="../css/register.css" rel="stylesheet" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../plugin/loginPage/b_login.css">
+    <link rel="stylesheet" type="text/css" href="../plugin/loginPage/bootstrap.min.css">
+
     <title>欢迎注册</title>
 </head>
 <body>
-<div class="position">
-    <div class="container">
-        <div style="margin-left: 100px;padding-top:40px;">滴滴管理系统</div>
-    </div>
-    <div style="width: 51%;float: right">
-        <form id="form">
-            <div style="padding-top: 20px;">
-                <table >
-                    <tr><td></td><td><label id="errorMsg"  style="color: red"></label></td></tr>
-                    <tr>
-                        <td> <label id="name1" for="name">登&nbsp;&nbsp;陆&nbsp;&nbsp;名:</label></td>
-                        <td>&nbsp;<input style="width:120px " type="text" name="name" id="name"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td> <label for="password">密&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;码:</label></td>
-                        <td>&nbsp;<input style="width:120px " type="password" name="password" id="password"/></td>
-                    </tr>
-                    <tr>
-                       <td><label for="confirmPassword">确认密码:</label></td>
-                        <td>&nbsp;<input  style="width:120px "type="password" name="conPassword" id="ConfirmPassword"/></td>
-                    </tr>
-                    <tr>
-                        <td><label>身份类型:</label></td>
-                        <td>
-                            &nbsp;
-                            <input type="radio" name="role" value="CSA" >客服
-                            &nbsp;
-                            <input type="radio" name="role" value="admin">管理员
-                        </td>
-                    </tr>
-                </table>
-                <div style="width: 100%;margin-left: 70px;margin-top: 10px">
-                    <input class="btn btn-primary" id="submit" type="button" value="提交">
-                    <br/>
-                    <br/>
-                    <a href="login.html" style="font-size: 10px;text-decoration: none">已有账号？现在登录</a>
+<div class="login">
+    <div class="loginmain">
+        <h2>&nbsp;&nbsp;&nbsp;电池滴滴后台管理管理系统</h2>
+        <br>
+        <form id="form" class="form-horizontal">
+            <!-- 让表单在一行中显示form-horizontal -->
+            <div class="form-group">
+                <label for="username" class="col-lg-1 control-label"><font size="3">用户名</font></label>
+                <div class="col-lg-4">
+                    <input type="text" name="username" id="username" class="form-control">
                 </div>
             </div>
+
+            <div class="form-group">
+                <label for="password" class="col-lg-1 control-label"><font size="3">密&nbsp;&nbsp;&nbsp;&nbsp;码</font></label>
+                <div class="col-lg-4">
+                    <input type="password" name="password" id="password" class="form-control" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="col-lg-1 control-label"><font size="3">身&nbsp;&nbsp;&nbsp;&nbsp;份</font></label>
+                <div class="col-lg-4">
+
+                    <div class="form-group">
+                        <div class="col-lg-2" style="width:50px">
+                            <input id="staff" type="radio" name="role" value="staff" class="form-control" style="width:50px">
+                        </div>
+                        <label for="staff" class="col-lg-2 control-label"><font size="3">客&nbsp;&nbsp;&nbsp;&nbsp;服</font></label>
+
+                        <div class="col-lg-4" style="width:50px"></div>
+
+                        <div class="col-lg-4" style="width:50px">
+                            <input id="admin" type="radio" name="role" value="admin" class="form-control" style="width:50px">
+                        </div>
+                        <label for="admin" class="col-lg-2 control-label"><font size="3">管&nbsp;理&nbsp;员</font></label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-lg-4 col-lg-offset-1">
+                    <input id="submit" value="登录" class="btn btn-danger btn-lg">
+                    <br><span class="text"><a href="register.html" style="font-size: 15px">
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    没有账号？注册一个</a></span>
+                </div>
+            </div>
+
         </form>
     </div>
-    <div style="width: 49%;float: left">
-        <div style="font-style: oblique ;font-size: 20px;margin-left: 50px;margin-top: 20px;">欢迎注册</div>
+    <div class="rightpic">
+        <div id="container">
+
+        </div>
     </div>
+</div>
+
+<script src="../plugin/loginPage/delaunay.js"></script>
+<script src="../plugin/loginPage/TweenMax.js"></script>
+<script src="../plugin/loginPage/effect.js"></script>
 </div>
 
 </body>

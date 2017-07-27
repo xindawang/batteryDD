@@ -140,8 +140,6 @@ public class UserInfoManageController {
     public String findOneadmin(HttpServletRequest request){
         String loginName=request.getParameter("loginName");
 
-        System.out.println("****"+loginName+"****");
-
         AdminEntity user=usermanageservice.findAdminOne(loginName);
 
         return JsonTool.objectToJson(user);

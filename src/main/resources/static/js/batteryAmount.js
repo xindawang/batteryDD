@@ -28,11 +28,11 @@ $(function () {
                 },
                 {
                     title:'电池型号',
-                    data:'type'
+                    data:'batteryEntity.type'
                 },
                 {
                     title:'城市',
-                    data:'cityName'
+                    data:'cityEntity.cityName'
                 },
                 {
                     title:'电池库存量',
@@ -70,11 +70,11 @@ $(function () {
                 },
                 {
                     title:'电池型号',
-                    data:'type'
+                    data:'battery.type'
                 },
                 {
                     title:'城市',
-                    data:'cityName'
+                    data:'city.cityName'
                 },
                 {
                     title:'电池库存量',

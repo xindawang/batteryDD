@@ -22,7 +22,7 @@ $(function () {
         type: "POST",
         url: '/queryInformation',
         dataType : 'json',
-        data:$("#form").serialize(),
+        //data:$("#form").serialize(),
         success:function (data) {
 
             $("#loginName").val(data.loginName);
