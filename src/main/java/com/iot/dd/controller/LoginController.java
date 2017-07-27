@@ -79,7 +79,7 @@ public class LoginController {
                             HttpSession session) {
         String result="请选择用户类型！";
         String role=request.getParameter("role");
-        String loginName=request.getParameter("name");
+        String loginName=request.getParameter("username");
         String password=request.getParameter("password");
         if(role==null){
             return result;

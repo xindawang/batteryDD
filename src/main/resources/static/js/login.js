@@ -13,10 +13,8 @@ $(function() {
                 if(data.toString()=='登陆成功'){
                     window.location="index.html";
                 }else{
-                    document.getElementById("errorMsg").innerHTML=data.toString();
+                    alert(data)
                 }
-
-
             }
             }
         );
