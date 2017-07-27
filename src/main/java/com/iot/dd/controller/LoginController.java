@@ -72,7 +72,7 @@ public class LoginController {
 
 
 
-
+//登陆
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(HttpServletResponse response,
                             HttpServletRequest request,
@@ -104,6 +104,8 @@ public class LoginController {
         session.removeAttribute("user");
         return "index";
     }
+
+
 
      //管理员和客服信息完善
     @RequestMapping(value = "/modifyInformation", method = RequestMethod.POST)

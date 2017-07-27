@@ -1,7 +1,7 @@
 package com.iot.dd.controller;
 
 import com.iot.dd.Tools.JsonTool;
-import com.iot.dd.dao.entity.IndentStatesEntity;
+import com.iot.dd.dao.entity.Indent.IndentStatesEntity;
 import com.iot.dd.service.indentStatesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

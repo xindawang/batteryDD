@@ -30,7 +30,6 @@ public class BatteryAmountController {
     public String findStockByCity(int pageSize, int page,HttpServletRequest request){
 
         String cityCode=request.getParameter("cityCode");
-        System.out.println("*******"+cityCode);
         PageHelper.startPage(page, pageSize);
 
         List<BatteryStockEntity> list = stock.findStockByCity(cityCode);
@@ -46,10 +45,9 @@ public class BatteryAmountController {
     public String findStockByType(int pageSize, int page,HttpServletRequest request){
 
         String batteryType=request.getParameter("batteryType");
-        System.out.println("*******"+batteryType);
         PageHelper.startPage(page, pageSize);
 
-        List<BatteryStockEntity> list = stock.findStockByType(batteryType);
+        List<BatteryStockEntity> list = stock.findStockByType(Integer.parseInt(batteryType));
         long total = ((Page<BatteryStockEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);

@@ -12,6 +12,6 @@ public interface StockMapper {
 
     List<BatteryStockEntity> findBatteryStockByCity(String cityCode);
 
-    List<BatteryStockEntity> findBatteryStockByType(String batteryType);
+    List<BatteryStockEntity> findBatteryStockByType(Integer batteryType);
 
 }

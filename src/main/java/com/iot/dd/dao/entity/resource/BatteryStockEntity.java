@@ -9,6 +9,9 @@ public class BatteryStockEntity {
     private  String cityCode;
     private Integer inventory;
 
+    private BatteryEntity battery;
+    private CityEntity city;
+
     public Integer getId() {
         return id;
     }
@@ -17,24 +20,21 @@ public class BatteryStockEntity {
         this.id = id;
     }
 
-    public BatteryEntity getBatteryEntity() {
-        return batteryEntity;
+    public BatteryEntity getBattery() {
+        return battery;
     }
 
-    public void setBatteryEntity(BatteryEntity batteryEntity) {
-        this.batteryEntity = batteryEntity;
+    public void setBattery(BatteryEntity battery) {
+        this.battery = battery;
     }
 
-    public CityEntity getCityEntity() {
-        return cityEntity;
+    public CityEntity getCity() {
+        return city;
     }
 
-    public void setCityEntity(CityEntity cityEntity) {
-        this.cityEntity = cityEntity;
+    public void setCity(CityEntity city) {
+        this.city = city;
     }
-
-    private BatteryEntity batteryEntity;
-    private CityEntity cityEntity;
 
     public Integer getBatteryId() {
         return batteryId;
@@ -59,4 +59,5 @@ public class BatteryStockEntity {
     public void setInventory(Integer inventory) {
         this.inventory = inventory;
     }
+
 }

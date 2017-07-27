@@ -22,7 +22,7 @@ public class StockService {
       return   stockMapper.findBatteryStockByCity(cityCode);
 
     }
-    public List<BatteryStockEntity> findStockByType(String batteryType){
+    public List<BatteryStockEntity> findStockByType(Integer batteryType){
 
         return   stockMapper.findBatteryStockByType(batteryType);
 
