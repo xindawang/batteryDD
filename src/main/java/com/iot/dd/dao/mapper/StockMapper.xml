@@ -6,7 +6,7 @@
     <select id="findBatteryStockByType" resultMap="BatteryStock">
         select b.type,c.city_name,bs.inventory
         from battery_stock bs
-       left join city c
+        left join city c
         on c.city_code=bs.city_code
          join battery b
         on b.id=bs.battery_id

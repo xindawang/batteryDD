@@ -10,7 +10,7 @@
 $(function () {
 
 
-   //城市改变时触发
+    //城市改变时触发
     $("#city").change(function () {
 
        var cityCode=$("#city option:selected").val();
@@ -59,10 +59,6 @@ $(function () {
                     data:'customerTelephone'
                 },
                 {
-                    title:'客户电话',
-                    data:'customerTelephone'
-                },
-                {
                     title:'微信号',
                     data:'wechatId'
                 },
@@ -98,18 +94,8 @@ $(function () {
                     title:'备注',
                     data:'remark'
                 },
-
-
-
-
             ]
         })
-
-
-
-
-
-
 
     });
 

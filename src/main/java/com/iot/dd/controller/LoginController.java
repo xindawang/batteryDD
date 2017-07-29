@@ -57,14 +57,16 @@ public class LoginController {
         if(request.getParameter("role").equals("admin"))
         {
             AdminEntity adminEntity=new AdminEntity();
-            adminEntity.setLoginName(request.getParameter("name"));
+            adminEntity.setLoginName(request.getParameter("username"));
             adminEntity.setPassword(request.getParameter("password"));
+            adminEntity.setRole(request.getParameter("role"));
             result=userService.registerAdmin(adminEntity);
         }
         else{
             StaffEntity staffEntity=new StaffEntity();
-            staffEntity.setLoginName(request.getParameter("name"));
+            staffEntity.setLoginName(request.getParameter("username"));
             staffEntity.setPassword(request.getParameter("password"));
+            staffEntity.setRole(request.getParameter("role"));
             result=userService.registerStaff(staffEntity);
         }
         return result;
@@ -107,72 +109,72 @@ public class LoginController {
 
 
 
-     //管理员和客服信息完善
-    @RequestMapping(value = "/modifyInformation", method = RequestMethod.POST)
-    public String modifyinfromation(HttpServletRequest request) {
-        //工作人员信息完善
-        String loginName=request.getParameter("loginName");
-        String name=request.getParameter("name");
-        String password=request.getParameter("password");
-        String cellphone=request.getParameter("cellphone");
-        String telephone=request.getParameter("telephone");
-        String address=request.getParameter("address");
-        String idNumber=request.getParameter("idNumber");
-        String email=request.getParameter("email");
-        String role=request.getParameter("role");
-      if(role.equals("admin")){
-
-          AdminEntity dUser=new AdminEntity();
-          dUser.setLoginName(loginName);
-          dUser.setName(name);
-          dUser.setPassword(password);
-          dUser.setCellphone(cellphone);
-          dUser.setTelephone(telephone);
-          dUser.setIdNumber(idNumber);
-          dUser.setEmail(email);
-          dUser.setAddress(address);
-          dUser.setRole(role);
-
-        return  userService.adminInformation(dUser);
-      }
-      else{
-
-          StaffEntity sUser=new StaffEntity();
-            sUser.setLoginName(loginName);
-            sUser.setName(name);
-            sUser.setPassword(password);
-            sUser.setCellphone(cellphone);
-            sUser.setTelephone(telephone);
-            sUser.setIdNumber(idNumber);
-            sUser.setEmail(email);
-            sUser.setAddress(address);
-            sUser.setRole(role);
-
-            return userService.staffInformation(sUser);
-
-      }
-    }
-
-    //查询管理员和客服信息
-    @RequestMapping(value ="/queryInformation", method = RequestMethod.POST)
-    public String query_Admin_and_Staff(HttpServletRequest request,HttpSession session){
-        String role=(String) session.getAttribute("role");
-        String loginName=(String) session.getAttribute("loginName");
-      if(role.equals("admin")){
-            AdminEntity dUser=new AdminEntity();
-          dUser=userService.findAdminByLogin_name(loginName);
-          dUser.setRole(role);
-            return JsonTool.objectToJson(dUser);
-        }
-        else{
-            StaffEntity sUser=new StaffEntity();
-            sUser=userService.findStaffByLogin_name(loginName);
-            sUser.setRole(role);
-          return JsonTool.objectToJson(sUser);
-
-        }
-
-    }
+//     //管理员和客服信息完善
+//    @RequestMapping(value = "/modifyInformation", method = RequestMethod.POST)
+//    public String modifyinfromation(HttpServletRequest request) {
+//        //工作人员信息完善
+//        String loginName=request.getParameter("loginName");
+//        String name=request.getParameter("name");
+//        String password=request.getParameter("password");
+//        String cellphone=request.getParameter("cellphone");
+//        String telephone=request.getParameter("telephone");
+//        String address=request.getParameter("address");
+//        String idNumber=request.getParameter("idNumber");
+//        String email=request.getParameter("email");
+//        String role=request.getParameter("role");
+//      if(role.equals("admin")){
+//
+//          AdminEntity dUser=new AdminEntity();
+//          dUser.setLoginName(loginName);
+//          dUser.setName(name);
+//          dUser.setPassword(password);
+//          dUser.setCellphone(cellphone);
+//          dUser.setTelephone(telephone);
+//          dUser.setIdNumber(idNumber);
+//          dUser.setEmail(email);
+//          dUser.setAddress(address);
+//          dUser.setRole(role);
+//
+//        return  userService.adminInformation(dUser);
+//      }
+//      else{
+//
+//          StaffEntity sUser=new StaffEntity();
+//            sUser.setLoginName(loginName);
+//            sUser.setName(name);
+//            sUser.setPassword(password);
+//            sUser.setCellphone(cellphone);
+//            sUser.setTelephone(telephone);
+//            sUser.setIdNumber(idNumber);
+//            sUser.setEmail(email);
+//            sUser.setAddress(address);
+//            sUser.setRole(role);
+//
+//            return userService.staffInformation(sUser);
+//
+//      }
+//    }
+//
+//    //查询管理员和客服信息
+//    @RequestMapping(value ="/queryInformation", method = RequestMethod.POST)
+//    public String query_Admin_and_Staff(HttpServletRequest request,HttpSession session){
+//        String role=(String) session.getAttribute("role");
+//        String loginName=(String) session.getAttribute("loginName");
+//      if(role.equals("admin")){
+//            AdminEntity dUser=new AdminEntity();
+//          dUser=userService.findAdminByLogin_name(loginName);
+//          dUser.setRole(role);
+//            return JsonTool.objectToJson(dUser);
+//        }
+//        else{
+//            StaffEntity sUser=new StaffEntity();
+//            sUser=userService.findStaffByLogin_name(loginName);
+//            sUser.setRole(role);
+//          return JsonTool.objectToJson(sUser);
+//
+//        }
+//
+//    }
 
 
 }

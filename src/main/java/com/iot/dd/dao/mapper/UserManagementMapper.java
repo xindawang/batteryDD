@@ -53,6 +53,7 @@ public interface UserManagementMapper {
     @Select("select * from technician")
     @Results({
             @Result(property = "loginName", column = "login_name"),
+            @Result(property = "technicianId", column = "technician_id"),
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "organizationId", column = "organization_id")
@@ -62,6 +63,7 @@ public interface UserManagementMapper {
     @Select("select * from technician where login_name=#{loginName}")
     @Results({
             @Result(property = "loginName", column = "login_name"),
+            @Result(property = "technicianId", column = "technician_id"),
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "organizationId", column = "organization_id")

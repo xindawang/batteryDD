@@ -3,7 +3,19 @@
  */
 $(function() {
     $("#login").click(function () {
-        var role=''
+
+       //获取用户类型
+        var loginName=$("#username").val();
+        var role="";
+       //获取radio
+        var radio = document.getElementById("form").role;
+        for(var i=0;i<radio.length;i++) {
+            if (radio[i].checked) {//被选择
+                role = radio[i].value
+            }
+        }
+
+
         $.ajax({
             type: "POST",
             url: '/login',
@@ -12,7 +24,13 @@ $(function() {
             success:function (data) {
                 // console.log(data.result);
                 if(data.toString()=='登陆成功'){
-                    window.location="index.html?role="+role;
+                    if(role=='staff'){
+                        window.location="index.html?loginName="+loginName+"&&role="+role;
+                    }
+                    if(role=='admin'){
+                        window.location="indexAdmin.html?loginName="+loginName+"&&role="+role;
+                    }
+
                 }else{
                     alert(data)
                 }

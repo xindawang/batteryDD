@@ -13,10 +13,7 @@ $(function () {
         // $("#Table").simplePagination.pagination('destroy');
         $("#Table").children('div .page-nav').remove();
         $("#Table").children('div .addon').remove();
-
         var cityCode=$("#city option:selected").val();
-        alert(cityCode);
-
         $("#Table").table({
             url: '/batteryAmountCity?cityCode='+cityCode,
             type: "get",
@@ -28,11 +25,11 @@ $(function () {
                 },
                 {
                     title:'电池型号',
-                    data:'batteryEntity.type'
+                    data:'battery.type'
                 },
                 {
                     title:'城市',
-                    data:'cityEntity.cityName'
+                    data:'city.cityName'
                 },
                 {
                     title:'电池库存量',
@@ -55,7 +52,6 @@ $(function () {
         // $("#Table").simplePagination.pagination('destroy');
         $("#Table").children('div .page-nav').remove();
         $("#Table").children('div .addon').remove();
-
 
         var batteryType=$("#batteryType option:selected").val();
 

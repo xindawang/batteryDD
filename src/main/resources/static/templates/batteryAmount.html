@@ -2,25 +2,82 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+
     <script type="text/javascript" src="../js/commonPlugin.js"></script>
-    <script type="text/javascript" src="../js/importIndent.js"></script>
     <script type="text/javascript" src="../js/batteryAmount.js"></script>
+    <script type="text/javascript" src="../js/importIndent.js"></script>
+    <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+
+    <link rel="stylesheet" href="../css/global.css" media="all">
+    <link rel="stylesheet" href="../css/table.css" />
+    <script type="text/javascript" src="../plugins/layui/layui.js"></script>
+
     <title>电池数量监控</title>
 </head>
 <body>
-  <div style="margin-top: 50px;margin-left: 100px;">
-    <label>省份</label><select id="province" name="province" style="width: 150px;"></select>
-    <label>城市</label><select id="city" name="city"  style="width: 150px;"></select>
-      <br/>
-      <br/>
-      电池品牌：<select id="batteryBrand" name="batteryBrand" style="width: 150px;"></select>
-      电池型号：<select id="batteryType" name="batteryType" style="width: 150px;"></select>
-      <br/>
-      <br/>
-      <div id="Table" class="body">
-          <table class="table table-hover  table-condensed">
-          </table>
-      </div>
-  </div>
+ <form class="layui-form">
+
+
+     <div class="layui-form-item">
+         <label class="layui-form-label">省份</label>
+         <div class="layui-input-inline">
+             <select  id="province" name="province" style="display: inherit " class="layui-input">
+             </select>
+         </div>
+         <label class="layui-form-label">城市</label>
+         <div class="layui-input-inline">
+             <select id="city" name="city"  style="display: inherit " class="layui-input">
+             </select>
+         </div>
+     </div>
+
+     <div class="layui-form-item">
+         <label class="layui-form-label">电池品牌</label>
+         <div class="layui-input-inline">
+             <select  id="batteryBrand" name="batteryBrand" style="display: inherit " class="layui-input">
+             </select>
+         </div>
+         <label class="layui-form-label">电池型号</label>
+         <div class="layui-input-inline">
+             <select id="batteryType" name="batteryType" style="display: inherit " class="layui-input">
+             </select>
+         </div>
+     </div>
+     <!--<br/>-->
+     <!--<br/>-->
+     <!--<div id="Table" class="body">-->
+     <!--<table class="table table-hover  table-condensed">-->
+     <!--</table>-->
+     <!--</div>-->
+
+
+     <div class="admin-main">
+         <fieldset class="layui-elem-field">
+             <legend>数据列表</legend>
+             <div class="layui-field-box layui-form" id="Table">
+                 <table class="layui-table admin-table">
+                     <thead>
+                     <tr>
+                         <th>序号</th>
+                         <th>电池型号</th>
+                         <th>城市</th>
+                         <th>电池库存量</th>
+                     </tr>
+                     </thead>
+                 </table>
+             </div>
+         </fieldset>
+     </div>
+
+
+
+ </form>
 </body>
 </html>
