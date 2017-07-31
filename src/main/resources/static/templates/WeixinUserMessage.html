@@ -1,17 +1,32 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html >
 <head>
     <meta charset="UTF-8">
     <title>获取的个人信息</title>
+    <script type="text/javascript" src="../js/commonplugin.js"></script>
+    <script type="text/javascript" src="../js/WeixinUserMessage.js"></script>
 </head>
 <body>
-<h1>用户标识:<span th:text="${openId}"></span></h1>
-<h1> 用户昵称：<span th:text="${nickname}"></span></h1>
-<h1> 性别：<span th:text="${sex}"></span></h1>
-<h1> 用户所在国家：<span th:text="${country}"></span></h1>
-<h1> 用户所在省份：<span th:text="${province}"></span></h1>
-<h1> 用户所在城市:<span th:text="${city}"></span></h1>
-<h1> 使用语言:<span th:text="${language}"></span></h1>
-<h1> 用户头像:<span th:text="${headimgurl}"></span></h1>
+<h1>用户标识:<span id="userId"></span></h1>
+<h1> 用户昵称：<span id="userNickname"></span></h1>
+<h1> 性别：<span id="sex"></span></h1>
+<h1> 用户所在国家：<span id="country" ></span></h1>
+<h1> 用户所在省份：<span id="province"></span></h1>
+<h1> 用户所在城市:<span id="city"></span></h1>
+<h1> 使用语言:<span id="language"></span></h1>
+<h1> 用户头像:<span id="userPicture"></span></h1>
 </body>
+<script type="text/javascript">
+     var msg=window.location.search.substring(1).split("&")
+     var code;
+     var state
+     for( var i in msg){
+         var param = msg[i]
+         param = param.split('=')
+         if(param[0]=='code')code = param[1]
+         if(param[0]=='state')state = param[1]
+     }
+</script>
+<script language="JavaScript"> document.location="/WeixinUserMessage?code="+code+"&state="+state</script>
+
 </html>

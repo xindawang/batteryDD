@@ -1,13 +1,13 @@
 package com.iot.dd.controller.weixin;
 
-import com.iot.dd.service.weixin.CheckUtil;
-import com.iot.dd.service.weixin.MenuUtil;
-import com.iot.dd.service.weixin.MessageUtil;
+import com.iot.dd.service.weixin.CheckService;
+import com.iot.dd.service.weixin.MenuService;
+import com.iot.dd.service.weixin.NewsService;
 import org.dom4j.DocumentException;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -20,15 +20,15 @@ import java.util.Map;
 /**
  * Created by huanglin on 2017/7/11.
  */
-@Controller
-public class WeixinServlet extends HttpServlet {
+@RestController
+public class WeixinInitController extends HttpServlet {
 
     public static float latitude_1;
     public static float longitude_1;
 
-    @Override
-    @RequestMapping(value = "/", method = RequestMethod.GET)
 
+    //进行微信服务器与后台服务器的校验
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 
         String signature = req.getParameter("signature");
@@ -40,7 +40,7 @@ public class WeixinServlet extends HttpServlet {
         if(signature !=null && timestamp!=null && nonce!=null && echostr !=null) {
             PrintWriter out = resp.getWriter();
             //验证成功，则返回echostr
-            if (CheckUtil.checkSignature(signature, timestamp, nonce)) {
+            if (CheckService.checkSignature(signature, timestamp, nonce)) {
                 out.print(echostr);
             }
         }
@@ -49,52 +49,44 @@ public class WeixinServlet extends HttpServlet {
 
     // 对事件消息的回复或者其他操作
     //post方式
-    //
     @RequestMapping(value = "/", method = RequestMethod.POST)
     protected void doPost(Model model, HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         req.setCharacterEncoding("UTF-8");
         resp.setCharacterEncoding("UTF-8");
-
         PrintWriter out = resp.getWriter();
 
         Map<String, String> map = null;
         try {
-            map = MessageUtil.xmlToMap(req);
+            map = NewsService.xmlToMap(req);
 
             String fromUserName = map.get("FromUserName");
             String toUserName = map.get("ToUserName");
             String msgType = map.get("MsgType");
             String content = map.get("Content");
 
-            //地理位置信息
-
-
             String message = null;
-            if (MessageUtil.MESSAGE_TEXT.equals(msgType)) {
+            if (NewsService.MESSAGE_TEXT.equals(msgType)) {
                 if ("1".equals(content)) {
                     content = "本微信号会获取您的位置，请注意";
-                    message = MessageUtil.initText(toUserName, fromUserName, content);
+                    message = NewsService.initText(toUserName, fromUserName, content);
                 } else {
                     content = "回复无效，请回复1";
-                    message = MessageUtil.initText(toUserName, fromUserName, content);
+                    message = NewsService.initText(toUserName, fromUserName, content);
                 }
-            } else if (MessageUtil.MESSAGE_LOCATION.equals(msgType)) {
+            } else if (NewsService.MESSAGE_LOCATION.equals(msgType)) {
 
                 float latitude = Float.valueOf(map.get("Location_X"));//纬度
                 float longitude = Float.parseFloat(map.get("Location_Y"));//经度
                 latitude_1 = latitude;
                 longitude_1 = longitude;
-                //message=MessageUtil.initText(toUserName,fromUserName,MessageUtil.menuText());
-//                model.addAttribute("latitude", latitude_1);
-//                model.addAttribute("longitude", longitude_1);
-                //return "location";
-            } else if (MessageUtil.MESSAGE_EVENT.equals(msgType)) {
+
+            } else if (NewsService.MESSAGE_EVENT.equals(msgType)) {
                 if (map.get("Event").equals("subscribe"))
-                    message = MessageUtil.initText(toUserName, fromUserName, MessageUtil.menuText());
+                    message = NewsService.initText(toUserName, fromUserName, NewsService.menuText());
             }
             if(message !=null){
-                System.out.println(message);
+                //System.out.println(message);
                 out.print(message);
             }
 
@@ -103,21 +95,24 @@ public class WeixinServlet extends HttpServlet {
         } finally {
             out.close();
         }
-        //return "nullhtml";
     }
 
-    @RequestMapping("/createMenu")
-    public String CreateMenu() {
-        int status = MenuUtil.createMenu(MenuUtil.getMenu());
+    //在修改菜单代码后要进行访问createMenu页面对菜单进行修改
+    @RequestMapping(value = "/createMenu",method = RequestMethod.POST)
+    public String  CreateMenu() {
+        String result="";
+        int status = MenuService.createMenu(MenuService.getMenu());
 		if(status==0)
         {
-            System.out.println("菜单创建成功！");
-
+            result="菜单创建成功！";
         }else
         {
-            System.out.println("菜单创建失败！");
+            result="菜单创建失败！";
+
         }
-        return "createMenu";
+        System.out.println(result);
+		return result;
 
     }
+
 }

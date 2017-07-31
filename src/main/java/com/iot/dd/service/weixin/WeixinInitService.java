@@ -10,6 +10,10 @@ import org.apache.http.util.EntityUtils;
 
 
 import java.io.UnsupportedEncodingException;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,6 +31,13 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
+import java.net.URL;
+import javax.net.ssl.HttpsURLConnection;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLSocketFactory;
+import javax.net.ssl.TrustManager;
+import java.net.ConnectException;
+
 import com.iot.dd.dao.entity.weixin.AccessToken;
 
 
@@ -38,9 +49,9 @@ import com.iot.dd.dao.entity.weixin.AccessToken;
 //微信验证类
     //APPID和APPSECRET是微信公众号分配的属性，唯一，
 
-public class WeixinUtil {
+public class WeixinInitService {
 
-    private static Logger log = LoggerFactory.getLogger(WeixinUtil.class);
+    private static Logger log = LoggerFactory.getLogger(WeixinInitService.class);
     public static final String APPID = "wx653f3498190e7c80";
     // public static  final String APPSECRET="819ecd32b3a55c86539f9ae9e455d431";
 
@@ -103,21 +114,66 @@ public class WeixinUtil {
 
     }
 
+    public static JSONObject httpsRequest(String requestUrl,String requestMethod, String outputStr) {
+        JSONObject jsonObject = null;
+        StringBuffer buffer = new StringBuffer();
+        try {
+            TrustManager[] tm = { new MyX509TrustManager() };
+            SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");
+            sslContext.init(null, tm, new java.security.SecureRandom());
+            SSLSocketFactory ssf = sslContext.getSocketFactory();
+            URL url = new URL(requestUrl);
+            HttpsURLConnection httpUrlConn = (HttpsURLConnection) url.openConnection();
+            httpUrlConn.setSSLSocketFactory(ssf);
+            httpUrlConn.setDoOutput(true);
+            httpUrlConn.setDoInput(true);
+            httpUrlConn.setUseCaches(false);
+            httpUrlConn.setRequestMethod(requestMethod);
+            if ("GET".equalsIgnoreCase(requestMethod))
+                httpUrlConn.connect();
+            if (null != outputStr) {
+                OutputStream outputStream = httpUrlConn.getOutputStream();
+                outputStream.write(outputStr.getBytes("UTF-8"));
+                outputStream.close();
+            }
+            InputStream inputStream = httpUrlConn.getInputStream();
+            InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "utf-8");
+            BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
+            String str = null;
+            while ((str = bufferedReader.readLine()) != null) {
+                buffer.append(str);
+            }
+            bufferedReader.close();
+            inputStreamReader.close();
+            inputStream.close();
+            //inputStream = null;
+            httpUrlConn.disconnect();
+            jsonObject = JSONObject.fromObject(buffer.toString());
+        } catch (ConnectException ce) {
+            ce.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
 
-    public static Map<String, Object> getWxConfig(HttpServletRequest request) {
+
+    public static Map<String, Object> getWxConfig(HttpServletRequest request) throws UnsupportedEncodingException {
         Map<String, Object> ret = new HashMap<String, Object>();
 
-        String appId = WeixinUtil.APPID; // 必填，公众号的唯一标识
-        String secret = WeixinUtil.APPSECRET;
+        String appId = WeixinInitService.APPID; // 必填，公众号的唯一标识
+        String secret = WeixinInitService.APPSECRET;
 
-        String requestUrl = request.getRequestURL().toString();
+        String requestUrl=request.getParameter("targetUrl");//获取在前端编码过的url。
+        requestUrl=java.net.URLDecoder.decode(requestUrl,"GBK");
+        requestUrl=java.net.URLDecoder.decode(requestUrl,"UTF-8");
         String access_token = "";
         String jsapi_ticket = "";
         String timestamp = Long.toString(System.currentTimeMillis() / 1000); // 必填，生成签名的时间戳
         String nonceStr = UUID.randomUUID().toString(); // 必填，生成签名的随机串
-        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+ appId + "&secret=" + secret;
+        String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="+appId+"&secret=" +secret;
 
-        JSONObject json = WeixinMessageUtil.httpRequest(url, "GET", null);
+        JSONObject json = httpsRequest(url, "GET", null);
 
         //卡券 api_ticket 是用于调用卡券相关接口的临时票据，有效期为 7200 秒，通过 access_token 来获取
         //先获取access_token再获取jsapi_token
@@ -126,7 +182,7 @@ public class WeixinUtil {
             access_token = json.getString("access_token");
 
             url = "https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token="+ access_token + "&type=jsapi";
-            json = WeixinMessageUtil.httpRequest(url, "GET", null);
+            json = httpsRequest(url, "GET", null);
             if (json != null) {
                 jsapi_ticket = json.getString("ticket");
             }

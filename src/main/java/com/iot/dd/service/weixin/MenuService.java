@@ -14,7 +14,7 @@ import net.sf.json.JSONObject;
 /**
  * Created by huanglin on 2017/7/16.
  */
-public class MenuUtil {
+public class MenuService {
     /**
      * 	创建自定义菜单(每天限制1000次)
      * */
@@ -22,12 +22,12 @@ public class MenuUtil {
         String jsonMenu=JSONObject.fromObject(menu).toString();
 
 
-        AccessToken token= WeixinUtil.getAccessToken();
+        AccessToken token= WeixinInitService.getAccessToken();
 
         int status=0;
 
         //System.out.println("菜单："+jsonMenu);
-        String path=WeixinUtil.menu_create_url.replace("ACCESS_TOKEN",token.getToken());
+        String path= WeixinInitService.menu_create_url.replace("ACCESS_TOKEN",token.getToken());
         try {
             URL url=new URL(path);
             HttpURLConnection http = (HttpURLConnection)url.openConnection();
@@ -63,16 +63,17 @@ public class MenuUtil {
     public static Menu getMenu(){
 
 
-        String userMessage_url="http://dcdd.tunnel.qydev.com/weixinwebautho";
-        String location_url="http://dcdd.tunnel.qydev.com/location.html";
+        String userMessage_url="http://dcdd.tunnel.qydev.com/WeixinUserMessage";
+        String location_url="http://dcdd.tunnel.qydev.com/templates/location.html";
+        String serviceInit_url="http://dcdd.tunnel.qydev.com/templates/applyServiceValidate.html";
         ViewButton vb_11 = new ViewButton();
         vb_11.setName("个人位置");
         vb_11.setType("view");
-        vb_11.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_base&state=123#wechat_redirect ".replace("APPID",WeixinUtil.APPID).replace("REDIRECT",location_url));
-        CommonButton cb_12 = new CommonButton();
-        cb_12.setKey("jyzn");
+        vb_11.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",location_url));
+        ViewButton cb_12 = new ViewButton();
+        cb_12.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",serviceInit_url));
         cb_12.setName("申请服务");
-        cb_12.setType("click");
+        cb_12.setType("view");
 
         ComplexButton cx_1 = new ComplexButton();
         cx_1.setName("电池更换");
@@ -87,7 +88,7 @@ public class MenuUtil {
         ViewButton vb_22 = new ViewButton();
         vb_22.setName("个人信息");
         vb_22.setType("view");
-        vb_22.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_base&state=123#wechat_redirect ".replace("APPID",WeixinUtil.APPID).replace("REDIRECT",userMessage_url));
+        vb_22.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",userMessage_url));
 
         ViewButton vb_23 = new ViewButton();
         vb_23.setName("更换记录");

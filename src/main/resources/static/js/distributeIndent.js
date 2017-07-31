@@ -47,8 +47,8 @@ $(function () {
     });
 
     var icon = new AMap.Icon({
-        image: 'https://vdata.amap.com/icons/b18/1/2.png',
-        size: new AMap.Size(24, 24)
+        image: '../bgimg/user.png',
+        size: new AMap.Size(24,24)
     });
     marker = new AMap.Marker({
         icon: icon,
@@ -56,7 +56,6 @@ $(function () {
         offset: new AMap.Pixel(-12,-12),
         zIndex: 101,
         title: '用户地理位置',
-        content:'<p>华中科技大学</p>',
         map: map
     });
     var Atitle='赵四<span style="font-size:11px;color:#F00;">电话:1316462138</span>'

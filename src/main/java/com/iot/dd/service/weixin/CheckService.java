@@ -9,7 +9,7 @@ import java.util.Arrays;
 
 //验证微信服务器和后台服务器是否可以进行数据交互，，开发的第一步。
 
-public class CheckUtil {
+public class CheckService {
     private static String token="itest";
     //signature :微信加密签名
     //timestamp:时间戳

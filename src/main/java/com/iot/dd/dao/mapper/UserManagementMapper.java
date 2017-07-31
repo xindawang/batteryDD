@@ -100,7 +100,7 @@ public interface UserManagementMapper {
     int deleteStaff(String loginName);
 
     @Delete("delete from technician where login_name=#{loginName}")
-    int deleteTchnician(String loginName);
+    int deleteTechnician(String loginName);
 
     @Update("update admin set password=#{password}, name=#{name} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName}")
     boolean modifyAdminInfo(AdminEntity user);
@@ -114,9 +114,11 @@ public interface UserManagementMapper {
     @Update("update technician set technician_id=#{technicianId}, password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},id_number=#{idNumber}, organization_id=#{organizationId} ,license_plate_number=#{licensePlateNumber}  where login_name=#{loginName}")
     boolean modifyTechnicianInfo(TechnicianEntity user);
 
-
+    //更新技师经纬度
     @Update("update technician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
     boolean updateTechnicianAddress(String technicianId,Float technicianLongitude,Float technicianLatitude);
+
+
 
 
 }

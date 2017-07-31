@@ -89,6 +89,21 @@ public interface OrderMapper {
     })
     List<OrderEntity> selectIndentByStatusAndCity(@Param("status") String status,@Param("cityCode") String cityCode);
 
+    //根据客户从微信发送过来的电话查询订单是否存在
+    @Select("select * from indent where customer_cellphone=#{telephone} OR customer_telephone=#{telephone}  ")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property="batteryType",column="battery_type"),
+            @Result(property ="customerName",column="customer_name"),
+            @Result(property = "cityCode",column="city_code"),
+            @Result(property = "customerCellphone",column="customer_cellphone"),
+            @Result(property = "customerTelephone",column="customer_telephone"),
+            @Result(property = "wechatId",column="wechat_id"),
+            @Result(property = "automobileType",column="automobile_type"),
+            @Result(property = "licensePlateNumber",column="license_plate_number"),
+            @Result(property = "createTime",column="create_time"),
+    })
+    List<OrderEntity> selectIndentByPhone(String telephone);
 
     @Select("select ORDER_ID as orderId,TECHNICIAN_ID as technicianId,ACCEPT_TIME as acceptTime,TECHNICIAN_LONGITUDE as technicianLongitude,TECHNICIAN_LATITUDE as technicianLatitude,CUSTOMER_LONGITUDE as customerLongitude,CUSTOMER_LATITUDE as customerLatitude from indent_allocation where ORDER_ID=#{orderId}")
     IndentAllocationEntity selectIndentAllocationMsg(String orderId);
@@ -96,5 +111,9 @@ public interface OrderMapper {
 
     @Insert("insert into  indent_allocation (ORDER_ID) values (#{orderId})")
     boolean insertAllocationOderId(String orderId);
+
+
+    @Update("update indent_allocation set customer_longitude=#{customerLongitude},customer_latitude=#{customerLatitude}")
+    boolean updateUserAddress(String orderId,Float customerLongitude,Float customerLatitude);
 
 }

@@ -5,6 +5,7 @@ import net.sf.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -15,7 +16,7 @@ import java.net.URL;
 /**
  * Created by huanglin on 2017/7/16.
  */
-public class WeixinMessageUtil {
+public class UserInformationService {
 
     private static Logger log = LoggerFactory.getLogger(WeixinUserBaseMessage.class);
 
@@ -24,9 +25,10 @@ public class WeixinMessageUtil {
         JSONObject jsonObject = null;
         try {
             URL url = new URL(requestUrl);
-            HttpURLConnection http = (HttpURLConnection) url.openConnection();
+            HttpsURLConnection http = (HttpsURLConnection) url.openConnection();
             http.setDoOutput(true);
             http.setDoInput(true);
+            http.setUseCaches(false);
             http.setRequestMethod(requestMethod);
             http.setRequestProperty("Content-Type", "application/x-www-form-urlencoded");
             http.connect();
@@ -53,8 +55,8 @@ public class WeixinMessageUtil {
     public static WeixinUserBaseMessage getUserInfo(String accessToken, String openId) {
         WeixinUserBaseMessage weixinUserInfo = null;
         // 拼接请求地址
-        String requestUrl = "https://api.weixin.qq.com/cgi-bin/user/info?access_token=ACCESS_TOKEN&openid=OPENID";
-        requestUrl = requestUrl.replace("ACCESS_TOKEN", accessToken).replace("OPENID", openId);
+        String requestUrl = "https://api.weixin.qq.com/sns/userinfo?access_token=ACCESS_TOKEN&openid=OPENID&lang=zh_CN";
+        requestUrl = requestUrl.replace("ACCESS_TOKEN", accessToken).replace("OPENID",openId);
         // 获取用户信息
         JSONObject jsonObject = httpRequest(requestUrl, "GET", null);
 
@@ -85,7 +87,7 @@ public class WeixinMessageUtil {
                 if (0 == weixinUserInfo.getSubscribe()) {
                     log.error("用户{}已取消关注", weixinUserInfo.getOpenId());
                 } else {
-                    int errorCode = jsonObject.getInt("errcode");
+                    Integer  errorCode = jsonObject.getInt("errcode");
                     String errorMsg = jsonObject.getString("errmsg");
                     log.error("获取用户信息失败 errcode:{} errmsg:{}", errorCode, errorMsg);
                 }

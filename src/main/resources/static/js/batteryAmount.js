@@ -25,11 +25,11 @@ $(function () {
                 },
                 {
                     title:'电池型号',
-                    data:'battery.type'
+                    data:'batteryEntity.type'
                 },
                 {
                     title:'城市',
-                    data:'city.cityName'
+                    data:'cityEntity.cityName'
                 },
                 {
                     title:'电池库存量',
@@ -52,6 +52,7 @@ $(function () {
         // $("#Table").simplePagination.pagination('destroy');
         $("#Table").children('div .page-nav').remove();
         $("#Table").children('div .addon').remove();
+
 
         var batteryType=$("#batteryType option:selected").val();
 

@@ -74,7 +74,7 @@ public class UserManageService {
         return usermanage.deleteStaff(loginName);
     }
     public int deleteOneTechnician(String loginName){
-        return usermanage.deleteTchnician(loginName);
+        return usermanage.deleteTechnician(loginName);
     }
 
 
