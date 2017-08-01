@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.iot.dd.dao.mapper.indentAllocationMapper">
+
+    <select id="find" resultMap="indentAllocation">
+        select bs.ORDER_ID,bs.TECHNICIAN_ID,bs.ACCEPT_TIME,t.NAME
+        from indent_allocation bs
+        left join technician t
+        on bs.TECHNICIAN_ID=t.TECHNICIAN_ID
+        where bs.ORDER_ID=#{orderId}
+    </select>
+
+    <select id="findlist" resultMap="indentAllocation">
+        select bs.ORDER_ID,bs.TECHNICIAN_ID,bs.ACCEPT_TIME,t.NAME
+        from indent_allocation bs
+        left join technician t
+        on bs.TECHNICIAN_ID=t.TECHNICIAN_ID
+        where bs.TECHNICIAN_ID=#{technicianId}
+    </select>
+
+    <select id="findtechnicianId" resultMap="indentAllocation1">
+        select distinct bs.TECHNICIAN_ID,t.NAME
+        from indent_allocation bs
+        left join technician t
+        on bs.TECHNICIAN_ID=t.TECHNICIAN_ID
+    </select>
+
+    <select id="findorderId" resultMap="indentAllocation2">
+        select bs.ORDER_ID
+        from indent_allocation bs
+    </select>
+
+    <resultMap id="indentAllocation" type="com.iot.dd.dao.entity.Indent.IndentAllocationEntity">
+        <result property="orderId" column="order_Id" />
+        <result property="technicianId" column="technician_Id" />
+        <result property="acceptTime" column="accept_time" />
+        <association property="technician" javaType="com.iot.dd.dao.entity.worker.TechnicianEntity">
+            <result property="name" column="name" />
+        </association>
+    </resultMap>
+
+
+    <resultMap id="indentAllocation1" type="com.iot.dd.dao.entity.Indent.IndentAllocationEntity">
+        <result property="technicianId" column="technician_Id" />
+        <association property="technician" javaType="com.iot.dd.dao.entity.worker.TechnicianEntity">
+            <result property="name" column="name" />
+        </association>
+    </resultMap>
+
+
+    <resultMap id="indentAllocation2" type="com.iot.dd.dao.entity.Indent.IndentAllocationEntity">
+        <result property="orderId" column="order_Id" />
+    </resultMap>
+
+
+
+</mapper>

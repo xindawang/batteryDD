@@ -144,10 +144,6 @@ $(function () {
                     data:'customerTelephone'
                 },
                 {
-                    title:'客户电话',
-                    data:'customerTelephone'
-                },
-                {
                     title:'微信号',
                     data:'wechatId'
                 },
