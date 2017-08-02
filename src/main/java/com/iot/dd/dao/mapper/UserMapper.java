@@ -43,6 +43,17 @@ public interface UserMapper {
     StaffEntity selectStaffUser(String name);
 
 
+     //技师注册
+    @Insert("insert into technician (LOGIN_NAME,PASSWORD,TECHNICIAN_ID,NAME,SEX,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS,CITY_CODE,LICENSE_PLATE_NUMBER) values(#{loginName},#{password}),#{technicianId},#{name},#{sex},#{telephone},#{email},#{idNumber},#{address},#{cityCode},#{licensePlateNumber}")
+    boolean addTechnician(TechnicianEntity user);
+
+
+    //查询
+    @Select("select * from technician where LOGIN_NAME=#{loginName} limit 1")
+    TechnicianEntity selectTechnician(String loginName);
+
+
+
     //更新经纬度
 
    //客服信息更新

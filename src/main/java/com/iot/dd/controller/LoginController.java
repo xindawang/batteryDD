@@ -2,6 +2,7 @@ package com.iot.dd.controller;
 
 
 import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.service.ResourceService;
 import com.iot.dd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
@@ -26,6 +27,8 @@ public class LoginController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private ResourceService re;
 
 
     //跳转链接，跳转到主页
@@ -105,6 +108,40 @@ public class LoginController {
         //从session中删除user属性，用户退出登录
         session.removeAttribute("user");
         return "index";
+    }
+
+     //技师登陆
+    @RequestMapping(value = "/technicinLogin", method = RequestMethod.GET)
+    public String technicianLogin(HttpServletRequest request){
+
+      String loginName=request.getParameter("loginName");
+      String password=request.getParameter("password");
+      return  userService.technicianLogin(loginName,password);
+    }
+
+
+
+    //技师注册
+    @RequestMapping(value = "/technicinSignUp", method = RequestMethod.GET)
+    public String technicianSignUp(HttpServletRequest request){
+
+         String cityName=request.getParameter("cityName");
+
+         //获取城市的编码
+        String cityCode=re.findCityCODE(cityName);
+
+        TechnicianEntity user=new TechnicianEntity();
+         user.setLoginName(request.getParameter("loginName"));
+         user.setPassword(request.getParameter("password"));
+         user.setTechnicianId(request.getParameter("technicianId"));
+         user.setSex(request.getParameter("sex"));
+         user.setTelephone(request.getParameter("telephone"));
+         user.setEmail(request.getParameter("email"));
+         user.setCityCode(cityCode);
+         user.setAddress(request.getParameter("address"));
+         user.setIdNumber(request.getParameter("idNumber"));
+         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+        return  userService.registerTechnician(user);
     }
 
 
