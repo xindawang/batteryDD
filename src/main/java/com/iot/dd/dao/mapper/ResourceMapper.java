@@ -37,6 +37,7 @@ public interface ResourceMapper {
     @Select("select CITY_CODE  from city where CITY_NAME=#{cityName}")
     String selectCityCode(String cityName);
 
+
     //选择订单状态
     @Select("select STATE from indent_state where ID=#{id}")
     String selectStatus(Integer id);
@@ -65,5 +66,8 @@ public interface ResourceMapper {
 
     @Select("select TYPE from battery where ID=#{id}")
     String selectBatteryTypeName(Integer id);
+
+    @Select("select id from battery where type=#{type}")
+    Integer selectBatteryTypeId(String type);
 
 }

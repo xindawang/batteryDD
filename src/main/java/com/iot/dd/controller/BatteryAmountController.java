@@ -55,5 +55,34 @@ public class BatteryAmountController {
         return JsonTool.objectToJson(map);
     }
 
+    //删除库存
+    @RequestMapping(value="/batteryAmountDelete",method = RequestMethod.GET )
+    public String deletebattery(int pageSize, int page,HttpServletRequest request){
+     String cityName=request.getParameter("cityName");
+     String batteryType=request.getParameter("batteryType");
+
+        Integer batteryId=stock.findbatteryId(batteryType);
+        String cityCode=stock.findcityId(cityName);
+        return stock.deletebatteryStock(cityCode,batteryId);
+    }
+
+    //编辑库存量
+    @RequestMapping(value="/batteryAmountEdit",method = RequestMethod.GET )
+    public String Addbatterycount(int pageSize, int page,HttpServletRequest request){
+
+
+        return "";
+    }
+
+    //增加一个城市的电池库
+    @RequestMapping(value="/batteryAmountAdd",method = RequestMethod.GET )
+    public String Addbattery(int pageSize, int page,HttpServletRequest request){
+
+
+        return "";
+    }
+
+
+
 
 }

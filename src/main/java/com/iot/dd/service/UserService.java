@@ -1,5 +1,7 @@
 package com.iot.dd.service;
 
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
+import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.dao.mapper.UserMapper;
 import com.iot.dd.dao.entity.worker.StaffEntity;
 import com.iot.dd.dao.entity.worker.AdminEntity;
@@ -14,6 +16,7 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+
 
 //管理员注册
     public String registerAdmin(AdminEntity user){
@@ -36,6 +39,18 @@ public class UserService {
         }
 
     }
+    //技师注册
+    public String registerTechnician(TechnicianEntity user){
+        if(userMapper.selectStaffUser(user.getName())== null){
+            userMapper.addTechnician(user);
+            return "OK";
+        }else{
+            return "ERROR";
+        }
+
+    }
+
+
     //客服登陆
     public String staffLogin(String name,String password){
         StaffEntity dUser= userMapper.selectStaffUser(name);
@@ -64,6 +79,24 @@ public class UserService {
         }
 
     }
+
+   //技师登陆
+   public String technicianLogin(String name,String password){
+       TechnicianEntity dUser= userMapper.selectTechnician(name);
+       if(dUser==null){
+           return "该用户不存在";
+       }
+       else if(! dUser.getPassword().equals(password)){
+           return "密码错误";
+       }
+       else{
+           return "OK";
+       }
+
+   }
+
+
+
 
     //管理员信息完善
     public String adminInformation(AdminEntity dUser){

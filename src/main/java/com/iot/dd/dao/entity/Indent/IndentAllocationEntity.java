@@ -1,5 +1,7 @@
 package com.iot.dd.dao.entity.Indent;
 
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
+
 import java.sql.Date;
 
 /**
@@ -15,6 +17,7 @@ public class IndentAllocationEntity {
     private float technicianLatitude;
     private float customerLongitude;
     private float customerLatitude;
+    private TechnicianEntity technician;
 
     public Integer getId() {
         return id;
@@ -78,5 +81,13 @@ public class IndentAllocationEntity {
 
     public void setCustomerLatitude(float customerLatitude) {
         this.customerLatitude = customerLatitude;
+    }
+
+    public TechnicianEntity getTechnician() {
+        return technician;
+    }
+
+    public void setTechnician(TechnicianEntity technician) {
+        this.technician = technician;
     }
 }
