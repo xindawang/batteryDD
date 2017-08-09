@@ -43,7 +43,7 @@ public interface UserMapper {
     StaffEntity selectStaffUser(String name);
 
 
-    //更新经纬度
+
 
    //客服信息更新
     @Update("update staff set name=#{name},sex=#{sex} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName} ")

@@ -4,6 +4,7 @@ import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.entity.weixin.WeixinOauth2Token;
 import com.iot.dd.dao.entity.weixin.WeixinUserBaseMessage;
+import com.iot.dd.service.OrderService;
 import com.iot.dd.service.weixin.ServiceValidateService;
 import com.iot.dd.service.weixin.UserInformationService;
 import com.iot.dd.service.weixin.WebService;
@@ -35,6 +36,9 @@ public class WeixinWebController {
     @Autowired
     ServiceValidateService validateService;
     //获取aaccess_token的地址
+
+    @Autowired
+    OrderService orderService;
     public  String requestUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
 
@@ -93,14 +97,44 @@ public class WeixinWebController {
             if(Indent==null){
                 result= JsonTool.objectToJson("订单不存在,请检查电话号码");
             }else{//telephone与订单对应
-                Map<String,Object> LocationConfigMsg=validateService.WeixingetLocation(request);
-                result=JsonTool.objectToJson(LocationConfigMsg);
+                result= JsonTool.objectToJson("订单存在，请等待技师给您派单");
             }
 
         }
 
-
         return result;
     }
+
+
+    @RequestMapping(value="/getLocationMsg",method=RequestMethod.POST)
+    String getLocationMsg(HttpServletRequest request){
+        //String targetUrl=request.getParameter("targetUrl");
+        String result=null;
+        Map<String,Object> LocationConfigMsg= null;
+        try {
+            LocationConfigMsg = validateService.WeixingetLocation(request);
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        result=JsonTool.objectToJson(LocationConfigMsg);
+
+        return result;
+
+    }
+
+    @RequestMapping(value="/setCustomerLocation",method = RequestMethod.POST)
+    String setCustomerLoaction(HttpServletRequest request){
+        String result=null;
+        String telephone=request.getParameter("userTelephone");
+        Float longitude=Float.parseFloat(request.getParameter("longitude"));
+        Float latitude=Float.parseFloat(request.getParameter("latitude"));
+
+        result=orderService.updateCustomerLocation(telephone,longitude,latitude);
+        return result;
+    }
+
+
+
+
 
 }

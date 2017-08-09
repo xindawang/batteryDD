@@ -105,15 +105,19 @@ public interface OrderMapper {
     })
     List<OrderEntity> selectIndentByPhone(String telephone);
 
+    @Select("select order_id from indent where customer_cellphone=#{telephone} OR customer_telephone=#{telephone}")
+    String selectOrderIdbyPhone(String telephone);
+
     @Select("select ORDER_ID as orderId,TECHNICIAN_ID as technicianId,ACCEPT_TIME as acceptTime,TECHNICIAN_LONGITUDE as technicianLongitude,TECHNICIAN_LATITUDE as technicianLatitude,CUSTOMER_LONGITUDE as customerLongitude,CUSTOMER_LATITUDE as customerLatitude from indent_allocation where ORDER_ID=#{orderId}")
     IndentAllocationEntity selectIndentAllocationMsg(String orderId);
-
 
     @Insert("insert into  indent_allocation (ORDER_ID) values (#{orderId})")
     boolean insertAllocationOderId(String orderId);
 
 
-    @Update("update indent_allocation set customer_longitude=#{customerLongitude},customer_latitude=#{customerLatitude}")
-    boolean updateUserAddress(String orderId,Float customerLongitude,Float customerLatitude);
+
+
+    @Update("update indent_allocation set customer_longitude=#{customerLongitude},customer_latitude=#{customerLatitude} where order_id=#{orderId}")
+    boolean updateUserAddress(@Param("orderId") String orderId,@Param("customerLongitude")Float customerLongitude,@Param("customerLatitude")Float customerLatitude);
 
 }

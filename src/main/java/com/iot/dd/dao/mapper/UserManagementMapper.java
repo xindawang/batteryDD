@@ -58,7 +58,7 @@ public interface UserManagementMapper {
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "organizationId", column = "organization_id")
     })
-    List<TechnicianEntity> findTechnicianAll() ;
+    List<TechnicianEntity> findTechnicianAll();
 
     @Select("select * from technician where login_name=#{loginName}")
     @Results({
@@ -111,14 +111,24 @@ public interface UserManagementMapper {
     @Update("update customer set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},postcode=#{postcode} where login_name=#{loginName}")
     boolean modifyCustomerInfo(CustomerEntity user);
 
-    @Update("update technician set technician_id=#{technicianId}, password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},id_number=#{idNumber}, organization_id=#{organizationId} ,license_plate_number=#{licensePlateNumber}  where login_name=#{loginName}")
-    boolean modifyTechnicianInfo(TechnicianEntity user);
+    //技师注册
+    @Insert("insert into technician (login_name,technician_id,password,name,sex,telephone,email,address,city_code,id_number,license_plate_number) values(#{loginName},#{technicianId},#{password},#{name},#{sex},#{telephone},#{email},#{address},#{cityCode},#{idNumber},#{licensePlateNumber})")
+    boolean technicianLogin(TechnicianEntity user);
 
     //更新技师经纬度
     @Update("update technician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
-    boolean updateTechnicianAddress(String technicianId,Float technicianLongitude,Float technicianLatitude);
+    boolean updateTechnicianLocation(@Param("technicianId")String technicianId,@Param("technicianLongitude")Float technicianLongitude,@Param("technicianLatitude")Float technicianLatitude);
 
 
-
+    @Select("select * from technician where city_code=#{cityCode}")
+    @Results({
+            @Result(property = "loginName", column = "login_name"),
+            @Result(property = "technicianId", column = "technician_id"),
+            @Result(property = "idNumber", column = "id_number"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "organizationId", column = "organization_id"),
+            @Result(property="cityCode", column="city_code")
+    })
+    TechnicianEntity selectTechMsgFromCity(String cityCode);
 
 }

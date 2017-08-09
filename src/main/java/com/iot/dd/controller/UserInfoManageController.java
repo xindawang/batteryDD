@@ -255,6 +255,7 @@ public class UserInfoManageController {
         user.setEmail(request.getParameter("email"));
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
+
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
 
         if(request.getParameter("organizationId")==""||request.getParameter("organizationId")==null) {
@@ -263,9 +264,7 @@ public class UserInfoManageController {
         else {
             user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
         }
-
-
-        return usermanageservice.updateOneTechnician(user);
+        return usermanageservice.technicianLogin(user);
 
 
     }

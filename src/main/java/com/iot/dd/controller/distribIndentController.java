@@ -25,19 +25,20 @@ public class distribIndentController {
     @Autowired
     private ResourceMapper resourceMapper;
 
-    @RequestMapping(value="/selectIndentMsg",method= RequestMethod.POST)
+    @RequestMapping(value = "/selectIndentMsg", method = RequestMethod.POST)
     String selectUndoneIndent(HttpServletRequest request) {
         String undoneStatus = resourceMapper.selectStatus(1);
         List<OrderEntity> UndoneIndentMsg = orderService.selectUndoneIndentMsg(undoneStatus);
-        List<String> undoneIndentId =new ArrayList<>();
+        List<String> undoneIndentId = new ArrayList<>();
         if (UndoneIndentMsg != null) {
             for (OrderEntity order : UndoneIndentMsg) {
-                    undoneIndentId.add(order.getOrderId());
-                }
-            }
+                undoneIndentId.add(order.getOrderId());
 
-            return JsonTool.objectToJson(undoneIndentId);
+            }
         }
+
+        return JsonTool.objectToJson(undoneIndentId);
+    }
 
 
     @RequestMapping(value = "/importIndentMsg" ,method=RequestMethod.POST)
@@ -49,6 +50,15 @@ public class distribIndentController {
         orderService.InsertOrderId(orderId);
 
         return JsonTool.objectToJson(undoneIndentMessage);
+    }
+
+
+    @RequestMapping(value="/importTechMsgFromCity",method=RequestMethod.POST)
+    String importTechMsgFormCity(HttpServletRequest request){
+        String cityCode=request.getParameter("cityCode");
+
+        return "";
+
     }
 //
 //    @RequestMapping(value="/importMapMessage" ,method=RequestMethod.POST)

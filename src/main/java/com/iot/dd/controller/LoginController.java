@@ -107,6 +107,22 @@ public class LoginController {
         return "index";
     }
 
+    @RequestMapping(value="/technicianLogin",method=RequestMethod.POST)
+    String technicianLogin(HttpServletRequest request){
+        String result=null;
+
+        return result;
+    }
+
+    @RequestMapping(value = "/updateTechLocation",method=RequestMethod.POST)
+    String updateTechAddress(HttpServletRequest request){
+        String result=null;
+
+        return result;
+    }
+
+
+
 
 
 //     //管理员和客服信息完善

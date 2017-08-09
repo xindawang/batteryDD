@@ -31,12 +31,12 @@ public class OrderService {
 
         return orderMapper.selectIndentMsg(status);
     }
-
+//根据订单号将select未派发的订单信息
     public List<OrderEntity> importUndoneIndentMsg(String status,String orderId){
         return orderMapper.importIndentMsg(status,orderId);
     }
 
-    //在订单派发开始时选中某一未派发订单时将订单编号存入
+    //在订单派发开始时选中某一未派发订单时将订单编号存入订单派发表中
     public String InsertOrderId(String orderId) {
         if (orderMapper.selectIndentAllocationMsg(orderId) == null) {
             orderMapper.insertAllocationOderId(orderId);
@@ -44,6 +44,18 @@ public class OrderService {
             return "订单编号已导入";
         }
         return "订单编号成功导入订单转发表";
+    }
+
+
+    public String updateCustomerLocation(String telephone,Float longitude,Float latitude){
+        String orderId=orderMapper.selectOrderIdbyPhone(telephone);
+        Boolean res=orderMapper.updateUserAddress(orderId,longitude,latitude);
+        if(res==true){
+            return "用户地理位置更新成功";
+        }else{
+            return "用户地理位置更新失败";
+        }
+
     }
 
 }

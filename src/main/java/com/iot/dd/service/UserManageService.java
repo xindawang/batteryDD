@@ -109,13 +109,15 @@ public class UserManageService {
             return "信息修改失败！";
         }
     }
-    public String updateOneTechnician(TechnicianEntity user){
-        boolean b=usermanage.modifyTechnicianInfo(user);
-        if(b) {
-            return "信息修改成功！";
+
+    //注册技师信息
+    public String technicianLogin(TechnicianEntity user){
+        boolean result=usermanage.technicianLogin(user);
+        if(result) {
+            return "技师注册成功！";
         }
         else {
-            return "信息修改失败！";
+            return "技师注册失败！";
         }
     }
 
