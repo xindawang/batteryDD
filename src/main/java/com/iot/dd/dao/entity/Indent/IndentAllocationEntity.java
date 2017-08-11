@@ -13,10 +13,10 @@ public class IndentAllocationEntity {
     private String orderId;
     private String technicianId;
     private Date acceptTime;
-    private float technicianLongitude;
-    private float technicianLatitude;
-    private float customerLongitude;
-    private float customerLatitude;
+    private Float technicianLongitude;
+    private Float technicianLatitude;
+    private Float customerLongitude;
+    private Float customerLatitude;
     private TechnicianEntity technician;
 
     public Integer getId() {
@@ -51,35 +51,35 @@ public class IndentAllocationEntity {
         this.acceptTime = acceptTime;
     }
 
-    public float getTechnicianLongitude() {
+    public Float getTechnicianLongitude() {
         return technicianLongitude;
     }
 
-    public void setTechnicianLongitude(float technicianLongitude) {
+    public void setTechnicianLongitude(Float technicianLongitude) {
         this.technicianLongitude = technicianLongitude;
     }
 
-    public float getTechnicianLatitude() {
+    public Float getTechnicianLatitude() {
         return technicianLatitude;
     }
 
-    public void setTechnicianLatitude(float technicianLatitude) {
+    public void setTechnicianLatitude(Float technicianLatitude) {
         this.technicianLatitude = technicianLatitude;
     }
 
-    public float getCustomerLongitude() {
+    public Float getCustomerLongitude() {
         return customerLongitude;
     }
 
-    public void setCustomerLongitude(float customerLongitude) {
+    public void setCustomerLongitude(Float customerLongitude) {
         this.customerLongitude = customerLongitude;
     }
 
-    public float getCustomerLatitude() {
+    public Float getCustomerLatitude() {
         return customerLatitude;
     }
 
-    public void setCustomerLatitude(float customerLatitude) {
+    public void setCustomerLatitude(Float customerLatitude) {
         this.customerLatitude = customerLatitude;
     }
 

@@ -17,7 +17,7 @@ public class IndentManageService {
 
 
     //根据订单状态查询所有订单
-    public List<OrderEntity> findIndentByState(String state){
+    public List<OrderEntity> findIndentByState(Integer state){
         return ordermapper.selectIndentMsg(state);
 
     }
@@ -29,7 +29,7 @@ public class IndentManageService {
     }
 
     //根据城市及订单状态查找所有订单
-    public List<OrderEntity> findIndentByStateAndCity(String status,String cityCode){
+    public List<OrderEntity> findIndentByStateAndCity(Integer status,String cityCode){
         return ordermapper.selectIndentByStatusAndCity(status,cityCode);
     }
 

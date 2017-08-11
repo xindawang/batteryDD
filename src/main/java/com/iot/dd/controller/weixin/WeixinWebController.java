@@ -1,6 +1,7 @@
 package com.iot.dd.controller.weixin;
 
 import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.entity.weixin.WeixinOauth2Token;
 import com.iot.dd.dao.entity.weixin.WeixinUserBaseMessage;
@@ -11,6 +12,8 @@ import com.iot.dd.service.weixin.WebService;
 import com.iot.dd.service.weixin.WeixinInitService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -122,7 +125,10 @@ public class WeixinWebController {
 
     }
 
+
+    //将用户位置更新到数据库
     @RequestMapping(value="/setCustomerLocation",method = RequestMethod.POST)
+
     String setCustomerLoaction(HttpServletRequest request){
         String result=null;
         String telephone=request.getParameter("userTelephone");
@@ -132,6 +138,14 @@ public class WeixinWebController {
         result=orderService.updateCustomerLocation(telephone,longitude,latitude);
         return result;
     }
+
+
+
+
+
+
+
+
 
 
 

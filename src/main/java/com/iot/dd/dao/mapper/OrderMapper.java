@@ -34,8 +34,15 @@ public interface OrderMapper {
                     @Result(property = "createTime",column="create_time"),
                     @Result(property = "finishTime",column="finish_time"),
             })
-    List<OrderEntity> selectIndentMsg(String status);
+    List<OrderEntity> selectIndentMsg(Integer status);
 
+
+    //查询订单状态是已录入，且用户经纬度已经上传的订单编号，用于订单派发
+    @Select("select indent.ORDER_ID from indent join indent_allocation" +
+            " on indent.ORDER_ID = indent_allocation.ORDER_ID" +
+            " where indent.STATUS=#{status} AND" +
+            " indent_allocation.CUSTOMER_LATITUDE IS NOT NULL")
+    List<String> selectImportIndentOrderId(Integer status);
 
     //根据订单号查询所有未派发订单信息
     @Select("select * from indent where STATUS=#{status} AND ORDER_ID=#{orderId}")
@@ -52,7 +59,7 @@ public interface OrderMapper {
             @Result(property = "createTime",column="create_time"),
             @Result(property = "finishTime",column="finish_time"),
     })
-    List<OrderEntity> importIndentMsg(@Param("status") String status,@Param("orderId") String orderId);
+    List<OrderEntity> importIndentMsg(@Param("status") Integer status,@Param("orderId") String orderId);
 
 
     //根据订单所在城市查询所有订单
@@ -87,7 +94,7 @@ public interface OrderMapper {
             @Result(property = "createTime",column="create_time"),
             @Result(property = "finishTime",column="finish_time"),
     })
-    List<OrderEntity> selectIndentByStatusAndCity(@Param("status") String status,@Param("cityCode") String cityCode);
+    List<OrderEntity> selectIndentByStatusAndCity(@Param("status") Integer status,@Param("cityCode") String cityCode);
 
     //根据客户从微信发送过来的电话查询订单是否存在
     @Select("select * from indent where customer_cellphone=#{telephone} OR customer_telephone=#{telephone}  ")
@@ -105,8 +112,9 @@ public interface OrderMapper {
     })
     List<OrderEntity> selectIndentByPhone(String telephone);
 
-    @Select("select order_id from indent where customer_cellphone=#{telephone} OR customer_telephone=#{telephone}")
-    String selectOrderIdbyPhone(String telephone);
+    //通过电话号码查询订单状态是已录入的订单编号
+    @Select("select order_id from indent where status=#{status} and (customer_cellphone=#{telephone} or customer_telephone=#{telephone})")
+    String selectOrderIdbyPhone(@Param("telephone") String telephone,@Param("status")String status);
 
     @Select("select ORDER_ID as orderId,TECHNICIAN_ID as technicianId,ACCEPT_TIME as acceptTime,TECHNICIAN_LONGITUDE as technicianLongitude,TECHNICIAN_LATITUDE as technicianLatitude,CUSTOMER_LONGITUDE as customerLongitude,CUSTOMER_LATITUDE as customerLatitude from indent_allocation where ORDER_ID=#{orderId}")
     IndentAllocationEntity selectIndentAllocationMsg(String orderId);
@@ -118,6 +126,16 @@ public interface OrderMapper {
 
 
     @Update("update indent_allocation set customer_longitude=#{customerLongitude},customer_latitude=#{customerLatitude} where order_id=#{orderId}")
-    boolean updateUserAddress(@Param("orderId") String orderId,@Param("customerLongitude")Float customerLongitude,@Param("customerLatitude")Float customerLatitude);
+    boolean updateUserLocation(@Param("orderId") String orderId,@Param("customerLongitude")Float customerLongitude,@Param("customerLatitude")Float customerLatitude);
+
+    @Select("select customer_longitude as customerLongitude, customer_latitude as customerLatitude from indent_allocation where order_id=#{orderId}")
+    IndentAllocationEntity selectCustomerLocation(String orderId);
+
+
+    //查询订单编号是否已经存在
+    @Select("select ORDER_ID from indent where ORDER_ID=#{orderId}")
+    String selectIdByOrderId(String orderId);
+
+
 
 }

@@ -108,12 +108,12 @@ function distributeTechMap(map,longitude,latitude,titleMsg,detailedMsg) {
     }
 
 
-    var mock = {
-        log: function (result) {
-            window.parent.setIFrameResult('log', result);
-        }
-    }
-    console = mock;
+    // var mock = {
+    //     log: function (result) {
+    //         window.parent.setIFrameResult('log0', result);//log改为log
+    //     }
+    // }
+    // console = mock;
     window.Konsole = {
         exec: function (code) {
             code = code || '';

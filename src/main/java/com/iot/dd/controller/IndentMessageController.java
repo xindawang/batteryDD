@@ -31,7 +31,8 @@ public class IndentMessageController {
 
        PageHelper.startPage(page, pageSize);
 
-       String state=request.getParameter("indentState");
+//       String state=request.getParameter("indentState");
+       Integer state=1;
        String cityCode=request.getParameter("cityCode");
        List<OrderEntity> list;
 

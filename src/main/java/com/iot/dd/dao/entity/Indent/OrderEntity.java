@@ -1,5 +1,7 @@
 package com.iot.dd.dao.entity.Indent;
 
+import org.omg.CORBA.INTERNAL;
+
 import java.sql.Date;
 
 /**
@@ -20,7 +22,7 @@ public class OrderEntity {
     private String cityCode;
     private Date createTime;
     private Date finishTime;
-    private String status;
+    private Integer status;
     private String remark;
 
     public Integer getId() {
@@ -127,11 +129,11 @@ public class OrderEntity {
         this.finishTime = finishTime;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
 

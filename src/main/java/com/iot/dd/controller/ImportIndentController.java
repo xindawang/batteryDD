@@ -67,11 +67,16 @@ public class ImportIndentController {
         }
         orderEntity.setCreateTime(createTime);
 
-        String status= resourceMapper.selectStatus(1);//状态：已录入
-        orderEntity.setStatus(status);
+
+        orderEntity.setStatus(1);//状态：已录入
         orderEntity.setRemark(request.getParameter("remark"));
 
-        result=orderService.importOrder(orderEntity);
+        if(orderService.selectOrderId(request.getParameter("orderId"))==null) {
+            result = orderService.importOrder(orderEntity);
+
+            //同时向订单转发表中插入订单编号
+            orderService.InsertOrderId(request.getParameter("orderId"));
+        }
 
         return result;
 

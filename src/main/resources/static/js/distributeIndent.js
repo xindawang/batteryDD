@@ -14,12 +14,22 @@ $(function () {
                var ii=i+1;
                //使用 $("#undoneIndent")会报错
               document.getElementById("undoneIndent").options[ii]=new Option(data[i],data[i]);
-           }
+               }
+
+
        }
    })
 
+    //创建以北京为中心的全国地图
+    var map = new AMap.Map("container", {
+        resizeEnable: true,
+        center: [116.397428, 39.90923],//地图中心
+        zoom: 5
+    });
+
 
     $("#undoneIndent").change(function () {
+        //通过orderId获取用户和订单的信息
         $.ajax({
             url:"/importIndentMsg",
             type:"POST",
@@ -35,34 +45,70 @@ $(function () {
                 $("#createTime").val(data[0].createTime);
                 $("#batteryType").val(data[0].batteryType);
                 $("#address").val(data[0].address);
+
+
             }
         })
 
+        var cusLongitude;
+        var cusLatitude;
+        //通过orderIda获取用户的地理位置作为位置中间
+        $.ajax({
+            url:"/getCustomerLocation",
+            type:"POST",
+            dataType:"json",
+            data:{"orderId": $("#undoneIndent option:selected").val()},
+            success:function (data) {
+                cusLongitude=data.cusLongitude
+                cusLatitude=data.cusLatitude
+
+                //在获取用户位置后更新地图的中心点和放大级别
+                map.setZoom(10)
+                map.setCenter([cusLongitude,cusLatitude])
+
+
+                //设置用户的图标
+                var icon = new AMap.Icon({
+                    image: '../bgimg/user.png',
+                    size: new AMap.Size(24,24)
+                });
+                marker = new AMap.Marker({
+                    icon: icon,
+                    position: [cusLongitude, cusLatitude],
+                    offset: new AMap.Pixel(-12,-12),
+                    zIndex: 101,
+                    title: '用户位置',
+                    map: map
+                });
+            }
+        })
+
+
+
+
+
+
+        var Atitle='赵四<span style="font-size:11px;color:#F00;">电话:1316462138</span>'
+        var AdetailedMsg="评价：5分<br/>性别：男"
+
+        distributeTechMap(map,114.380,30.63,Atitle,AdetailedMsg);
+        var Btitle='李六<span style="font-size:11px;color:#F00;">电话:10086</span>'
+        var BdetailedMsg="评价：5分<br/>性别：男"
+        distributeTechMap(map,114.270,30.63,Btitle,BdetailedMsg);
+
+
     });
 
-    var map = new AMap.Map("container", {
-        resizeEnable: true,
-        center: [114.418, 30.509],
-        zoom: 10
-    });
 
-    var icon = new AMap.Icon({
-        image: '../bgimg/user.png',
-        size: new AMap.Size(24,24)
-    });
-    marker = new AMap.Marker({
-        icon: icon,
-        position: [114.418, 30.509],
-        offset: new AMap.Pixel(-12,-12),
-        zIndex: 101,
-        title: '用户地理位置',
-        map: map
-    });
-    var Atitle='赵四<span style="font-size:11px;color:#F00;">电话:1316462138</span>'
-    var AdetailedMsg="评价：5分<br/>性别：男"
 
-    distributeTechMap(map,114.380,30.63,Atitle,AdetailedMsg);
-    var Btitle='李六<span style="font-size:11px;color:#F00;">电话:10086</span>'
-    var BdetailedMsg="评价：5分<br/>性别：男"
-    distributeTechMap(map,114.270,30.63,Btitle,BdetailedMsg);
+
+
+
+
+
+    
+    
+
+
+
 });
