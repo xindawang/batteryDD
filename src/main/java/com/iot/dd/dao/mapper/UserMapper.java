@@ -17,7 +17,7 @@ public interface UserMapper {
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "loginName", column = "login_name")
     })
-    AdminEntity selectAdminUser(String name);
+    AdminEntity selectAdminUser(@Param("loginName")String name);
 
 
 
