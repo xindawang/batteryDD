@@ -1,7 +1,10 @@
 package com.iot.dd.dao.mapper;
 
 import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 
 import java.util.List;
@@ -23,5 +26,7 @@ public interface indentAllocationMapper {
     IndentAllocationEntity find(String indentId);
     //按技师编号查询订单转发记录
     List<IndentAllocationEntity> findlist(String technicianId);
+
+
 
 }

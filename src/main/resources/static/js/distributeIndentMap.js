@@ -3,6 +3,8 @@
  */
 //技师地图
 //地图初始化时，在地图上添加一个marker标记,鼠标点击marker可弹出自定义的信息窗体
+
+var techMarkers=[]
 function distributeTechMap(map,longitude,latitude,titleMsg,detailedMsg) {
 
 
@@ -15,6 +17,7 @@ function distributeTechMap(map,longitude,latitude,titleMsg,detailedMsg) {
             map: map,
             position: [longitude, latitude]
         });
+        techMarkers.push(marker)//markers在distributeIndent.js创建
         //鼠标点击marker弹出自定义的信息窗体
         AMap.event.addListener(marker, 'click', function () {
             infoWindow.open(map, marker.getPosition());
@@ -26,7 +29,7 @@ function distributeTechMap(map,longitude,latitude,titleMsg,detailedMsg) {
         content = [];
     //content.push("<img src='https://tpc.googlesyndication.com/simgad/5843493769827749134'>地址：北京市朝阳区阜通东大街6号院3号楼东北8.3公里");
     content.push(detailedMsg);
-    content.push("<a href='https://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
+    //content.push("<a href='https://ditu.amap.com/detail/B000A8URXB?citycode=110105'>详细信息</a>");
     var infoWindow = new AMap.InfoWindow({
         isCustom: true,  //使用自定义窗体
         content: createInfoWindow(title, content.join("<br/>")),

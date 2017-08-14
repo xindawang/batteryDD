@@ -91,12 +91,12 @@ public class WeixinWebController {
     @RequestMapping(value="/applyServiceValidate",method=RequestMethod.POST)
     public String serviceValidate(HttpServletRequest request) throws UnsupportedEncodingException {
         String result=null;
-        String telephone=request.getParameter("telephone");
+        String cellphone=request.getParameter("cellphone");
 
-        if(telephone==null ||telephone.length()!=11){
+        if(cellphone==null ||cellphone.length()!=11){
             result=JsonTool.objectToJson("电话号码不能少于11位或者为空");
         }else{
-            List<OrderEntity> Indent =validateService.getIndentByTelephone(telephone);
+            List<OrderEntity> Indent =validateService.getIndentByCellphone(cellphone);
             if(Indent==null){
                 result= JsonTool.objectToJson("订单不存在,请检查电话号码");
             }else{//telephone与订单对应

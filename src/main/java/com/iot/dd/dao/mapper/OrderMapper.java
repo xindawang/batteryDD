@@ -2,6 +2,7 @@ package com.iot.dd.dao.mapper;
 
 import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -97,7 +98,7 @@ public interface OrderMapper {
     List<OrderEntity> selectIndentByStatusAndCity(@Param("status") Integer status,@Param("cityCode") String cityCode);
 
     //根据客户从微信发送过来的电话查询订单是否存在
-    @Select("select * from indent where customer_cellphone=#{telephone} OR customer_telephone=#{telephone}  ")
+    @Select("select * from indent where customer_cellphone=#{cellphone} OR customer_telephone=#{cellphone}  ")
     @Results({
             @Result(property = "orderId", column = "order_id"),
             @Result(property="batteryType",column="battery_type"),
@@ -110,7 +111,7 @@ public interface OrderMapper {
             @Result(property = "licensePlateNumber",column="license_plate_number"),
             @Result(property = "createTime",column="create_time"),
     })
-    List<OrderEntity> selectIndentByPhone(String telephone);
+    List<OrderEntity> selectIndentByPhone(String cellphone);
 
     //通过电话号码查询订单状态是已录入的订单编号
     @Select("select order_id from indent where status=#{status} and (customer_cellphone=#{telephone} or customer_telephone=#{telephone})")
@@ -125,6 +126,9 @@ public interface OrderMapper {
 
 
 
+
+
+
     @Update("update indent_allocation set customer_longitude=#{customerLongitude},customer_latitude=#{customerLatitude} where order_id=#{orderId}")
     boolean updateUserLocation(@Param("orderId") String orderId,@Param("customerLongitude")Float customerLongitude,@Param("customerLatitude")Float customerLatitude);
 
@@ -135,6 +139,30 @@ public interface OrderMapper {
     //查询订单编号是否已经存在
     @Select("select ORDER_ID from indent where ORDER_ID=#{orderId}")
     String selectIdByOrderId(String orderId);
+
+    //查询订单所在城市所有技师的信息。
+    @Select("select * from technician where CITY_CODE=#{cityCode}")
+    @Results({
+            @Result(property = "technicianId",column="technician_id"),
+            @Result(property = "loginName",column="login_name"),
+            @Result(property = "idNumber",column="id_number"),
+            @Result(property = "longitude",column="technician_longitude"),
+            @Result(property = "latitude",column="technician_latitude"),
+            @Result(property = "licensePlateNumber",column="license_plate_number"),
+            @Result(property = "cityCode",column = "city_code"),
+            @Result(property = "organizationId",column="organization_id")
+    })
+    List<TechnicianEntity> selectTechMsg(String cityCode);
+
+    @Select("select city_code from indent where order_id=#{orderId}")
+    String selectCityCodeByOrderId(String orderId);
+
+
+    @Update("update indent set status=#{status} where order_id=#{orderId}")
+    Boolean updateStatus(@Param("orderId")String orderId,@Param("status")Integer status);
+
+    @Update("update indent_allocation set technician_id=#{techId} where order_id=#{orderId}")
+    Boolean updateIndentAllocTech(@Param("orderId")String orderId,@Param("techId")String techId);
 
 
 

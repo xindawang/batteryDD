@@ -1,5 +1,6 @@
 package com.iot.dd.controller;
 
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
@@ -62,12 +63,25 @@ public class distribIndentController {
     }
 
     @RequestMapping(value="/importTechMsgFromCity",method=RequestMethod.POST)
-    String importTechMsgFormCity(HttpServletRequest request){
-        String cityCode=request.getParameter("cityCode");
+    public String importTechMsgFormCity(HttpServletRequest request){
+        String indentId=request.getParameter("indentId");
+        List<TechnicianEntity> techMsg=orderService.selectTechMsg(indentId);
 
-        return "";
+        return JsonTool.objectToJson(techMsg);
 
     }
+
+    @RequestMapping(value="/allocationIndent",method=RequestMethod.POST)
+    public void allocationIndent(HttpServletRequest request){
+
+        String indentId=request.getParameter("indentId");
+        String techId=request.getParameter("techId");
+        orderService.allocIndent(indentId,techId);
+
+    }
+
+
+
 
 
 

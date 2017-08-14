@@ -1,6 +1,7 @@
 package com.iot.dd.service;
 
 import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
+import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import com.iot.dd.dao.mapper.OrderMapper;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.mapper.ResourceMapper;
@@ -80,6 +81,28 @@ public class OrderService {
     public String selectOrderId(String orderId){
          return orderMapper.selectIdByOrderId(orderId);
     }
+
+
+    public List<TechnicianEntity> selectTechMsg(String orderId){
+        String cityCode=orderMapper.selectCityCodeByOrderId(orderId);
+        List<TechnicianEntity> techMsg=orderMapper.selectTechMsg(cityCode);
+
+        //去除不含地理位置的技师信息
+        for(TechnicianEntity msg : techMsg){
+            if(msg.getLatitude()==null || msg.getLongitude()==null)
+                techMsg.remove(msg);
+        }
+        return techMsg;
+    }
+
+
+    //订单转发给技师，改变订单状态，更新订单转发表中技师编号和地址。
+    public void allocIndent(String indentId,String techId){
+        orderMapper.updateIndentAllocTech(indentId, techId);
+        Integer indentAlloc=2;//订单已经转发的状态
+        orderMapper.updateStatus(indentId,indentAlloc);
+    }
+
 
 
 

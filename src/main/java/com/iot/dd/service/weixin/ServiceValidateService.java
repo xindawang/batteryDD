@@ -34,8 +34,8 @@ public class ServiceValidateService {
         return ret;
     }
 
-    public  List<OrderEntity> getIndentByTelephone(String telephone) {
-        List<OrderEntity> Indent = orderMapper.selectIndentByPhone(telephone);
+    public  List<OrderEntity> getIndentByCellphone(String cellphone) {
+        List<OrderEntity> Indent = orderMapper.selectIndentByPhone(cellphone);
         if (!Indent.isEmpty()) {//取到数据
             Integer status = Indent.get(0).getStatus();
             Integer importStatus=1;
