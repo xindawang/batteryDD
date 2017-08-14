@@ -37,11 +37,11 @@ import javax.servlet.http.HttpServletResponse;
 public class WeixinWebController {
 
     @Autowired
-    ServiceValidateService validateService;
+    private ServiceValidateService validateService;
     //获取aaccess_token的地址
 
     @Autowired
-    OrderService orderService;
+    private OrderService orderService;
     public  String requestUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
 
 
@@ -90,7 +90,7 @@ public class WeixinWebController {
 
     @RequestMapping(value="/applyServiceValidate",method=RequestMethod.POST)
     public String serviceValidate(HttpServletRequest request) throws UnsupportedEncodingException {
-        String result=null;
+        String result;
         String cellphone=request.getParameter("cellphone");
 
         if(cellphone==null ||cellphone.length()!=11){
@@ -112,7 +112,7 @@ public class WeixinWebController {
     @RequestMapping(value="/getLocationMsg",method=RequestMethod.POST)
     String getLocationMsg(HttpServletRequest request){
         //String targetUrl=request.getParameter("targetUrl");
-        String result=null;
+        String result;
         Map<String,Object> LocationConfigMsg= null;
         try {
             LocationConfigMsg = validateService.WeixingetLocation(request);
@@ -129,8 +129,8 @@ public class WeixinWebController {
     //将用户位置更新到数据库
     @RequestMapping(value="/setCustomerLocation",method = RequestMethod.POST)
 
-    String setCustomerLoaction(HttpServletRequest request){
-        String result=null;
+    String setCustomerLocation(HttpServletRequest request){
+        String result;
         String telephone=request.getParameter("userTelephone");
         Float longitude=Float.parseFloat(request.getParameter("longitude"));
         Float latitude=Float.parseFloat(request.getParameter("latitude"));
