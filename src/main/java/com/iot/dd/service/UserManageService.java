@@ -122,7 +122,11 @@ public class UserManageService {
     }
 
 
+  //更新技师位置信息
 
+    public boolean updateTechnicianLocation(String technician,double longitude,double latitude){
+        return usermanage.updateTechnicianLocation(technician,longitude,latitude);
+    }
 
 
 }

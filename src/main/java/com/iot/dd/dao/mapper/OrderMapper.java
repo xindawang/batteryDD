@@ -136,6 +136,33 @@ public interface OrderMapper {
     @Select("select ORDER_ID from indent where ORDER_ID=#{orderId}")
     String selectIdByOrderId(String orderId);
 
+  //android端事务
+    /*
+    * 根据订单号查找订单
+    * */
+    @Select("select * from indent where order_id=#{orderId}")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property="batteryType",column="battery_type"),
+            @Result(property ="customerName",column="customer_name"),
+            @Result(property = "cityCode",column="city_code"),
+            @Result(property = "customerCellphone",column="customer_cellphone"),
+            @Result(property = "customerTelephone",column="customer_telephone"),
+            @Result(property = "wechatId",column="wechat_id"),
+            @Result(property = "automobileType",column="automobile_type"),
+            @Result(property = "licensePlateNumber",column="license_plate_number"),
+            @Result(property = "createTime",column="create_time"),
+    })
+    OrderEntity findOrder(String orderId);
+
+    /*
+    * 根据订单编号修改订单状态
+    * 技师接受订单委派时，‘已派单’到‘已接单’变化
+    * 技师拒绝订单委派时，‘’已派单到‘已录入’变化
+    * */
+    @Update("update indent  set status=#{status} where order_id=#{orderId}")
+    boolean updateStatues(@Param("orderId") String orderId,@Param("status")int status);
+
 
 
 }

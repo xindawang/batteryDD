@@ -9,17 +9,19 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ResourceService {
+
     @Autowired
     private ResourceMapper resourcemapper;
 
-
-
-
-    //更具城市名获取cityCode
+    //根据城市名获取cityCode
     public String  findCityCODE(String cityName){
         return resourcemapper.selectCityCode(cityName);
     }
 
+    //根据cityCode获取城市名
+    public String  findCityName(String cityName){
+        return resourcemapper.selectCityName(cityName);
+    }
 
 }
 

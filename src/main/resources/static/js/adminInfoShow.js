@@ -83,23 +83,26 @@ function getRowObj(obj)
 
 //删除一个记录后，再返回剩下的所有记录
 function deleteInfo(obj){
-    var personType=$("#type").val();// 获取类型 customer/admin/staff/technician
-    var tr=getRowObj(obj);
-    var m=tr.rowIndex;
-    m=m-1;
-    var loginName=$("#tb>tbody").find('tr:eq('+m+') td:eq(1)').text();
-    $.ajax({
-        type:"post",
-        url:"/delete",
-        data:{
-            personType:personType,
-            loginName:loginName,
-        },
-        success:function(data) {
-            alert(data);
-            tr.parentNode.removeChild(tr);//移除该行
-        }
-    });
+
+    if(window.confirm("确定删除该用户吗？")){
+        var personType=$("#type").val();// 获取类型 customer/admin/staff/technician
+        var tr=getRowObj(obj);
+        var m=tr.rowIndex;
+        m=m-1;
+        var loginName=$("#tb>tbody").find('tr:eq('+m+') td:eq(1)').text();
+        $.ajax({
+            type:"post",
+            url:"/delete",
+            data:{
+                personType:personType,
+                loginName:loginName,
+            },
+            success:function(data) {
+                alert(data);
+                tr.parentNode.removeChild(tr);//移除该行
+            }
+        });
+    }
 };
 
 

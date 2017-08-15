@@ -39,9 +39,13 @@ public class OrderService {
 
         return orderMapper.selectImportIndentOrderId(status);
     }
-//根据订单号将select未派发的订单信息
+   //根据订单号将select未派发的订单信息
     public List<OrderEntity> importUndoneIndentMsg(Integer status,String orderId){
         return orderMapper.importIndentMsg(status,orderId);
+    }
+    //根据订单编号查找订单
+    public OrderEntity findOrder(String orderId){
+        return orderMapper.findOrder(orderId);
     }
 
     //在订单派发开始时选中某一未派发订单时将订单编号存入订单派发表中
@@ -82,5 +86,14 @@ public class OrderService {
     }
 
 
+
+    /*
+    * 修改订单状态
+    * 技师接受委派或拒绝订单委派时调用
+    * */
+    public boolean updateStatues(String orderId,int statues){
+
+        return orderMapper.updateStatues(orderId,statues);
+    }
 
 }

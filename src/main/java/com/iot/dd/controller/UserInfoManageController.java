@@ -7,13 +7,17 @@ import com.iot.dd.dao.entity.customer.CustomerEntity;
 import com.iot.dd.dao.entity.worker.AdminEntity;
 import com.iot.dd.dao.entity.worker.StaffEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
+import com.iot.dd.dao.mapper.indentAllocationMapper;
 import com.iot.dd.service.UserManageService;
+import com.iot.dd.service.indentAllocationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,11 +28,13 @@ import java.util.Map;
 @RestController
 public class UserInfoManageController {
     @Autowired
-    private UserManageService   usermanageservice;
+    private UserManageService usermanageservice;
+    @Autowired
+    private indentAllocationService indentAlloccation;
 
-  //查询一类用户信息
-    @RequestMapping(value="customer",method = RequestMethod.GET )
-    public String findcustomer(int pageSize, int page){
+    //查询一类用户信息
+    @RequestMapping(value = "customer", method = RequestMethod.GET)
+    public String findcustomer(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
         List<CustomerEntity> list = usermanageservice.findCustomerall();
         long total = ((Page<CustomerEntity>) list).getTotal();
@@ -37,8 +43,9 @@ public class UserInfoManageController {
         map.put("total", total);
         return JsonTool.objectToJson(map);
     }
-    @RequestMapping(value="/admin",method = RequestMethod.GET )
-    public String findadmin(int pageSize, int page){
+
+    @RequestMapping(value = "/admin", method = RequestMethod.GET)
+    public String findadmin(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
         List<AdminEntity> list = usermanageservice.findAdminall();
         long total = ((Page<AdminEntity>) list).getTotal();
@@ -46,10 +53,10 @@ public class UserInfoManageController {
         map.put("list", list);
         map.put("total", total);
         return JsonTool.objectToJson(map);
-   }
+    }
 
-    @RequestMapping(value="/staff",method = RequestMethod.GET )
-    public String findstaff(int pageSize, int page){
+    @RequestMapping(value = "/staff", method = RequestMethod.GET)
+    public String findstaff(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
         List<StaffEntity> list = usermanageservice.findStaffall();
         long total = ((Page<StaffEntity>) list).getTotal();
@@ -59,8 +66,8 @@ public class UserInfoManageController {
         return JsonTool.objectToJson(map);
     }
 
-    @RequestMapping(value="/technician",method = RequestMethod.GET )
-    public String findtechnician(int pageSize, int page){
+    @RequestMapping(value = "/technician", method = RequestMethod.GET)
+    public String findtechnician(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
         List<TechnicianEntity> list = usermanageservice.findTechnicianall();
         long total = ((Page<TechnicianEntity>) list).getTotal();
@@ -71,50 +78,40 @@ public class UserInfoManageController {
     }
 
 
-
-
     //删除信息
-    @RequestMapping(value="/delete",method = RequestMethod.POST )
-    public String deleteinformation(HttpServletRequest request){
-        String type=request.getParameter("personType");
-        String loginName=request.getParameter("loginName");
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public String deleteinformation(HttpServletRequest request) {
+        String type = request.getParameter("personType");
+        String loginName = request.getParameter("loginName");
         System.out.println(type);
         System.out.println(loginName);
-        if(type.equals("customer"))
-        {
-            int n=usermanageservice.deleteOneCustomer(loginName);
-            if(n>=1) {
+        if (type.equals("customer")) {
+            int n = usermanageservice.deleteOneCustomer(loginName);
+            if (n >= 1) {
                 return "删除成功！！";
-            }
-            else{
+            } else {
                 return "删除失败！！";
             }
-        }
-        else if(type.equals("admin")){
-            int n=usermanageservice.deleteOneAdmin(loginName);
-            if(n>=1) {
+        } else if (type.equals("admin")) {
+            int n = usermanageservice.deleteOneAdmin(loginName);
+            if (n >= 1) {
                 return "删除成功！！";
-            }
-            else{
+            } else {
                 return "删除失败！！";
             }
-        }
-        else if(type.equals("staff")){
-            int n=usermanageservice.deleteOneStaff(loginName);
-            if(n>=1) {
+        } else if (type.equals("staff")) {
+            int n = usermanageservice.deleteOneStaff(loginName);
+            if (n >= 1) {
                 return "删除成功！！";
-            }
-            else{
+            } else {
                 return "删除失败！！";
             }
-        }
-        else{//technician
+        } else {//technician
 
-            int n= usermanageservice.deleteOneTechnician(loginName);
-            if(n>=1) {
+            int n = usermanageservice.deleteOneTechnician(loginName);
+            if (n >= 1) {
                 return "删除成功！！";
-            }
-            else{
+            } else {
                 return "删除失败！！";
             }
 
@@ -123,73 +120,71 @@ public class UserInfoManageController {
 
 
     //查询一个用户信息
-    @RequestMapping(value="/findOneStaff",method = RequestMethod.POST )
-    public String findOnestaff(HttpServletRequest request){
+    @RequestMapping(value = "/findOneStaff", method = RequestMethod.POST)
+    public String findOnestaff(HttpServletRequest request) {
 
-        String loginName=request.getParameter("loginName");
+        String loginName = request.getParameter("loginName");
 
-        StaffEntity user=new StaffEntity();
+        StaffEntity user = new StaffEntity();
 
-        user =usermanageservice.findStaffOne(loginName);
+        user = usermanageservice.findStaffOne(loginName);
 
         return JsonTool.objectToJson(user);
 
     }
 
-    @RequestMapping(value="/findOneAdmin",method = RequestMethod.POST )
-    public String findOneadmin(HttpServletRequest request){
-        String loginName=request.getParameter("loginName");
+    @RequestMapping(value = "/findOneAdmin", method = RequestMethod.POST)
+    public String findOneadmin(HttpServletRequest request) {
+        String loginName = request.getParameter("loginName");
 
-        AdminEntity user=usermanageservice.findAdminOne(loginName);
+        AdminEntity user = usermanageservice.findAdminOne(loginName);
 
         return JsonTool.objectToJson(user);
 
 
     }
-    @RequestMapping(value="/findOneCustomer",method = RequestMethod.POST )
-    public String findOnecustomer(HttpServletRequest request){
 
-        String loginName=request.getParameter("loginName");
-          CustomerEntity user=new CustomerEntity();
-        user=usermanageservice.findCustomerOne(loginName);
+    @RequestMapping(value = "/findOneCustomer", method = RequestMethod.POST)
+    public String findOnecustomer(HttpServletRequest request) {
+
+        String loginName = request.getParameter("loginName");
+        CustomerEntity user = new CustomerEntity();
+        user = usermanageservice.findCustomerOne(loginName);
         return JsonTool.objectToJson(user);
 
     }
 
-    @RequestMapping(value="/findOneTechnician",method = RequestMethod.POST )
-    public String findOnetechnician(HttpServletRequest request){
-        String loginName=request.getParameter("loginName");
-        TechnicianEntity user=new TechnicianEntity();
-        user=usermanageservice.findTechnicianOne(loginName);
+    @RequestMapping(value = "/findOneTechnician", method = RequestMethod.POST)
+    public String findOnetechnician(HttpServletRequest request) {
+        String loginName = request.getParameter("loginName");
+        TechnicianEntity user = new TechnicianEntity();
+        user = usermanageservice.findTechnicianOne(loginName);
         return JsonTool.objectToJson(user);
 
     }
-
-
 
 
     //更新信息
 
-    @RequestMapping(value="/staffModify",method = RequestMethod.POST )
-    public String staffmodify(HttpServletRequest request){
+    @RequestMapping(value = "/staffModify", method = RequestMethod.POST)
+    public String staffmodify(HttpServletRequest request) {
 
-        StaffEntity user=new StaffEntity();
+        StaffEntity user = new StaffEntity();
 
-         user.setLoginName(request.getParameter("loginName"));
-         user.setPassword(request.getParameter("password"));
-         user.setName(request.getParameter("name"));
-         user.setSex(request.getParameter("sex"));
-         user.setCellphone(request.getParameter("cellphone"));
-         user.setTelephone(request.getParameter("telephone"));
-         user.setEmail(request.getParameter("email"));
-         user.setIdNumber(request.getParameter("idNumber"));
-         user.setAddress(request.getParameter("address"));
-         user.setRole(request.getParameter("role"));
+        user.setLoginName(request.getParameter("loginName"));
+        user.setPassword(request.getParameter("password"));
+        user.setName(request.getParameter("name"));
+        user.setSex(request.getParameter("sex"));
+        user.setCellphone(request.getParameter("cellphone"));
+        user.setTelephone(request.getParameter("telephone"));
+        user.setEmail(request.getParameter("email"));
+        user.setIdNumber(request.getParameter("idNumber"));
+        user.setAddress(request.getParameter("address"));
+        user.setRole(request.getParameter("role"));
 
-        if(request.getParameter("organizationId")==""||request.getParameter("organizationId")==null) {
+        if (request.getParameter("organizationId") == "" || request.getParameter("organizationId") == null) {
             user.setOrganizationId(0);
-        }
-        else {
+        } else {
             user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
         }
 
@@ -199,10 +194,10 @@ public class UserInfoManageController {
 
     }
 
-    @RequestMapping(value="/adminModify",method = RequestMethod.POST )
-    public String adminmodify(HttpServletRequest request){
+    @RequestMapping(value = "/adminModify", method = RequestMethod.POST)
+    public String adminmodify(HttpServletRequest request) {
 
-        AdminEntity user=new AdminEntity();
+        AdminEntity user = new AdminEntity();
 
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
@@ -220,10 +215,10 @@ public class UserInfoManageController {
 
     }
 
-    @RequestMapping(value="/customerModify",method = RequestMethod.POST )
-    public String customermodify(HttpServletRequest request){
+    @RequestMapping(value = "/customerModify", method = RequestMethod.POST)
+    public String customermodify(HttpServletRequest request) {
 
-       CustomerEntity user=new CustomerEntity();
+        CustomerEntity user = new CustomerEntity();
 
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
@@ -241,10 +236,10 @@ public class UserInfoManageController {
 
     }
 
-    @RequestMapping(value="/technicianModify",method = RequestMethod.POST )
-    public String technicianmodify(HttpServletRequest request){
+    @RequestMapping(value = "/technicianModify", method = RequestMethod.POST)
+    public String technicianmodify(HttpServletRequest request) {
 
-        TechnicianEntity user=new TechnicianEntity();
+        TechnicianEntity user = new TechnicianEntity();
         user.setTechnicianId(request.getParameter("technicianId"));
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
@@ -258,10 +253,9 @@ public class UserInfoManageController {
 
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
 
-        if(request.getParameter("organizationId")==""||request.getParameter("organizationId")==null) {
+        if (request.getParameter("organizationId") == "" || request.getParameter("organizationId") == null) {
             user.setOrganizationId(0);
-        }
-        else {
+        } else {
             user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
         }
         return usermanageservice.technicianLogin(user);
@@ -269,6 +263,29 @@ public class UserInfoManageController {
 
     }
 
+/*
+* android
+* */
+
+    //更新技师位置信息（indent ，）indent_allocation
+    @RequestMapping(value = "/technicianAddress", method = RequestMethod.GET)
+    public String updataPosition(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        String technicianName= request.getParameter("loginName");
+        double longitude = Double.parseDouble(request.getParameter("longitude"));
+        double latitude = Double.parseDouble(request.getParameter("latitude"));
+
+        //根据登陆名找id
+         TechnicianEntity technician=usermanageservice.findTechnicianOne(technicianName);
+         String technicianId=technician.getTechnicianId();
+
+        //technician表的经纬度
+        usermanageservice.updateTechnicianLocation(technicianId, longitude, latitude);
+        //indent_allocation
+        indentAlloccation.SetTechnicianPosition(technicianId, longitude, latitude);
+        return "Ok";
+    }
 
 
 }

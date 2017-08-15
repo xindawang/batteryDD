@@ -29,6 +29,7 @@ $(function () {
 
 
     $("#undoneIndent").change(function () {
+
         //通过orderId获取用户和订单的信息
         $.ajax({
             url:"/importIndentMsg",
@@ -45,11 +46,17 @@ $(function () {
                 $("#createTime").val(data[0].createTime);
                 $("#batteryType").val(data[0].batteryType);
                 $("#address").val(data[0].address);
-
-
             }
         })
 
+        //显示indent按钮
+        var string=$("#undoneIndent option:selected").text();
+        if(string=='---请选择---'){
+            $("#indentDetail").hide();
+        }
+        else {
+            $("#indentDetail").show();
+        }
         var cusLongitude;
         var cusLatitude;
         //通过orderIda获取用户的地理位置作为位置中间
@@ -99,7 +106,13 @@ $(function () {
 
     });
 
-
+   //点击‘订单信息’，则显示信息
+    $("#DetailShow").click(function () {
+        $("#indentDetailShow").show();
+    });
+    $("#cancel").click(function () {
+        $("#indentDetailShow").hide();
+    });
 
 
 

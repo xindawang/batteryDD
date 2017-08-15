@@ -18,10 +18,10 @@ $(function () {
             cityCode='0';
         }
 
-       var indentState=$("#indentState option:selected").text();
-        if(indentState=='---请选择--'){
-            indentState='0';
-        }
+       var indentState=$("#indentState option:selected").val();
+        // if(indentState=='---请选择--'){
+        //     indentState='0';
+        // }
 
         //清空table数据
         $("#Table").children('table').empty();
@@ -103,10 +103,8 @@ $(function () {
     $("#indentState").change(function () {
 
         var cityCode=$("#city option:selected").val();
-        var indentState=$("#indentState option:selected").text();
-        if(indentState=='---请选择--'){
-            indentState="0";
-        }
+        var indentState=$("#indentState option:selected").val();
+
 
         //清空table数据
         $("#Table").children('table').empty();

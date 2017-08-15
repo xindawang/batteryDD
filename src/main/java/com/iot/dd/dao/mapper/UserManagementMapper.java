@@ -64,9 +64,12 @@ public interface UserManagementMapper {
     @Results({
             @Result(property = "loginName", column = "login_name"),
             @Result(property = "technicianId", column = "technician_id"),
+            @Result(property = "cityCode", column = "city_code"),
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
-            @Result(property = "organizationId", column = "organization_id")
+            @Result(property = "organizationId", column = "organization_id"),
+            @Result(property = "longitude", column = "technician_longitude"),
+            @Result(property = "latitude", column = "technician_latitude"),
     })
     TechnicianEntity findTechnicianOne(String loginName) ;
 
@@ -117,7 +120,7 @@ public interface UserManagementMapper {
 
     //更新技师经纬度
     @Update("update technician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
-    boolean updateTechnicianLocation(@Param("technicianId")String technicianId,@Param("technicianLongitude")Float technicianLongitude,@Param("technicianLatitude")Float technicianLatitude);
+    boolean updateTechnicianLocation(@Param("technicianId")String technicianId,@Param("technicianLongitude")double technicianLongitude,@Param("technicianLatitude")double technicianLatitude);
 
 
     @Select("select * from technician where city_code=#{cityCode}")

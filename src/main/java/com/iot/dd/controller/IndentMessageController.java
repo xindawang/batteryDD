@@ -26,13 +26,13 @@ public class IndentMessageController {
     private IndentManageService indentService;
 
 
+    //订单监控
    @RequestMapping(value="/findIndent",method = RequestMethod.GET)
     public  String findIndent(int pageSize, int page,HttpServletRequest request){
 
        PageHelper.startPage(page, pageSize);
-
-//       String state=request.getParameter("indentState");
-       Integer state=1;
+       String state=request.getParameter("indentState");
+       int IntState=Integer.parseInt(state);
        String cityCode=request.getParameter("cityCode");
        List<OrderEntity> list;
 
@@ -55,7 +55,8 @@ public class IndentMessageController {
        }
        if(cityCode.equals("0")&&!state.equals("0")){//按状态查询
 
-           list=indentService.findIndentByState(state);
+
+           list=indentService.findIndentByState(IntState);
            long total = ((Page<OrderEntity>) list).getTotal();
            Map<String, Object> map = new HashMap<>();
            map.put("list", list);
@@ -63,7 +64,7 @@ public class IndentMessageController {
            return JsonTool.objectToJson(map);
        }
       else{
-           list=indentService.findIndentByStateAndCity(state,cityCode);
+           list=indentService.findIndentByStateAndCity(IntState,cityCode);
            long total = ((Page<OrderEntity>) list).getTotal();
            Map<String, Object> map = new HashMap<>();
            map.put("list", list);

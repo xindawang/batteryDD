@@ -17,6 +17,8 @@ import javax.servlet.http.HttpSession;
 
 import com.iot.dd.dao.entity.worker.*;
 
+import java.io.UnsupportedEncodingException;
+
 /**
  * Created by huanglin on 2017/7/13.
  */
@@ -56,48 +58,44 @@ public class LoginController {
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public String qwe(HttpServletRequest request) {
-        String result=null;
-        if(request.getParameter("role").equals("admin"))
-        {
-            AdminEntity adminEntity=new AdminEntity();
+        String result = null;
+        if (request.getParameter("role").equals("admin")) {
+            AdminEntity adminEntity = new AdminEntity();
             adminEntity.setLoginName(request.getParameter("username"));
             adminEntity.setPassword(request.getParameter("password"));
             adminEntity.setRole(request.getParameter("role"));
-            result=userService.registerAdmin(adminEntity);
-        }
-        else{
-            StaffEntity staffEntity=new StaffEntity();
+            result = userService.registerAdmin(adminEntity);
+        } else {
+            StaffEntity staffEntity = new StaffEntity();
             staffEntity.setLoginName(request.getParameter("username"));
             staffEntity.setPassword(request.getParameter("password"));
             staffEntity.setRole(request.getParameter("role"));
-            result=userService.registerStaff(staffEntity);
+            result = userService.registerStaff(staffEntity);
         }
         return result;
     }
 
 
-
-//登陆
+    //登陆
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public String loginPost(HttpServletResponse response,
                             HttpServletRequest request,
                             HttpSession session) {
-        String result="请选择用户类型！";
-        String role=request.getParameter("role");
-        String loginName=request.getParameter("username");
-        String password=request.getParameter("password");
-        if(role==null){
+        String result = "请选择用户类型！";
+        String role = request.getParameter("role");
+        String loginName = request.getParameter("username");
+        String password = request.getParameter("password");
+        if (role == null) {
             return result;
         }
-        if(role.equals("staff")){//客服
-            session=request.getSession();
-            session.setAttribute("loginName",loginName);
-            session.setAttribute("role",role);
-            result=userService.staffLogin(loginName,password);
-        }
-        else if(role.equals("admin")) {
+        if (role.equals("staff")) {//客服
+            session = request.getSession();
             session.setAttribute("loginName", loginName);
-            session.setAttribute("role",role);
+            session.setAttribute("role", role);
+            result = userService.staffLogin(loginName, password);
+        } else if (role.equals("admin")) {
+            session.setAttribute("loginName", loginName);
+            session.setAttribute("role", role);
             result = userService.adminLogin(loginName, password);
         }
         return result;
@@ -110,40 +108,41 @@ public class LoginController {
         return "index";
     }
 
-     //技师登陆
-    @RequestMapping(value = "/technicinLogin", method = RequestMethod.GET)
-    public String technicianLogin(HttpServletRequest request){
-
-      String loginName=request.getParameter("loginName");
-      String password=request.getParameter("password");
-      return  userService.technicianLogin(loginName,password);
+    //技师登陆
+    @RequestMapping(value="/technicinLogin", method = RequestMethod.GET)
+    public String technicianLogin(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        String loginName = request.getParameter("loginName");
+        String password = request.getParameter("password");
+        return userService.technicianLogin(loginName, password);
     }
-
 
 
     //技师注册
-    @RequestMapping(value = "/technicinSignUp", method = RequestMethod.GET)
-    public String technicianSignUp(HttpServletRequest request){
+    @RequestMapping(value = "/technicianSignUp", method = RequestMethod.GET)
+    public String technicianSignUp(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
 
-         String cityName=request.getParameter("cityName");
+        String cityName = request.getParameter("cityName");
 
-         //获取城市的编码
-        String cityCode=re.findCityCODE(cityName);
-
-        TechnicianEntity user=new TechnicianEntity();
-         user.setLoginName(request.getParameter("loginName"));
-         user.setPassword(request.getParameter("password"));
-         user.setTechnicianId(request.getParameter("technicianId"));
-         user.setSex(request.getParameter("sex"));
-         user.setTelephone(request.getParameter("telephone"));
-         user.setEmail(request.getParameter("email"));
-         user.setCityCode(cityCode);
-         user.setAddress(request.getParameter("address"));
-         user.setIdNumber(request.getParameter("idNumber"));
-         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
-        return  userService.registerTechnician(user);
+        //获取城市的编码
+        String cityCode = re.findCityCODE(cityName);
+        TechnicianEntity user = new TechnicianEntity();
+        user.setLoginName(request.getParameter("loginName"));
+        user.setPassword(request.getParameter("password"));
+        user.setTechnicianId(request.getParameter("technicianId"));
+        user.setName(request.getParameter("name"));
+        user.setSex(request.getParameter("sex"));
+        user.setTelephone(request.getParameter("telephone"));
+        user.setEmail(request.getParameter("email"));
+        user.setCityCode(cityCode);
+        user.setAddress(request.getParameter("address"));
+        user.setIdNumber(request.getParameter("idNumber"));
+        user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+        return userService.registerTechnician(user);
     }
-
 
 
 //     //管理员和客服信息完善
