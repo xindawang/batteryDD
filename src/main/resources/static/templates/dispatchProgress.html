@@ -1,27 +1,27 @@
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="gb2312">
-    <title>响应式布局</title>
-    <meta name="keywords" content="" />
-    <meta name="description" content="" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../plugin/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="../css/dispatchProgress.css">
+    <title>璁㈠崟杩涘害</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <!--//璁惧畾涓嶅悓璁惧闂寸殑鏍峰紡-->
     <style>
-        *{margin:0;padding:0;text-decoration:none;list-style:none;
-            font-size:14px;font-family:"微软雅黑";text-align:center;
-            color:#fff;}
         .clear{clear:both;}
         #header,#content,#footer{margin:0 auto;margin-top:10px;}
         #header,#footer{margin-top:10px;height:100px;}
         #header,#footer,.left,.right,.center{background:#333;}
-        /*通用样式*/
-        /*手机*/
+        /*閫氱敤鏍峰紡*/
+        /*鎵嬫満*/
         @media screen and (max-width:600px){
             #header,#content,#footer{width:400px;}
             .right,.center{margin-top:10px;}
             .left,.right{height:100px;}
             .center{height:200px;}
         }
-        /*平板*/
+        /*骞虫澘*/
         @media screen and (min-width:600px) and (max-width:960px){
             #header,#content,#footer{width:600px;}
             .right{display:none;}
@@ -38,21 +38,29 @@
             .right{width:200px;}
         }
     </style>
+    <script type="text/javascript" src="../plugin/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../js/dispatchProgress.js"></script>
 </head>
-<body>
-<!--header start-->
-<div id="header">header</div>
-<!--end header-->
-<!--content start-->
-<div id="content">
-    <div>left</div>
-    <div>center</div>
-    <div>right</div>
-    <div></div>
+
+<body style="">
+
+<!--鍦╠ata-step 涓緭鍏ヤ綘鎯冲睍绀虹殑榛樿姝ラ 鑻ヤ笉濉啓 鍒欓粯璁や负1-->
+<div class="container">
+    <ul class="nav nav-pills nav-justified step step-arrow">
+        <li class="active">
+            <a>姝ｅ湪娲惧崟</a>
+        </li>
+        <li >
+            <a>鎶�甯堝凡鎺ュ崟</a>
+        </li>
+        <li>
+            <a>瀹夎瀹屾垚</a>
+        </li>
+        <li>
+            <a>璁㈠崟璇勪环</a>
+        </li>
+    </ul>
 </div>
-<!--end content-->
-<!--footer-->
-<div id="footer">footer</div>
-<!--end footer-->
-</body>
-</html>
+
+
+</body></html>

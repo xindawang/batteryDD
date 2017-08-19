@@ -30,11 +30,14 @@ $(function () {
 
     $("#undoneIndent").change(function () {
 
+        var userMarkers=[] //保存marker  地图点标记
+
+        var indentId=$("#undoneIndent option:selected").val()
         //通过orderId获取用户和订单的信息
         $.ajax({
             url:"/importIndentMsg",
             type:"POST",
-            data:{"indentId": $("#undoneIndent option:selected").val()},
+            data:{"indentId": indentId},
             dataType:"json",
             success:function (data) {
                 document.getElementById("customerName").value=data[0].customerName;
@@ -46,6 +49,8 @@ $(function () {
                 $("#createTime").val(data[0].createTime);
                 $("#batteryType").val(data[0].batteryType);
                 $("#address").val(data[0].address);
+
+
             }
         })
 
@@ -64,7 +69,7 @@ $(function () {
             url:"/getCustomerLocation",
             type:"POST",
             dataType:"json",
-            data:{"orderId": $("#undoneIndent option:selected").val()},
+            data:{"orderId": indentId},
             success:function (data) {
                 cusLongitude=data.cusLongitude
                 cusLatitude=data.cusLatitude
@@ -87,21 +92,84 @@ $(function () {
                     title: '用户位置',
                     map: map
                 });
+                userMarkers.push(marker)
+            }
+        })
+
+        //更新可选择的技师信息-通过cityCode
+        var techCellphone
+        var techName
+        var techLongitude
+        var techLatitude
+        var techSex
+        var techId
+        $.ajax({
+            url:"/importTechMsgFromCity",
+            type:"POST",
+            data:{"indentId":indentId},
+            dataType:"json",
+            success:function (data) {
+                $("#technician").empty()
+                $("#technician").append("<option value=0>---请选择---</option>")
+                for(var i in data){
+                    techName=data[i].name
+                    techLongitude=data[i].longitude
+                    techLatitude=data[i].latitude
+                    techId=data[i].technicianId
+                    techSex=data[i].sex
+                    techCellphone=data[i].cellphone
+
+                    $("#technician").append('<option value='+techId+'>'+techName+'-'+techId+'</option>')
+
+                    var title=setTechTitle(techName,techId)
+                    var msg=setTechMsg(techCellphone,techSex)
+
+                    distributeTechMap(map,techLongitude,techLatitude,title,msg);
+
+                }
+            }
+        })
+        $("#technician").change(function () {
+            var selectedTechMsg=$("#technician option:selected").text()
+            var selectedTechId=$("#technician option:selected").val()
+            console.log(selectedTechId)
+            if($("#technician").val()!=0){
+                $.mbox({
+                    area: [ "450px", "auto" ], //弹框大小
+                    border: [ 0, .5, "#666" ],
+                    title:"订单派发确认",
+                    dialog: {
+                        msg: "订单编号："+indentId+'<br/>'+'派发给'+'<br/>'+selectedTechMsg,
+                        btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+                        type: 2,   //1:对钩   2：问号  3：叹号
+                        btn: [ "确认", "取消"],  //自定义按钮
+                        yes: function() {  //点击左侧按钮：成功
+                            $.ajax({
+                                url:"/allocationIndent",
+                                type:"POST",
+                                data:{"techId":selectedTechId,"indentId":indentId},
+                                dataType:"json",
+                                success:function () {
+
+                                }
+                            })
+
+                            map.remove(userMarkers)
+                            map.remove(techMarkers)
+                            map.setZoom(5)
+                            map.setCenter([116.397428, 39.90923])
+                            console.log("test moveMarker")
+                        },
+                        no: function() { //点击右侧按钮：失败
+                            return false;
+                        }
+                    }
+                })
             }
         })
 
 
 
-
-
-
-        var Atitle='赵四<span style="font-size:11px;color:#F00;">电话:1316462138</span>'
-        var AdetailedMsg="评价：5分<br/>性别：男"
-
-        distributeTechMap(map,114.380,30.63,Atitle,AdetailedMsg);
-        var Btitle='李六<span style="font-size:11px;color:#F00;">电话:10086</span>'
-        var BdetailedMsg="评价：5分<br/>性别：男"
-        distributeTechMap(map,114.270,30.63,Btitle,BdetailedMsg);
 
 
     });
@@ -114,6 +182,14 @@ $(function () {
         $("#indentDetailShow").hide();
     });
 
+    //将获取的技师信息进行拼接用于派单地图显示
+    function setTechTitle(name,techId) {
+        return name+'<b style="color:#F00;">编号:'+techId+'<b>'
+    }
+
+    function setTechMsg(cellphone,sex) {
+        return '电话号码：'+cellphone+'<br/>'+'性别：'+sex
+    }
 
 
 

@@ -17,8 +17,8 @@ public class TechnicianEntity {
     private String address;//地址
 
     private String cityCode;
-    private float longitude;
-    private float latitude;
+    private Float longitude;
+    private Float latitude;
     private String licensePlateNumber;//车牌号
     private Integer organizationId;//机构编号
 
@@ -118,19 +118,19 @@ public class TechnicianEntity {
         this.cityCode = cityCode;
     }
 
-    public float getLongitude() {
+    public Float getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(Float longitude) {
         this.longitude = longitude;
     }
 
-    public float getLatitude() {
+    public Float getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(Float latitude) {
         this.latitude = latitude;
     }
 

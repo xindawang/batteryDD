@@ -65,9 +65,11 @@ $(function () {
         data:null,
         dataType:"json",
         success:function(data){
-            document.getElementById("automobileBrand").options[0]=new Option("---请选择---",0);
+            $("#automobileBrand").empty()
+            $("#automobileBrand").append("<option value= 0>---请选择--</option>")
             for (var i=0;i<data.length;i++){
                 var ii =i+1;
+                $('#automobileBrand').append("<option value="+data[i].id+">"+data[i].brandName+"</option>");
                 document.getElementById("automobileBrand").options[ii]=new Option(data[i].brandName,data[i].id);
                 // var code = data[i].provinceCode
                 // var name = data[i].provinceName

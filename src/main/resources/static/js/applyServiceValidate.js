@@ -10,7 +10,7 @@ $(function () {
         $.ajax({
             type: "POST",
             url: "/applyServiceValidate",
-            data: {"telephone": $("#main-phone").val()},
+            data: {"cellphone": $("#main-phone").val()},
             dataType: "json",
             success: function (data) {
                 console.log(Object.prototype.toString.call(data))
@@ -18,8 +18,8 @@ $(function () {
                 if(data.toString() !="订单存在，请等待技师给您派单"){
                     confirm(data.toString())
                 }else {
-
-                    window.location="wxIndentMap.html?telephone="+$("#main-phone").val();
+                        window.location="dispatchProgress.html"
+                    //window.location="wxIndentMap.html?telephone="+$("#main-phone").val();
                 }
 
             }

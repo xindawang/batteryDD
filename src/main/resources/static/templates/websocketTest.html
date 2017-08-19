@@ -1,0 +1,41 @@
+
+<!doctype html>
+<html>
+<head>
+    <title>Java后端WebSocket的Tomcat实现</title>
+    <meta charset="UTF-8">
+    <script  type="text/javascript" src="/plugin/sockjs-0.3.4.min.js"></script>
+    <script type="text/javascript" src="/plugin/stomp.min.js"></script>
+</head>
+<body>
+<div>
+<h1>测试1</h1>
+<button id="connect" onclick="connect()" value="连接">连接</button><br/>
+<button id="send" onclick="sendName()" value="发送消息">发送消息</button><br/>
+<button id="unconnect" onclick="unconnect()" value="关闭连接">关闭连接</button>
+</div>
+</body>
+
+<script type="text/javascript">
+    function connect() {
+        var socket=new SockJS('/endpointWisly');
+        stompClient=Stomp.over(socket)
+        stompClient.connect({},function () {
+            console.log('开始连接')
+            stompClient.subscribe('/topic/getResponse',function () {
+                showResponse()
+            })
+        })
+    }
+    function showResponse() {
+        console.log("有回复吗？")
+    }
+    function sendName() {
+        stompClient.send("/welcome",{},'后台收到了吗')
+    }
+    function unconnect(){
+        if(stompClient !=null)
+            stompClient.disconnect();
+    }
+</script>
+</html>
