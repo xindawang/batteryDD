@@ -318,7 +318,8 @@ a cite {
 }
 
 .layui-field-box {
-    padding: 10px 15px
+    padding: 10px 15px;
+
 }
 
 .layui-field-title .layui-field-box {
@@ -615,11 +616,18 @@ a cite {
 }
 
 .layui-select {
-    padding: 0 10px
+    padding: 0 10px;
+    display: block;
+    width: 190px;
+    font-size: medium;
 }
 
-.layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {
-    display: none
+/*.layui-form input[type=checkbox], .layui-form input[type=radio], .layui-form select {*/
+    /*display: none*/
+/*}*/
+
+.layui-form input[type=checkbox], .layui-form input[type=radio] {
+display: none
 }
 
 .layui-form-item {
@@ -639,10 +647,12 @@ a cite {
 .layui-form-label {
     float: left;
     display: block;
-    padding: 9px 15px;
+    padding: 9px 3px;
     width: 80px;
+    /*width:auto;*/
     font-weight: 400;
-    text-align: right
+    text-align: center;
+    font-size: medium;
 }
 
 .layui-form-item .layui-inline {
