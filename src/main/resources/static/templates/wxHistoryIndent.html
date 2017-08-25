@@ -1,0 +1,62 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no, width=device-width">
+    <title>历史订单</title>
+    <style>
+        .header{
+            position:fixed;
+            bottom:0px;
+            left:0px;
+            width: 100%;
+            background: white;
+            height:8%;
+
+        }
+        .indentLink{
+            text-align: center;
+            display: inline-block;
+            width: 32%;
+            height: 8%;
+            font-size: 20px;
+            vertical-align: middle;
+            font-weight: 100;
+
+        }
+
+    </style>
+
+    <script type="text/javascript" src="../js/commonPlugin.js"></script>
+</head>
+<body style="background-color: azure">
+
+<div class="header">
+
+    <a  id="allIndent" class="indentLink" href="javascript:void(0);">
+    全部订单
+    </a>
+    <a id="workingIndent" class="indentLink" href="javascript:void(0);">
+    正在进行
+    </a>
+    <a id="doneIndent" class="indentLink" href="javascript:void(0);">
+    已完成
+    </a>
+</div>
+<span id="allSpan" Style=" display:none;position:fixed;left:0%; bottom:8%;width: 33.3% ; height: 0.35%; background:#4bb1cf"></span>
+<span id="workingSpan" Style=" display:none;position:fixed;left:33.3%; bottom:8%;width: 33.3% ; height: 0.35%; background:#4bb1cf"></span>
+<span id="doneSpan" Style=" display: none; position:fixed;left:66.7%; bottom:8%;width: 33.3% ; height: 0.35%; background:#4bb1cf"></span>
+
+</body>
+<script>
+
+
+       $("#allIndent").click(function () {
+           $(this).color="#4bb1cf";
+           $("#allSpan").show()
+           $("#workingSpan").hide()
+           $("#doneSpan").hide()
+           window.confirm("OK")
+       })
+
+</script>
+</html>

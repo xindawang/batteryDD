@@ -1,0 +1,40 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>聊天室用户1</title>
+</head>
+<body>
+<button onclick="connect()">建立连接</button>
+<button onclick="sendCusLocation()">发送数据</button>
+</body>
+<script type="text/javascript" src="../plugin/sockjs-0.3.4.min.js"></script>
+<script type="text/javascript" src="../plugin/stomp.min.js"></script>
+
+
+<script>
+
+
+    function connect() {
+        var socket = new SockJS('/endpointDCDD');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function () {
+            console.log('开始连接')
+
+//2、接收数据
+            stompClient.subscribe('/topic/MsgFromB', function (ex) {
+                console.log(ex)
+                console.log('B发来了数据')
+            });
+        })
+    }
+
+
+    function sendCusLocation(longitude,latiutde) {
+        stompClient.send("/sendMsgToB",{},JSON.stringify({'customerLongitude':longitude,'customerLatitude':latiutde}))
+    }
+
+
+
+
+</script>
+</html>

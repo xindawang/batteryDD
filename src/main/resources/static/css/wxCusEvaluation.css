@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+}
+.box{
+    width: 100%;
+    margin:20px auto;
+}
+.list{
+    margin: 20px  20px;
+    width: 50%;
+    float: left;
+}
+h3{
+    text-align: center;
+    font-size: 30px;
+    color: #0e90d2;
+    letter-spacing: 0;
+    text-shadow: 0px 1px 0px #999,
+    0px 2px 0px #888,
+    0px 3px 0px #777,
+    0px 4px 0px #666,
+    0px 5px 0px #555,
+    0px 6px 0px #444,
+    0px 7px 0px #333,
+    0px 8px 7px #001135
+}
+a{
+    font-size: 20px;
+    text-decoration: none;
+    color: lightgray;
+}
+span ,label{
+    font-size: 20px;
+    padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+button{
+    FONT-SIZE: 18px;
+    color:#4bb1cf;
+
+}
+.c1 {
+    color: #0e90d2;
+}
+.c2{
+    color: #0e90d2;
+}
