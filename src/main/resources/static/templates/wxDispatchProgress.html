@@ -1,0 +1,72 @@
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" type="text/css" href="../plugin/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/mbox.css">
+    <link rel="stylesheet" type="text/css" href="../css/wxDispatchProgress.css">
+
+    <title>订单进度</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <!--//设定不同设备间的样式-->
+    <style>
+
+        body .progress_inner__tabs .tab {
+            opacity: 2;
+            /*position: absolute;*/
+            top: 20px;
+            text-align: center;
+            margin-top: 20px;
+            box-shadow: 0px 2px 1px #80b7d5;
+            padding: 30px;
+            background: white;
+            border-radius: 10px;
+            -webkit-transition: all .2s;
+            transition: all .2s;
+            font-family: 'Microsoft YaHei','Lantinghei SC','Open Sans',Arial,'Hiragino Sans GB','STHeiti','WenQuanYi Micro Hei','SimSun',sans-serif;
+            color: #2e6c8e;
+
+        }
+        body .progress_inner__tabs .tab h1 {
+            margin: 0;
+        }
+        body .progress_inner__tabs .tab p {
+            font-weight: 400;
+            opacity: 0.8;
+            /*text-align: justify;*/
+            text-indent: 2em;
+        }
+    </style>
+    <script type="text/javascript" src="../plugin/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../plugin/jm-qi.js"></script>
+    <script type="text/javascript" src="../js/wxUpdateCusLocation.js"></script>
+    <script type="text/javascript" src="../js/wxDispatchProgress.js"></script>
+</head>
+
+<body style="">
+
+<!--在data-step 中输入你想展示的默认步骤 若不填写 则默认为1-->
+<div class="container">
+    <ul class="nav nav-pills nav-justified step step-arrow">
+        <li class="active">
+            <a id="distributing">正在派单</a>
+        </li>
+        <li >
+            <a id="accepted">技师已接单</a>
+        </li>
+        <li>
+            <a id="finished">安装完成</a>
+        </li>
+    </ul>
+</div>
+<hr style="margin: 0px">
+<div id="progressMsg" class='progress_inner__tabs'>
+    <div  class='tab tab-0' style="margin: 0px">
+        <h1 id="progressTitle"></h1>
+        <p id="progressDetail"></p>
+    </div>
+</div>
+
+
+
+</body></html>

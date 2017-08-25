@@ -143,7 +143,11 @@ $(function () {
             data:$('#form').serialize(),
             dataType: "json",
             success:function (data) {
-
+                $(':input','#form')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .removeAttr('checked')
+                    .removeAttr('selected');
             }
         })
 

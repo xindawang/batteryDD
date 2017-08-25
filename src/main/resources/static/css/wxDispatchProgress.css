@@ -49,13 +49,14 @@
     padding-right: 20px;
 }
 .step-arrow li:last-child {
-    padding-right: 0;
+    padding-right: 20px;
 }
 /*.step-arrow li:nth-child(n+2) a {*/
     /*margin-left: -20px;*/
     /*border-radius: 0;*/
 /*}*/
-.step-arrow li:not(:last-child) a:after {
+/**/
+.step-arrow  li:not(:last-child) a:after {
     position: absolute;
     top: -1px;
     right: -20px;

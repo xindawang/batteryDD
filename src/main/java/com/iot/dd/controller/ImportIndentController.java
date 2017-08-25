@@ -1,5 +1,6 @@
 package com.iot.dd.controller;
 
+import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.Tools.TimeTool;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
@@ -78,7 +79,7 @@ public class ImportIndentController {
             orderService.InsertOrderId(request.getParameter("orderId"));
         }
 
-        return result;
+        return JsonTool.objectToJson(result);
 
     }
 

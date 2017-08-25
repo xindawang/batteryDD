@@ -1,10 +1,13 @@
 package com.iot.dd.controller;
 
+import com.iot.dd.dao.entity.resource.CityEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.service.OrderService;
+import net.sf.json.JSONObject;
+import org.apache.http.protocol.HTTP;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -43,6 +46,20 @@ public class distribIndentController {
         return JsonTool.objectToJson(undoneIndentId);
     }
 
+
+    @RequestMapping(value="/getHaveIndentOfCity",method=RequestMethod.POST)
+    String getHaveIndentOfCity(HttpServletRequest request){
+        List<CityEntity> cityEntityList=orderService.selectCity();
+        return JsonTool.objectToJson(cityEntityList);
+    }
+
+    @RequestMapping(value="/getIndentIdByCityCode",method=RequestMethod.POST)
+    String getIndentIdByCityCOde(HttpServletRequest request){
+        String cityCode=request.getParameter("cityCode");
+        List<OrderEntity> orderEntities=orderService.selectOrderIdByCity(cityCode);
+        return JsonTool.objectToJson(orderEntities);
+    }
+
 //在前端选择订单编号中时，向前端传递用户和订单的相关信息
     @RequestMapping(value = "/importIndentMsg" ,method=RequestMethod.POST)
     String importUndoneIndentMsg(HttpServletRequest request){
@@ -64,21 +81,28 @@ public class distribIndentController {
 
     @RequestMapping(value="/importTechMsgFromCity",method=RequestMethod.POST)
     public String importTechMsgFormCity(HttpServletRequest request){
-        String indentId=request.getParameter("indentId");
-        List<TechnicianEntity> techMsg=orderService.selectTechMsg(indentId);
+        String cityCode=request.getParameter("cityCode");
+        List<TechnicianEntity> techMsg=orderService.selectTechMsg(cityCode);
 
         return JsonTool.objectToJson(techMsg);
 
     }
 
     @RequestMapping(value="/allocationIndent",method=RequestMethod.POST)
-    public void allocationIndent(HttpServletRequest request){
+    public String  allocationIndent(HttpServletRequest request){
 
         String indentId=request.getParameter("indentId");
         String techId=request.getParameter("techId");
         orderService.allocIndent(indentId,techId);
 
+        return JsonTool.objectToJson("success");
+
     }
+
+//    @RequestMapping(value="/getHaveUnIndentOfCity",method = RequestMethod.POST)
+//    public String getHaveUnIndentOfCity(HttpServletRequest request){
+//
+//    }
 
 
 

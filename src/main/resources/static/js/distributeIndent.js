@@ -1,46 +1,186 @@
 /**
  * Created by huanglin on 2017/7/24.
  */
+
+var userMarkers = [] //保存marker  地图点标记
+var disIndentId
+var map
 $(function () {
 
-   $.ajax({
-       url:"/selectIndentMsg",
-       type:"POST",
-       data:null,
-       dataType:"json",
-       success:function (data) {
-            document.getElementById("undoneIndent").options[0]=new Option("---请选择---",0);
-           for(var i=0;i<data.length;i++){
-               var ii=i+1;
-               //使用 $("#undoneIndent")会报错
-              document.getElementById("undoneIndent").options[ii]=new Option(data[i],data[i]);
-               }
-
-
-       }
-   })
-
-    //创建以北京为中心的全国地图
-    var map = new AMap.Map("container", {
-        resizeEnable: true,
-        center: [116.397428, 39.90923],//地图中心
-        zoom: 5
+     map = new AMap.Map("container", { //创建地图
+        resizeEnable: true
+        // center: [116.397428, 39.90923], //地图中心
+        // zoom: 5
     });
+
+    selectCityList()//同步
+
+    //-------建立所有控件的监控----------------
+
+    $("#city").change(function () {
+        var cityCode = $("#city option:selected").val()
+        var cityName = $("#city option:selected").text()
+        selectIndentMsgByCityCode(cityCode)
+
+        map.setCity(cityName);
+        map.remove(userMarkers)
+        importTechMsgFromCity(cityCode)
+    })
 
 
     $("#undoneIndent").change(function () {
 
-        var userMarkers=[] //保存marker  地图点标记
+        disIndentId = $("#undoneIndent option:selected").val()
+        setCusMsgAndLocation(disIndentId)
 
-        var indentId=$("#undoneIndent option:selected").val()
+        if(disIndentId ==0){//当订单是---请选择时---
+            $("#indentDetail").hide()
+        }else{
+            $("#indentDetail").show()
+        }
+    })
+
+
+    $("#technician").change(function () {
+        var selectedTechMsg = $("#technician option:selected").text()
+        var selectedTechId = $("#technician option:selected").val()
+        console.log(selectedTechId)
+        confirmTech(selectedTechMsg, selectedTechId, disIndentId)
+
+    })
+
+    //点击‘订单信息’，则显示信息
+    $("#DetailShow").click(function () {
+        $("#indentDetailShow").show();
+    });
+    $("#cancel").click(function () {
+        $("#indentDetailShow").hide();
+    });
+
+
+    //-------建立所有控件的监控----------------
+
+
+
+
+
+
+})
+//改变技师时的操作--也就是要派发的操作
+function confirmTech(techMsg,techId,indentId) {
+
+    if (techId != 0  && indentId !=0) {
+        $.mbox({
+            area: ["450px", "auto"], //弹框大小
+            border: [0, .5, "#666"],
+            title: "订单派发确认",
+            dialog: {
+                msg: "订单编号：" + indentId + '<br/>' + '派发给' + '<br/>' + techMsg,
+                btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+                type: 2,   //1:对钩   2：问号  3：叹号
+                btn: ["确认", "取消"],  //自定义按钮
+                yes: function () {  //点击左侧按钮：成功
+
+                    //更新未派发订单下拉框，并且清空技师下拉框
+                    confirmIndent(techId, indentId)
+                },
+                no: function () { //点击右侧按钮：失败
+                    return false;
+                }
+            }
+        })
+    }
+}
+
+//确认将订单派发给技师的操作
+function confirmIndent(techId, indentId) {
+    $.ajax({
+        url: "/allocationIndent",
+        type: "POST",
+        data: {"techId": techId, "indentId": indentId},
+        dataType: "json",
+        success: function (data) {
+            $("#technician").empty()
+
+        }
+    })
+
+    map.remove(userMarkers)
+
+    selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
+    //
+    //map.setZoom(5)
+    //map.setCenter([116.397428, 39.90923])//依然更新地图到最初位置和放大程度
+
+}
+//通过cityCode查询未派发订单
+function selectIndentMsgByCityCode(cityCode) {
+
+    $.ajax({
+        url: "/getIndentIdByCityCode",
+        type: "POST",
+        data: {"cityCode": cityCode},
+        dataType: "json",
+        success: function (data) {
+            $("#undoneIndent").empty()
+            document.getElementById("undoneIndent").options[0] = new Option("---请选择---", 0);
+            for (var i = 0; i < data.length; i++) {
+                var ii = i + 1;
+                //使用 $("#undoneIndent")会报错
+                document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
+            }
+
+
+        }
+    })
+}
+
+
+//在网页加载或者派发完一个订单时对有订单的城市进行更新，并且更新位置
+function selectCityList() {
+    $.ajax({
+        url: "/getHaveIndentOfCity",
+        type: "POST",
+        data: null,
+        asnys: false,
+        dataType: "json",
+        success: function (data) {
+            $("#city").empty()
+            for (var i = 0; i < data.length; i++) {
+                //使用 $("#undoneIndent")会报错
+                document.getElementById("city").options[i] = new Option(data[i].cityName, data[i].cityCode);
+            }
+            var cityName = $("#city option:selected").text()
+            if (!cityName) {
+                cityName = '北京市';
+            }
+            // map.setZoom(20)
+            map.setCity(cityName);
+
+            var cityCode = $("#city option:selected").val()
+            selectIndentMsgByCityCode(cityCode)
+            importTechMsgFromCity(cityCode)
+
+        }
+    })
+}
+
+    //当选择一个订单时，显示订单位置和设置订单信息
+function setCusMsgAndLocation(indentId) {
+
+    var cusLongitude;//用户地理位置-经度
+    var cusLatitude;//纬度
+
+    map.remove(userMarkers)//重新选择订单后也清除地图
+    if (indentId != 0) {//点击订单编号
         //通过orderId获取用户和订单的信息
         $.ajax({
-            url:"/importIndentMsg",
-            type:"POST",
-            data:{"indentId": indentId},
-            dataType:"json",
-            success:function (data) {
-                document.getElementById("customerName").value=data[0].customerName;
+            url: "/importIndentMsg",
+            type: "POST",
+            data: {"indentId": indentId},
+            dataType: "json",
+            success: function (data) {
+                $("#customerName").val(data[0].customerName);
                 $("#wechatId").val(data[0].wechatId);
                 $("#telephone").val(data[0].customerTelephone);
                 $("#cellphone").val(data[0].customerCellphone);
@@ -50,44 +190,36 @@ $(function () {
                 $("#batteryType").val(data[0].batteryType);
                 $("#address").val(data[0].address);
 
-
             }
         })
 
-        //显示indent按钮
-        var string=$("#undoneIndent option:selected").text();
-        if(string=='---请选择---'){
-            $("#indentDetail").hide();
-        }
-        else {
-            $("#indentDetail").show();
-        }
-        var cusLongitude;
-        var cusLatitude;
+        $("#indentDetail").show();//订单详情按钮显示
+
         //通过orderIda获取用户的地理位置作为位置中间
         $.ajax({
-            url:"/getCustomerLocation",
-            type:"POST",
-            dataType:"json",
-            data:{"orderId": indentId},
-            success:function (data) {
-                cusLongitude=data.cusLongitude
-                cusLatitude=data.cusLatitude
+            url: "/getCustomerLocation",
+            type: "POST",
+            dataType: "json",
+            data: {"orderId": indentId},
+            success: function (data) {
+                cusLongitude = data.cusLongitude
+                cusLatitude = data.cusLatitude
 
+
+                //map.remove(techMarkers)
                 //在获取用户位置后更新地图的中心点和放大级别
-                map.setZoom(10)
-                map.setCenter([cusLongitude,cusLatitude])
-
+                map.setZoom(11)
+                map.setCenter([cusLongitude, cusLatitude])
 
                 //设置用户的图标
                 var icon = new AMap.Icon({
                     image: '../bgimg/user.png',
-                    size: new AMap.Size(24,24)
+                    size: new AMap.Size(24, 24)
                 });
                 marker = new AMap.Marker({
                     icon: icon,
                     position: [cusLongitude, cusLatitude],
-                    offset: new AMap.Pixel(-12,-12),
+                    offset: new AMap.Pixel(-12, -12),
                     zIndex: 101,
                     title: '用户位置',
                     map: map
@@ -95,109 +227,61 @@ $(function () {
                 userMarkers.push(marker)
             }
         })
+    }
+}
 
-        //更新可选择的技师信息-通过cityCode
-        var techCellphone
-        var techName
-        var techLongitude
-        var techLatitude
-        var techSex
-        var techId
-        $.ajax({
-            url:"/importTechMsgFromCity",
-            type:"POST",
-            data:{"indentId":indentId},
-            dataType:"json",
-            success:function (data) {
-                $("#technician").empty()
-                $("#technician").append("<option value=0>---请选择---</option>")
-                for(var i in data){
-                    techName=data[i].name
-                    techLongitude=data[i].longitude
-                    techLatitude=data[i].latitude
-                    techId=data[i].technicianId
-                    techSex=data[i].sex
-                    techCellphone=data[i].cellphone
+//更新城市时，更新当前城市的技师信息
+function importTechMsgFromCity(cityCode) {
 
-                    $("#technician").append('<option value='+techId+'>'+techName+'-'+techId+'</option>')
 
-                    var title=setTechTitle(techName,techId)
-                    var msg=setTechMsg(techCellphone,techSex)
+    //更新可选择的技师信息-通过cityCode
+    var techCellphone
+    var techName
+    var techLongitude
+    var techLatitude
+    var techSex
+    var techId
 
-                    distributeTechMap(map,techLongitude,techLatitude,title,msg);
+    map.remove(techMarkers)//清除之前的技师在地图的图标
+
+    $.ajax({
+        url: "/importTechMsgFromCity",
+        type: "POST",
+        data: {"cityCode": cityCode},
+        dataType: "json",
+        success: function (data) {
+            $("#technician").empty()
+            $("#technician").append("<option value=0>---请选择---</option>")
+            if (data != null) {
+                for (var i in data) {
+                    techName = data[i].name
+                    techLongitude = data[i].longitude
+                    techLatitude = data[i].latitude
+                    techId = data[i].technicianId
+                    techSex = data[i].sex
+                    techCellphone = data[i].cellphone
+
+                    $("#technician").append('<option value=' + techId + '>' + techName + '-' + techId + '</option>')
+
+                    var title = setTechTitle(techName, techId)
+                    var msg = setTechMsg(techCellphone, techSex)
+
+                    distributeTechMap(map, techLongitude, techLatitude, title, msg);
 
                 }
             }
-        })
-        $("#technician").change(function () {
-            var selectedTechMsg=$("#technician option:selected").text()
-            var selectedTechId=$("#technician option:selected").val()
-            console.log(selectedTechId)
-            if($("#technician").val()!=0){
-                $.mbox({
-                    area: [ "450px", "auto" ], //弹框大小
-                    border: [ 0, .5, "#666" ],
-                    title:"订单派发确认",
-                    dialog: {
-                        msg: "订单编号："+indentId+'<br/>'+'派发给'+'<br/>'+selectedTechMsg,
-                        btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
-                        type: 2,   //1:对钩   2：问号  3：叹号
-                        btn: [ "确认", "取消"],  //自定义按钮
-                        yes: function() {  //点击左侧按钮：成功
-                            $.ajax({
-                                url:"/allocationIndent",
-                                type:"POST",
-                                data:{"techId":selectedTechId,"indentId":indentId},
-                                dataType:"json",
-                                success:function () {
+        }
+    })
 
-                                }
-                            })
+}
 
-                            map.remove(userMarkers)
-                            map.remove(techMarkers)
-                            map.setZoom(5)
-                            map.setCenter([116.397428, 39.90923])
-                            console.log("test moveMarker")
-                        },
-                        no: function() { //点击右侧按钮：失败
-                            return false;
-                        }
-                    }
-                })
-            }
-        })
+//将获取的技师信息进行拼接用于派单地图显示
+function setTechTitle(name, techId) {
+    return name + '<b style="color:#F00;">编号:' + techId + '<b>'
+}
+
+function setTechMsg(cellphone, sex) {
+    return '电话号码：' + cellphone + '<br/>' + '性别：' + sex
+}
 
 
-
-
-
-    });
-
-   //点击‘订单信息’，则显示信息
-    $("#DetailShow").click(function () {
-        $("#indentDetailShow").show();
-    });
-    $("#cancel").click(function () {
-        $("#indentDetailShow").hide();
-    });
-
-    //将获取的技师信息进行拼接用于派单地图显示
-    function setTechTitle(name,techId) {
-        return name+'<b style="color:#F00;">编号:'+techId+'<b>'
-    }
-
-    function setTechMsg(cellphone,sex) {
-        return '电话号码：'+cellphone+'<br/>'+'性别：'+sex
-    }
-
-
-
-
-
-    
-    
-
-
-
-});

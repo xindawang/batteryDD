@@ -1,5 +1,6 @@
 package com.iot.dd.service.weixin;
 
+import com.iot.dd.dao.entity.weixin.WeixinOauth2Token;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -57,6 +58,7 @@ public class WeixinInitService extends TimerTask {
     public static final String ACCESS_TOKEN_URL = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=APPID&secret=APPSECRET";
     public static final String JSAPI_TICKET_URL="https://api.weixin.qq.com/cgi-bin/ticket/getticket?access_token=ACCESS_TOKEN&type=jsapi";
 
+    public static final String MapKey="3a840190111cc8b744af70595a5e7a2e";
 
     //菜单创建（POST）限100（次/天）
     public static String menu_create_url = "https://api.weixin.qq.com/cgi-bin/menu/create?access_token=ACCESS_TOKEN";
@@ -180,6 +182,37 @@ public class WeixinInitService extends TimerTask {
         String result = formatter.toString();
         formatter.close();
         return result;
+
+    }
+
+
+    //通过code获取网页授权access_token--获取用户信息
+    public static WeixinOauth2Token getOauth2AccessToken(String code){
+        String access_token_MsgUrl="https://api.weixin.qq.com/sns/oauth2/access_token?appid=APPID&secret=SECRET&code=CODE&grant_type=authorization_code";
+        WeixinOauth2Token wat=null;
+        String requestUrl;
+        requestUrl=access_token_MsgUrl.replace("APPID", WeixinInitService.APPID)
+                .replace("SECRET", WeixinInitService.APPSECRET)
+                .replace("CODE",code);
+        //JSONObject jsonObject= UserInformationService.httpRequest(requestUrl,"GET",null);
+        JSONObject jsonObject=doGetStr(requestUrl);
+        if (null != jsonObject) {
+            try {
+                wat = new WeixinOauth2Token();
+                wat.setAccessToken(jsonObject.getString("access_token"));
+                wat.setExpiresIn(jsonObject.getInt("expires_in"));
+                wat.setRefreshToken(jsonObject.getString("refresh_token"));
+                wat.setOpenId(jsonObject.getString("openid"));
+                wat.setScope(jsonObject.getString("scope"));
+            } catch (Exception e) {
+                wat = null;
+                int errorCode = jsonObject.getInt("errcode");
+                String errorMsg = jsonObject.getString("errmsg");
+                //log.error("获取网页授权凭证失败 errcode:{} errmsg:{}", errorCode, errorMsg);
+            }
+        }
+        return wat;
+
 
     }
 }

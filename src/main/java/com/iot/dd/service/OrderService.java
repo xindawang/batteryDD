@@ -1,14 +1,18 @@
 package com.iot.dd.service;
 
 import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
+import com.iot.dd.dao.entity.resource.CityEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import com.iot.dd.dao.mapper.OrderMapper;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.mapper.ResourceMapper;
+import com.iot.dd.service.weixin.IndentService;
+import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -60,24 +64,23 @@ public class OrderService {
     }
 
 
-    public String updateCustomerLocation(String telephone,Float longitude,Float latitude){
-        String status=resourceMapper.selectStatus(1);
-        String orderId=orderMapper.selectOrderIdbyPhone(telephone,status);
-        Boolean res=orderMapper.updateUserLocation(orderId,longitude,latitude);
-        if(res==true){
-            return "用户地理位置更新成功";
-        }else{
-            return "用户地理位置更新失败";
-        }
 
-    }
 
 //通过订单编号查询用户的地理位置
     public Map<String,Float> selectCustomerLocation(String orderId){
-        IndentAllocationEntity indentAllocationEntity=orderMapper.selectCustomerLocation(orderId);
+
         Map<String,Float> result=new HashMap<>();
-        result.put("cusLongitude",indentAllocationEntity.getCustomerLongitude());
-        result.put("cusLatitude",indentAllocationEntity.getCustomerLatitude());
+
+        IndentAllocationEntity indentAllocationEntity=orderMapper.selectCustomerLocation(orderId);
+        JSONObject location;
+        Float cusLongitude=indentAllocationEntity.getCustomerLongitude();
+        Float cusLatitude=indentAllocationEntity.getCustomerLatitude();
+
+        location=IndentService.turnLocation(cusLongitude,cusLatitude);
+
+
+        result.put("cusLongitude",Float.parseFloat(location.getString("locations").split(",")[0]));
+        result.put("cusLatitude",Float.parseFloat(location.getString("locations").split(",")[1]));
         return  result;
     }
 
@@ -87,20 +90,33 @@ public class OrderService {
     }
 
 
-    public List<TechnicianEntity> selectTechMsg(String orderId){
-        String cityCode=orderMapper.selectCityCodeByOrderId(orderId);
+    public List<TechnicianEntity> selectTechMsg(String cityCode){
         List<TechnicianEntity> techMsg=orderMapper.selectTechMsg(cityCode);
 
         //去除不含地理位置的技师信息
-        for(TechnicianEntity msg : techMsg){
-            if(msg.getLatitude()==null || msg.getLongitude()==null)
-                techMsg.remove(msg);
+        for (int i = techMsg.size() - 1; i >= 0; i--) {
+            if (techMsg.get(i).getLatitude() == null || techMsg.get(i).getLongitude() == null)
+                techMsg.remove(techMsg.get(i));
+
+
         }
+        //先去除没有地理位置的技师，再进行转码
+        for(int i=techMsg.size()-1;i>=0;i--){
+            //更新坐标系  GPS-高德
+            JSONObject location= IndentService.turnLocation(techMsg.get(i).getLongitude(),techMsg.get(i).getLatitude());
+            if(location !=null){
+                techMsg.get(i).setLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
+                techMsg.get(i).setLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
+            }
+        }
+
+
         return techMsg;
     }
 
 
     //订单转发给技师，改变订单状态，更新订单转发表中技师编号和地址。
+
     public void allocIndent(String indentId,String techId){
         orderMapper.updateIndentAllocTech(indentId, techId);
         Integer indentAlloc=2;//订单已经转发的状态
@@ -117,6 +133,28 @@ public class OrderService {
     public boolean updateStatues(String orderId,int statues){
 
         return orderMapper.updateStatues(orderId,statues);
+    }
+
+
+    public List<CityEntity> selectCity(){
+        Integer status = 1;
+        List<CityEntity> cityEntityList = orderMapper.selectCityCodeByStatus(status);
+        List<CityEntity> cityMsgList = new ArrayList<>();
+        if (cityEntityList != null) {
+            for (int i = 0; i < cityEntityList.size(); i++) {
+                String cityCode = cityEntityList.get(i).getCityCode();
+                CityEntity cityEntity=orderMapper.selectCityMsgByCityCode(cityCode);
+                cityMsgList.add(cityEntity);
+            }
+        }
+        return cityMsgList;
+    }
+
+    public List<OrderEntity> selectOrderIdByCity(String cityCode){
+        Integer status=1;
+        List<OrderEntity> orderEntities= new ArrayList<>();
+        orderEntities=orderMapper.selectIndentIdByStatusAndCity(status,cityCode);
+         return orderEntities;
     }
 
 }

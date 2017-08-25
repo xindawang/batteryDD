@@ -10,16 +10,10 @@ package com.iot.dd.dao.entity.weixin;
 * @Date:12:35 2017/7/15
 * @params:  * @param null
 */
-public class ComplexButton {
+public class ComplexButton extends ViewButton{
     private Buttton[] sub_button;
-    private String name;
 
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
+
 
     public Buttton[] getSub_button() {
         return sub_button;

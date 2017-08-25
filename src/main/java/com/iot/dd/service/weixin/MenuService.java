@@ -64,20 +64,15 @@ public class MenuService {
 
 
         String userMessage_url="http://dcdd.tunnel.qydev.com/WeixinUserMessage";
-        String location_url="http://dcdd.tunnel.qydev.com/templates/location.html";
+        String location_url="http://dcdd.tunnel.qydev.com/templates/wxIndentMap.html";
         String serviceInit_url="http://dcdd.tunnel.qydev.com/templates/applyServiceValidate.html";
-        ViewButton vb_11 = new ViewButton();
-        vb_11.setName("个人位置");
-        vb_11.setType("view");
-        vb_11.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",location_url));
-        ViewButton cb_12 = new ViewButton();
-        cb_12.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",serviceInit_url));
-        cb_12.setName("申请服务");
-        cb_12.setType("view");
+        String cusEvaluation_url="http://dcdd.tunnel.qydev.com/templates/wxCusEvaluation.html";
+        String historyIndent_url="http://dcdd.tunnel.qydev.com/templates/wxHistoryIndent.html";
 
         ComplexButton cx_1 = new ComplexButton();
-        cx_1.setName("电池更换");
-        cx_1.setSub_button(new Buttton[]{vb_11,cb_12});
+        cx_1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",serviceInit_url));
+        cx_1.setName("申请服务");
+        cx_1.setType("view");
 
 
         ViewButton vb_21 = new ViewButton();
@@ -88,33 +83,23 @@ public class MenuService {
         ViewButton vb_22 = new ViewButton();
         vb_22.setName("个人信息");
         vb_22.setType("view");
-        vb_22.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",userMessage_url));
+        vb_22.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",cusEvaluation_url));
 
         ViewButton vb_23 = new ViewButton();
-        vb_23.setName("更换记录");
+        vb_23.setName("用户评价");
         vb_23.setType("view");
-        vb_23.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx3e4a89adbc62b1e9&redirect_uri=http://www.jiaqiankun.site/imessage/wechat/event/wdbg.html&response_type=code&scope=snsapi_base&state=0531_819");
+        vb_23.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",cusEvaluation_url));
 
         ComplexButton cx_2 = new ComplexButton();
         cx_2.setName("信息查询");
         cx_2.setSub_button(new Buttton[]{vb_21,vb_22,vb_23});
 
-        CommonButton cb_31 = new CommonButton();
-        cb_31.setKey("cjwt");
-        cb_31.setName("常见问题");
-        cb_31.setType("click");
-        CommonButton cb_32 = new CommonButton();
-        cb_32.setKey("myddc");
-        cb_32.setName("满意度调查");
-        cb_32.setType("click");
 
-        CommonButton cb_33 = new CommonButton();
-        cb_33.setKey("app");
-        cb_33.setName("APP下载");
-        cb_33.setType("click");
         ComplexButton cx_3 = new ComplexButton();
-        cx_3.setName("更多精彩");
-        cx_3.setSub_button(new Buttton[]{cb_31,cb_32,cb_33});
+        cx_3.setName("历史订单");
+        cx_3.setType("view");
+        cx_3.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",historyIndent_url));
+
 
         Menu menu=new Menu();
         menu.setButton(new ComplexButton[]{cx_1,cx_2,cx_3});

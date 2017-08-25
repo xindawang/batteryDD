@@ -17,11 +17,19 @@
             height:100%;
             margin:0;
         }
+        span
+        {
+            background-color: white;
+            font-size: 15px;
+            color:orange;
+
+
+        }
     </style>
     <script type="text/javascript" src="../js/commonPlugin.js"></script>
-    <script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
     <script type="text/javascript" src="http://webapi.amap.com/maps?v=1.3&key=fcff9add7388792d2afc071dbd12e639&plugin=AMap.Driving"></script>
     <script type="text/javascript" src="http://cache.amap.com/lbs/static/addToolbar.js"></script>
+    <script type="text/javascript" src="../js/wxUpdateCusLocation.js"></script>
     <script type="text/javascript" src="../js/wxIndentMap.js"></script>
 
 
@@ -29,23 +37,17 @@
 </head>
 <body>
 
-<div id="container" tabindex="0" style="width:100%; height:65%"></div>
-<div id="unAccept"style="display:block;">
-    <h1 id="unAcceptMsg" name="unAccept" >请等待技师接单</h1>
-</div>
-<div id="accept" style="display:none;">
-    <form>
-        <input type="text" id="techName" name="techName" value="测试"><br/>
-        <input type="text" id="techTelephone" name="techName"><br/>
-        <input type="text" id="techPlateNumber" name="techPlateNumber"><br/>
+<div id="container" tabindex="0" style="width:100%; height:100%"></div>
 
-    </form>
+<div style="border-radius:10px 10px 10px 10px ;position: fixed;top:15px; right:15px; left:15px; padding: 5px; background-color: white" class="msg">
+    <div style="position: fixed;right: 20px;top: 20px " class="cellphone"><a id="cellToTech" style="border-radius:6px 6px 6px 6px ;color:#4bb1cf;background-color:lavender;text-decoration:none;font-size: 20px;padding:5px" >联系技师</a></div>
+    <span style="font-size:20px ;color:orange ; text-align: center">技师信息</span><hr/>
+    <span style="display:inline-block;width: 25%" id="name"></span>
+    <span style="display:inline-block;width: 20%" id="sex"></span>
+    <span style="display:inline-block;width: 45%" id="techId"></span><br/>
+    <span style="display:inline-block;width: 45%" id="phoneNumber"></span>
+    <span style="display:inline-block;width: 45%" id="lincePlaNum"></span>
 </div>
-<form id="customerRes">
-    <input type="button" value="评价">
-    <input type="button" value="联系客服">
-    <input type="button" value="反馈意见">
-</form>
 
 </body>
 

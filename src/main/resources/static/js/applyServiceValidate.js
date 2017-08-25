@@ -2,29 +2,39 @@
  * Created by huanglin on 2017/7/27.
  */
 var targetUrl = location.href.split("#")[0]
-targetUrl = encodeURIComponent(encodeURIComponent(targetUrl))
+//targetUrl = encodeURIComponent(encodeURIComponent(targetUrl))
+
+
+
 
 $(function () {
-    $("#main-btn").click(function () {
-
+    var strMsg = window.location.search.substring(1)
+    var param = strMsg.split("&")[0].split('=')
+    if (param[0] === 'code')
+        var code = param[1]
         $.ajax({
+            url: "/getOpenId",
             type: "POST",
-            url: "/applyServiceValidate",
-            data: {"cellphone": $("#main-phone").val()},
             dataType: "json",
+            async: false,
+            data: {"code": code},
             success: function (data) {
-                console.log(Object.prototype.toString.call(data))
-                console.log(data)
-                if(data.toString() !="订单存在，请等待技师给您派单"){
-                    confirm(data.toString())
-                }else {
-                        window.location="dispatchProgress.html"
-                    //window.location="wxIndentMap.html?telephone="+$("#main-phone").val();
+
+                if (data != null) {
+                    window.location = "wxDispatchProgress.html?orderId=" + data
+                }
+                else {
+
+                    window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
+                        .replace("APPID", APPID).replace("REDIRECT",wxGetServiceByPhone)
                 }
 
             }
         })
 
-    })
+
+
+
 
 });
+
