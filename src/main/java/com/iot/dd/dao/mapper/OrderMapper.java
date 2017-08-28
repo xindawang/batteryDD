@@ -202,7 +202,8 @@ public interface OrderMapper {
             @Result(property = "wechatId", column = "wechat_id"),
             @Result(property = "automobileType", column = "automobile_type"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
-            @Result(property = "createTime", column = "create_time")
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time")
     })
     OrderEntity findOrder(String orderId);
 

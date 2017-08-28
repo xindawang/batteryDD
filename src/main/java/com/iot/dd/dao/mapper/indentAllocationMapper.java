@@ -63,7 +63,7 @@ public interface indentAllocationMapper {
     boolean setAcceptTime(@Param("orderId") String orderId, @Param("acceptTime") Date acceptTime);
 
     //技师拒绝接单
-    @Delete("delete from indent_allocation where order_id=#{orderId}")
-    boolean deleteAllocation(String orderId);
+    @Delete("update indent_allocation set technician_id=#{technicianId} where order_id=#{orderId}")
+    boolean deleteAllocation(@Param("orderId") String orderId,@Param("technicianId") String technicianId);
 
 }
