@@ -39,7 +39,7 @@ span ,label{
 button{
     FONT-SIZE: 18px;
     color:#4bb1cf;
-
+    border-radius:10px 10px 10px 10px ;
 }
 .c1 {
     color: #0e90d2;

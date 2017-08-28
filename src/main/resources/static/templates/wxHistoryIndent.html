@@ -18,45 +18,100 @@
             display: inline-block;
             width: 32%;
             height: 8%;
-            font-size: 20px;
+            font-size: 18px;
             vertical-align: middle;
             font-weight: 100;
-
+            text-decoration: none;
+            color: black;
+            font-family: "Microsoft YaHei","宋体","黑体",sans-serif;
         }
 
+        .IndentMsg{
+            margin-left: -1.5%;
+            height:215px;
+            background-color: white;
+            margin-bottom:10px;
+            overflow:hidden
+        }
+        .Acolor{
+            color:#4bb1cf;
+        }
+        .techDetail{
+            height: 80px;
+            width: 94%;
+            margin-left: 2%;
+            margin-right:2%;
+            background-color: #F8F8F8;
+            border-radius:10px 10px 10px 10px ;
+        }
+        .indentDetail{
+            height:80px;
+            width: 94%;
+            background-color: #F8F8F8;
+            margin-bottom: 5px;
+            margin-top: 20px;
+            margin-left:2%;
+            margin-right:2%;
+            border-radius:10px 10px 10px 10px ;
+
+        }
+        .indentStatus{
+            float: right;
+            margin-right: 5%;
+            width:50px;
+            height: 30px;
+            font-size: 15px;
+            color: #4bb1cf;
+
+        }
+        .detailSpan{
+            display:inline-block;
+            font-size:14px ;
+            width: 47%
+        }
+        .detailTitle{
+            font-size:18px ;
+            color:#4bb1cf;
+            text-align: center
+        }
+        .evaButtonDiv{
+            float: right;
+            margin-right: 5%;
+            width:50px;
+            height: 30px;
+            font-size: 15px;
+            color: #4bb1cf;
+        }
+        .evaButton{
+            background-color: white ;color: #4bb1cf;border-radius:10px 10px 10px 10px ;
+        }
     </style>
 
-    <script type="text/javascript" src="../js/commonPlugin.js"></script>
+    <script type="text/javascript" src="../plugin/jquery-3.2.1.js"></script>
+    <script type="text/javascript" src="../js/wxHistoryIndent.js"></script>
 </head>
-<body style="background-color: azure">
-
+<body style="width:100%;background-color: 	#F0F0F0 ">
+<div id="base">
 <div class="header">
 
-    <a  id="allIndent" class="indentLink" href="javascript:void(0);">
+    <a  id="allIndent" class="indentLink" href="#">
     全部订单
     </a>
-    <a id="workingIndent" class="indentLink" href="javascript:void(0);">
+    <a id="workingIndent" class="indentLink" href="#">
     正在进行
     </a>
-    <a id="doneIndent" class="indentLink" href="javascript:void(0);">
+    <a id="doneIndent" class="indentLink" href="#">
     已完成
     </a>
 </div>
-<span id="allSpan" Style=" display:none;position:fixed;left:0%; bottom:8%;width: 33.3% ; height: 0.35%; background:#4bb1cf"></span>
-<span id="workingSpan" Style=" display:none;position:fixed;left:33.3%; bottom:8%;width: 33.3% ; height: 0.35%; background:#4bb1cf"></span>
-<span id="doneSpan" Style=" display: none; position:fixed;left:66.7%; bottom:8%;width: 33.3% ; height: 0.35%; background:#4bb1cf"></span>
+<span id="allSpan" Style=" display:none;position:fixed;left:0%; bottom:8%;width: 33.3% ; height: 0.5%; background:#4bb1cf"></span>
+<span id="workingSpan" Style=" display:none;position:fixed;left:33.3%; bottom:8%;width: 33.3% ; height: 0.5%; background:#4bb1cf"></span>
+<span id="doneSpan" Style=" display: none; position:fixed;left:66.7%; bottom:8%;width: 33.3% ; height: 0.5%; background:#4bb1cf"></span>
+
+
+</div>
 
 </body>
-<script>
 
 
-       $("#allIndent").click(function () {
-           $(this).color="#4bb1cf";
-           $("#allSpan").show()
-           $("#workingSpan").hide()
-           $("#doneSpan").hide()
-           window.confirm("OK")
-       })
-
-</script>
 </html>

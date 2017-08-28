@@ -14,6 +14,9 @@ import org.springframework.ui.Model;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,7 +62,7 @@ public class IndentService {
         return IndentId;
     }
 
-    public String getOrderIdByOpenId(String openId){
+    public List<OrderEntity> getOrderIdByOpenId(String openId){
         return orderMapper.selectOrderIdByOpenId(openId);
     }
 
@@ -132,6 +135,22 @@ public class IndentService {
         String locationURL = "http://restapi.amap.com/v3/assistant/coordinate/convert?locations=" + longitude + "," + latitude + "&coordsys=gps&output=json&key=" + WeixinInitService.MapKey;
         JSONObject location = WeixinInitService.doGetStr(locationURL);
         return location;
+    }
+
+
+    public String  setIndentEvaluation(String orderId,String techId,Integer deliverySpeed,Integer productQuality,Integer techService){
+        Integer status=5;
+        orderMapper.updateStatus(orderId,5);
+        Date date = new Date();//获得系统时间.
+        Timestamp currentTime=new Timestamp(date.getTime());
+        System.out.println(currentTime);
+        if(orderMapper.selectOrderIdFromEva(orderId)==null) {
+            orderMapper.insertIndentEvaluation(orderId, techId, currentTime, techService, deliverySpeed, productQuality);
+            return "success";
+        }else{
+            return "evaluated";
+        }
+
     }
 
 

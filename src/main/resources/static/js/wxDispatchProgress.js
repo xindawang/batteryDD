@@ -31,7 +31,7 @@ $(function() {
 //根据订单状态设置界面
 function setMsg() {
 
-    if(checkStatus(indentId)===1)
+    if(checkStatus(indentId)===1 || checkStatus(indentId)===2)
     {
         bsStep(1)
         getIndentMsg()

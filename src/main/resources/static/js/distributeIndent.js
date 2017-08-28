@@ -44,7 +44,6 @@ $(function () {
     $("#technician").change(function () {
         var selectedTechMsg = $("#technician option:selected").text()
         var selectedTechId = $("#technician option:selected").val()
-        console.log(selectedTechId)
         confirmTech(selectedTechMsg, selectedTechId, disIndentId)
 
     })
@@ -100,14 +99,16 @@ function confirmIndent(techId, indentId) {
         data: {"techId": techId, "indentId": indentId},
         dataType: "json",
         success: function (data) {
-            $("#technician").empty()
+            map.remove(userMarkers)
+            map.remove(techMarkers)
+            selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
 
+            $("#indentDetail").hide()//隐藏订单详情按钮
+            $("#indentDetailShow").hide();//隐藏订单详情内容
         }
     })
 
-    map.remove(userMarkers)
 
-    selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
     //
     //map.setZoom(5)
     //map.setCenter([116.397428, 39.90923])//依然更新地图到最初位置和放大程度
@@ -138,14 +139,15 @@ function selectIndentMsgByCityCode(cityCode) {
 
 //在网页加载或者派发完一个订单时对有订单的城市进行更新，并且更新位置
 function selectCityList() {
+    $("#city").empty()
     $.ajax({
         url: "/getHaveIndentOfCity",
         type: "POST",
         data: null,
-        asnys: false,
+        asyns: false,
         dataType: "json",
         success: function (data) {
-            $("#city").empty()
+
             for (var i = 0; i < data.length; i++) {
                 //使用 $("#undoneIndent")会报错
                 document.getElementById("city").options[i] = new Option(data[i].cityName, data[i].cityCode);
@@ -227,6 +229,8 @@ function setCusMsgAndLocation(indentId) {
                 userMarkers.push(marker)
             }
         })
+    }else{
+        $("#indentDetail").hide() //隐藏订单详情按钮
     }
 }
 

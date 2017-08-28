@@ -16,11 +16,8 @@ for(var i in param){
         techId=j[1]
 }
 
-window.confirm("tech"+techId+"orderId"+orderId)
-
 
 $(function(){
-
 
     starChange();
     // $("#evaSubmit").click(checkClick())
@@ -34,15 +31,27 @@ $(function(){
         deliverySpeed=$(".remark3").attr("data-id")
 
 
-        if(!(techService==null || deliverySpeed==null || deliverySpeed==null)){
+        if(!(techService==null || deliverySpeed==null || productQuality==null)){
+
 
             $.ajax({
                 url:"/evaSubmit",
                 type:"POST",
                 dataType:"json",
-                data:{"productQuality":productQuality,"techService":techService,"deliverySpeed":deliverySpeed},
+                data:{"productQuality":productQuality,
+                    "techService":techService,
+                    "deliverySpeed":deliverySpeed,
+                    "techId":techId,
+                    "orderId":orderId
+                },
                 success:function (data) {
-                    console.log("ok")
+                    if (data == "success") {
+                    window.location = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
+                        .replace("APPID", APPID).replace("REDIRECT", wxHistoryIndent)
+                    }else{
+                        window.confirm("您已评价过此订单了")
+                    }
+
                 }
             })
         }

@@ -7,3 +7,7 @@ APPSECRET = "365c06031424c5e9d5e93e40910a8975"
 
 
 var wxGetServiceByPhone="http://dcdd.tunnel.qydev.com/templates/wxGetServiceByPhone.html"
+
+var wxHistoryIndent="http://dcdd.tunnel.qydev.com/templates/wxHistoryIndent.html"
+
+var wxCusEvaluation="http://dcdd.tunnel.qydev.com/templates/wxCusEvaluation.html"

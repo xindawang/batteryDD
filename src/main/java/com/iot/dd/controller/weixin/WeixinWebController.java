@@ -16,12 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.swing.text.html.parser.Entity;
 
 /**
  * Created by huanglin on 2017/7/16.
@@ -45,7 +47,7 @@ public class WeixinWebController {
         // 用户同意授权后，能获取到code
         String code = request.getParameter("code");
         String openId;
-        String indentId=null;
+        List<OrderEntity> indentList=new ArrayList<>();
         // 用户同意授权
         if(session.getAttribute("openId")==null) {
             if (code != null) {
@@ -56,18 +58,18 @@ public class WeixinWebController {
                 if (weixinOauth2Token != null) {
                     openId = weixinOauth2Token.getOpenId();
                     session.setAttribute("openId", openId);
-                    indentId = indentService.getOrderIdByOpenId(openId);
+                    indentList = indentService.getOrderIdByOpenId(openId);
                 }
 
             }
 
         }else{
             openId=session.getAttribute("openId").toString();
-            indentId = indentService.getOrderIdByOpenId(openId);
+            indentList = indentService.getOrderIdByOpenId(openId);
         }
 
         // 跳转到index.jsp
-        return JsonTool.objectToJson(indentId);
+        return JsonTool.objectToJson(indentList);
     }
 
 
@@ -120,12 +122,14 @@ public class WeixinWebController {
     //将用户位置更新到数据库
     @RequestMapping(value="/setCustomerLocation",method = RequestMethod.POST)
     String setCustomerLocation(HttpServletRequest request){
-        String result;
+        String result=null;
         String orderId=request.getParameter("orderId");
-        Float longitude=Float.parseFloat(request.getParameter("longitude"));
-        Float latitude=Float.parseFloat(request.getParameter("latitude"));
-
-        result=indentService.updateCustomerLocation(orderId,longitude,latitude);
+        Float longitude,latitude;
+        if((request.getParameter("longitude")!=null)  &&(request.getParameter("longitude")!=null)){
+            longitude=Float.parseFloat(request.getParameter("longitude"));
+            latitude=Float.parseFloat(request.getParameter("latitude"));
+            result=indentService.updateCustomerLocation(orderId,longitude,latitude);
+        }
         return result;
     }
 
@@ -161,13 +165,15 @@ public class WeixinWebController {
 
     @RequestMapping(value="/evaSubmit",method=RequestMethod.POST)
     String submitEvaluation(HttpServletRequest request){
-        String result="success";
-        Integer techService=Integer.parseInt(request.getParameter(""));
-        String  techId=request.getParameter("");
-        Integer deliverySpeed=Integer.parseInt(request.getParameter(""));
-        Integer productQuality=Integer.parseInt(request.getParameter(""));
+        String result=null;
+        Integer techService=Integer.parseInt(request.getParameter("techService"));
+        String  techId=request.getParameter("techId");
+        Integer deliverySpeed=Integer.parseInt(request.getParameter("deliverySpeed"));
+        Integer productQuality=Integer.parseInt(request.getParameter("productQuality"));
+        String  orderId=request.getParameter("orderId");
 
-         return result;
+        result=indentService.setIndentEvaluation(orderId,techId,deliverySpeed,productQuality,techService);
+        return JsonTool.objectToJson(result);
     }
 
     @RequestMapping(value = "/getTechId",method=RequestMethod.POST)

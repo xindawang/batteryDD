@@ -4,9 +4,11 @@ import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.entity.resource.CityEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
+import com.sun.org.apache.xpath.internal.operations.Bool;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Timestamp;
 import java.util.List;
 
 /**
@@ -99,11 +101,11 @@ public interface OrderMapper {
     List<OrderEntity> selectIndentByStatusAndCity(@Param("status") Integer status, @Param("cityCode") String cityCode);
 
     //根据城市和订单状态查询该城市所有订单的订单编号
-    @Select("select indent.order_id as orderId from indent  join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} ")
+    @Select("select indent.order_id as orderId from indent  join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL ")
     List<OrderEntity> selectIndentIdByStatusAndCity(@Param("status")Integer status,@Param("cityCode")String cityCode);
 
 
-    @Select("select  DISTINCT indent.CITY_CODE  as cityCode from indent join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where STATUS=#{status} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL")
+    @Select("select  DISTINCT indent.CITY_CODE  as cityCode from indent join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL")
     List<CityEntity> selectCityCodeByStatus(Integer status);
 
     @Select("select city_code as cityCode,city_name as cityName from city where city_code=#{cityCode}")
@@ -129,8 +131,8 @@ public interface OrderMapper {
     @Select("select order_id from indent where status=#{status} and (customer_cellphone=#{telephone} or customer_telephone=#{telephone})")
     String selectOrderIdbyPhone(@Param("telephone") String telephone, @Param("status") Integer status);
 
-    @Select("select order_id from indent where STATUS !=4 and OPEN_ID=#{openId}")
-    String selectOrderIdByOpenId(String openId);
+    @Select("select order_id as orderId,status ,create_time as createTime, finish_time as finishTime ,battery_type as batteryType from indent where OPEN_ID=#{openId}")
+    List<OrderEntity> selectOrderIdByOpenId(String openId);
 
 
     @Select("select open_id from indent where order_id=#{orderId}")
@@ -220,6 +222,14 @@ public interface OrderMapper {
     TechnicianEntity selectTechMsgById(String techId);
 
 
+    @Insert("insert into indent_evaluation (order_id,technician_id,time,"+
+            "technician_service,delivery_speed,product_quality)" +
+            " values( #{orderId},#{techId},#{time},#{techService},#{deliverySpeed},#{productQuality})")
+    Boolean insertIndentEvaluation(@Param("orderId")String orderId, @Param("techId")String techId,@Param("time")Timestamp nowTime,@Param("techService")Integer techService,@Param("deliverySpeed")Integer deliverySpeed,@Param("productQuality")Integer productQuality);
+
+
+    @Select("select order_id from indent_evaluation where order_id=#{orderId}")
+    String selectOrderIdFromEva(String orderId);
 }
 
 
