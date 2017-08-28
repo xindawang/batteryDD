@@ -76,8 +76,8 @@ public class indentAllocationService {
     /*
     * 技师拒绝接受委派订单任务是删除记录
     * */
-    public boolean deleteByOrderId(String orderId){
-        return indentAllocatMapper.deleteAllocation(orderId);
+    public boolean deleteByOrderId(String orderId,String technicianId){
+        return indentAllocatMapper.deleteAllocation(orderId,technicianId);
 
     }
 

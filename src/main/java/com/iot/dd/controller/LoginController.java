@@ -109,7 +109,7 @@ public class LoginController {
     }
 
     //技师登陆
-    @RequestMapping(value="/technicinLogin", method = RequestMethod.GET)
+    @RequestMapping(value="/technicianLogin", method = RequestMethod.GET)
     public String technicianLogin(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
