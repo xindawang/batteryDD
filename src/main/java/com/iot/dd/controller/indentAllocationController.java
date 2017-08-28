@@ -172,6 +172,7 @@ public class indentAllocationController {
         String orderId = request.getParameter("orderId");
         int statues = 1;//已录入
 
+
         //修改indent中的statuew字段
         boolean t = orderMapper.updateStatues(orderId, statues);
         //删除indent_allocation中的记录根据orderId
