@@ -105,8 +105,8 @@ public class indentAllocationController {
                 map.put("customerCellphone", order.getCustomerCellphone());
                 map.put("customerTelephone", order.getCustomerTelephone());
                 map.put("licensePlateNumber", order.getLicensePlateNumber());
-                map.put("customerLatitude",entity.getCustomerLatitude()+"");
-                map.put("customerLongitude",entity.getCustomerLongitude()+"");
+                map.put("customerLatitude", entity.getCustomerLatitude() + "");
+                map.put("customerLongitude", entity.getCustomerLongitude() + "");
                 map.put("technicianId", entity.getTechnicianId());
                 map.put("address", order.getAddress());
                 mapList.add(map);
@@ -120,8 +120,8 @@ public class indentAllocationController {
                 map1.put("customerCellphone", order.getCustomerCellphone());
                 map1.put("customerTelephone", order.getCustomerTelephone());
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
-                map1.put("customerLatitude",entity.getCustomerLatitude()+"");
-                map1.put("customerLongitude",entity.getCustomerLongitude()+"");
+                map1.put("customerLatitude", entity.getCustomerLatitude() + "");
+                map1.put("customerLongitude", entity.getCustomerLongitude() + "");
                 map1.put("technicianId", entity.getTechnicianId());
                 map1.put("address", order.getAddress());
                 mapList.add(map1);
@@ -156,8 +156,8 @@ public class indentAllocationController {
                 map1.put("customerCellphone", order.getCustomerCellphone());
                 map1.put("customerTelephone", order.getCustomerTelephone());
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
-                map1.put("customerLatitude",entity.getCustomerLatitude()+"");
-                map1.put("customerLongitude",entity.getCustomerLongitude()+"");
+                map1.put("customerLatitude", entity.getCustomerLatitude() + "");
+                map1.put("customerLongitude", entity.getCustomerLongitude() + "");
                 map1.put("technicianId", entity.getTechnicianId());
                 map1.put("address", order.getAddress());
                 mapList.add(map1);
@@ -167,8 +167,7 @@ public class indentAllocationController {
         return JsonTool.listToJson(mapList).toString();
     }
 
-    //查看技师已完成的订单
-    //技师查看客服指派的订单(未接)
+    //查看技师已完成的订单(历史记录)
     @RequestMapping(value = "/completeRecord", method = RequestMethod.GET)
     public String findRecordIndent(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         request.setCharacterEncoding("utf-8");
@@ -179,7 +178,7 @@ public class indentAllocationController {
         //根据技师编号查早，接下的订单
         List<IndentAllocationEntity> listAllocation = allocation.findAllocation(technician.getTechnicianId());
 
-        List<Map<String,String>>maplist=new ArrayList<Map<String,String>>();
+        List<Map<String, String>> maplist = new ArrayList<Map<String, String>>();
         OrderEntity order;
         for (int i = 0; i < listAllocation.size(); i++) {
             IndentAllocationEntity entity = listAllocation.get(i);
@@ -187,30 +186,31 @@ public class indentAllocationController {
             String cityName = resourceService.findCityName(order.getCityCode());
             if (order.getStatus() == 4) {//订单已完成
                 //用城市名替换cityCode
-                Map<String,String>map=new HashMap<String,String>();
-                map.put("mask","0");
-                map.put("orderId",order.getOrderId());
-                map.put("batteryType",order.getBatteryType());
-                map.put("cityName",cityName);
-                map.put("licenseNumber",order.getLicensePlateNumber());
-                map.put("finishTime",order.getFinishTime()+"");
-                map.put("starNum","4");
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("mask", "0");
+                map.put("orderId", order.getOrderId());
+                map.put("batteryType", order.getBatteryType());
+                map.put("cityName", cityName);
+                map.put("licenseNumber", order.getLicensePlateNumber());
+                map.put("finishTime", order.getFinishTime() + "");
+                map.put("starNum", "0");
+                maplist.add(map);
             }
-            if(order.getStatus() == 5){
-                Map<String,String>map=new HashMap<String,String>();
-                map.put("mask","1");
-                map.put("orderId",order.getOrderId());
-                map.put("batteryType",order.getBatteryType());
-                map.put("cityName",cityName);
-                map.put("licenseNumber",order.getLicensePlateNumber());
-                map.put("finishTime",order.getFinishTime()+"");
-                map.put("starNum","5");
+            if (order.getStatus() == 5) {
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("mask", "1");
+                map.put("orderId", order.getOrderId());
+                map.put("batteryType", order.getBatteryType());
+                map.put("cityName", cityName);
+                map.put("licenseNumber", order.getLicensePlateNumber());
+                map.put("finishTime", order.getFinishTime() + "");
+                map.put("starNum", "4");
+                maplist.add(map);
             }
         }
         //将orderList已json格式字符串返回
         return JsonTool.listToJson(maplist).toString();
     }
-
 
 
     //更具订单编号查找技师和客户位置（）indent_allocation）
@@ -264,7 +264,7 @@ public class indentAllocationController {
     /*
     * 订单完成
     * */
-    @RequestMapping(value = "/androidComplete", method = RequestMethod.GET)
+    @RequestMapping(value = "/androidComplete", method = RequestMethod.POST)
     public String CompleteIndent(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
@@ -274,39 +274,39 @@ public class indentAllocationController {
         String carImg = request.getParameter("carImg");
         String qualityImg = request.getParameter("qualityImg");
 
-        String path="E:\\1111\\batteryDD\\src\\main\\resources\\static\\confirmImg\\";
+        String path = "E:\\1111\\batteryDD\\src\\main\\resources\\static\\confirmImg\\";
 
         //绝对路径
-        String path1=path+orderId+"_battery.jpg";
-        String path2=path+orderId+"_carNum.jpg";
-        String path3=path+orderId+"_quality.jpg";
+        String path1 = path + orderId + "_battery.jpg";
+        String path2 = path + orderId + "_carNum.jpg";
+        String path3 = path + orderId + "_quality.jpg";
         //相对路径
-        String path4="/confirmImg"+orderId+"_battery.jpg";
-        String path5="/confirmImg"+orderId+"_carNum.jpg";
-        String path6="/confirmImg"+orderId+"_quality.jpg";
+        String path4 = "/confirmImg" + orderId + "_battery.jpg";
+        String path5 = "/confirmImg" + orderId + "_carNum.jpg";
+        String path6 = "/confirmImg" + orderId + "_quality.jpg";
 
         //STRING 格式的图片解码保存
-        Base64decode decode=new Base64decode();
-        Boolean t1=decode.string2Image(batteryImg,path1);
-        Boolean t2=decode.string2Image(carImg,path2);
-        Boolean t3=decode.string2Image(qualityImg,path3);
-        if(t1==false||t2==false||t3==false){//解码失败
+        Base64decode decode = new Base64decode();
+        Boolean t1 = decode.string2Image(batteryImg, path1);
+        Boolean t2 = decode.string2Image(carImg, path2);
+        Boolean t3 = decode.string2Image(qualityImg, path3);
+        if (t1 == false || t2 == false || t3 == false) {//解码失败
             return "error";
         }
 
         //将图片相对路径保存
-        ConfirmEntity entity=new ConfirmEntity();
+        ConfirmEntity entity = new ConfirmEntity();
         entity.setOrderId(orderId);
         entity.setTechnicianId(technicianId);
-        entity.setBatteryImg(batteryImg);
-        entity.setLicensePlateNumberImg(carImg);
-        entity.setQualityAssuranceImg(qualityImg);
+        entity.setBatteryImg(path4);
+        entity.setLicensePlateNumberImg(path5);
+        entity.setQualityAssuranceImg(path6);
         entity.setTime(new Date());
 
         confirmService.addOneRecord(entity);
 
 
-        int statues = 1;//已录入
+        int statues = 4;//已录入
         //修改indent中的statuew字段
         boolean t = orderMapper.updateStatues(orderId, statues);
         return "OK";
