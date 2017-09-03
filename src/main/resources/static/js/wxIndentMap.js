@@ -3,12 +3,18 @@
  */
 
 
-var strMsg = window.location.search.substring(1)
+
 var orderId;
 
-var param = strMsg.split('=')
-if (param[0] == 'orderId') orderId = param[1]
+var strMsg = window.location.search.substring(1)
+var param = strMsg.split("&")
+for(var node in param){
 
+    var nodeDn=param[node].split("=")
+    if(nodeDn[0]==='orderId')
+        orderId=nodeDn[1]
+
+}
 //定义技师的经纬度和用户的经纬度为全局变量。
 var userLatitude
 var userLongitude

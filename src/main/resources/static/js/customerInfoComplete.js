@@ -6,6 +6,7 @@
 
 $(function () {
 
+
     //显示初始信息
     var userName=GetQueryString('loginName');
     $.ajax({

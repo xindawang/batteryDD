@@ -63,11 +63,11 @@ public class MenuService {
     public static Menu getMenu(){
 
 
-        String userMessage_url="http://dcdd.tunnel.qydev.com/WeixinUserMessage";
-        String location_url="http://dcdd.tunnel.qydev.com/templates/wxIndentMap.html";
-        String serviceInit_url="http://dcdd.tunnel.qydev.com/templates/applyServiceValidate.html";
-        String cusEvaluation_url="http://dcdd.tunnel.qydev.com/templates/wxCusEvaluation.html";
-        String historyIndent_url="http://dcdd.tunnel.qydev.com/templates/wxHistoryIndent.html";
+        String baseUrl="http://106.14.190.148:8080";
+        String location_url=baseUrl+"/templates/wxIndentMap.html";
+        String serviceInit_url=baseUrl+"/templates/applyServiceValidate.html";
+        String cusEvaluation_url=baseUrl+"/templates/wxCusEvaluation.html";
+        String historyIndent_url=baseUrl+"/templates/wxHistoryIndent.html";
 
         ComplexButton cx_1 = new ComplexButton();
         cx_1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",serviceInit_url));
@@ -88,7 +88,7 @@ public class MenuService {
         ViewButton vb_23 = new ViewButton();
         vb_23.setName("用户评价");
         vb_23.setType("view");
-        vb_23.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",cusEvaluation_url));
+        vb_23.setUrl(cusEvaluation_url);
 
         ComplexButton cx_2 = new ComplexButton();
         cx_2.setName("信息查询");
@@ -96,7 +96,7 @@ public class MenuService {
 
 
         ComplexButton cx_3 = new ComplexButton();
-        cx_3.setName("历史订单");
+        cx_3.setName("我的订单");
         cx_3.setType("view");
         cx_3.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",historyIndent_url));
 

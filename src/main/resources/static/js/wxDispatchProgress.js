@@ -9,10 +9,18 @@ var licensePlateNumber //车牌
 var batteryType
 var cusCellphone;
 var techId
-var strMsg = window.location.search.substring(1)
-var param = strMsg.split('=')
-if (param[0] == 'orderId') indentId = param[1]
 
+
+
+var strMsg = window.location.search.substring(1)
+var param = strMsg.split("&")
+for(var node in param){
+
+    var nodeDn=param[node].split("=")
+    if(nodeDn[0]==='orderId')
+        indentId=nodeDn[1]
+
+}
 
 var checkStatusID
 
@@ -134,11 +142,15 @@ function indentFinishedMsg() {
 }
 
 function turnIndentMap() {
-    window.location="wxIndentMap.html?orderId="+indentId
+    var indentMapUrl=basicUrl+"/templates/wxIndentMap.html?orderId="+indentId
+    window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
+        .replace("APPID", APPID).replace("REDIRECT",indentMapUrl)
 }
 
 function turnEvaluation() {
-    window.location="wxCusEvaluation.html?orderId="+indentId+"&techId="+techId
+    var evaLuationUrl=basicUrl+"/templates/wxCusEvaluation.html?orderId="+indentId+"&techId="+techId
+    window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
+        .replace("APPID", APPID).replace("REDIRECT",evaLuationUrl)
 }
 
 

@@ -90,13 +90,13 @@ public class IndentService {
             indentAllocationEntity.setCustomerLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
         }
 
-        Float techLongitude=indentAllocationEntity.getTechnicianLongitude();
-        Float techLatitude=indentAllocationEntity.getTechnicianLatitude();
-        location=turnLocation(techLongitude,techLatitude);
-        if(location !=null){
-            indentAllocationEntity.setTechnicianLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
-            indentAllocationEntity.setTechnicianLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
-        }
+//        Float techLongitude=indentAllocationEntity.getTechnicianLongitude();
+//        Float techLatitude=indentAllocationEntity.getTechnicianLatitude();
+//        location=turnLocation(techLongitude,techLatitude);
+//        if(location !=null){
+//            indentAllocationEntity.setTechnicianLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
+//            indentAllocationEntity.setTechnicianLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
+//        }
 
         return  indentAllocationEntity;
     }
@@ -140,12 +140,13 @@ public class IndentService {
 
     public String  setIndentEvaluation(String orderId,String techId,Integer deliverySpeed,Integer productQuality,Integer techService){
         Integer status=5;
-        orderMapper.updateStatus(orderId,5);
+
         Date date = new Date();//获得系统时间.
         Timestamp currentTime=new Timestamp(date.getTime());
         System.out.println(currentTime);
         if(orderMapper.selectOrderIdFromEva(orderId)==null) {
             orderMapper.insertIndentEvaluation(orderId, techId, currentTime, techService, deliverySpeed, productQuality);
+            orderMapper.updateStatus(orderId,5);
             return "success";
         }else{
             return "evaluated";

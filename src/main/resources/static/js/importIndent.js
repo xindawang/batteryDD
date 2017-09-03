@@ -2,6 +2,9 @@
  * Created by huanglin on 2017/7/20.
  */
 $(function () {
+
+    $('.required').before('<span style="color:red">*</span>')
+    $('.unrequired').before('<span style="visibility: hidden">*</span>')
     //省列表
     $.ajax({
         type:"POST",
@@ -137,20 +140,30 @@ $(function () {
     });
 
     $('#import').click(function(){
-        $.ajax({
-            type:"POST",
-            url:"/importOrder",
-            data:$('#form').serialize(),
-            dataType: "json",
-            success:function (data) {
-                $(':input','#form')
-                    .not(':button, :submit, :reset, :hidden')
-                    .val('')
-                    .removeAttr('checked')
-                    .removeAttr('selected');
+        var submit=true
+        $(".necessary").each(function () {
+            if((!$(this).val()) || ($(this).val()==0) ) {
+                submit=false
+                window.confirm($(this).attr("data-id")+"不能为空")
             }
-        })
 
+        })
+        if(submit) {
+            $.ajax({
+                type: "POST",
+                url: "/importOrder",
+                data: $('#form').serialize(),
+                dataType: "json",
+                success: function (data) {
+                    //清空表清单
+                    $(':input', '#form')
+                        .not(':button, :submit, :reset, :hidden')
+                        .val('')
+                        .removeAttr('checked')
+                        .removeAttr('selected');
+                }
+            })
+        }
 
     });
 });
