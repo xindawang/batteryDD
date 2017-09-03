@@ -8,11 +8,11 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-
     <script type="text/javascript" src="../js/commonPlugin.js"></script>
     <script type="text/javascript" src="../js/importIndent.js"></script>
     <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all"/>
     <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+
     <title>订单导入</title>
 </head>
 <body>
@@ -22,53 +22,48 @@
             <legend>客户信息</legend>
             <div class="layui-field-box layui-form">
 
-                <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">姓名</label>
+                <div class="layui-form-item ">
+                    <div class="layui-inline required">
+                        <label class="layui-form-label ">姓名</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="customerName" name="customerName" class="layui-input" value=""/>
+                            <input type="text" data-id="姓名" id="customerName" name="customerName" class="layui-input necessary"  >
                         </div>
                     </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">微信号</label>
+                    <div class="layui-inline required">
+                        <label class="layui-form-label">汽车品牌</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="wechatId" name="wechatId" class="layui-input"/>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">移动电话</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="cellphone" name="cellphone" class="layui-input"/>
+                            <select id="automobileBrand" data-id="汽车品牌" name="automobileBrand" class="layui-select necessary"></select>
                         </div>
                     </div>
 
                 </div>
                 <div class="layui-form-item">
-                    <div class="layui-inline">
-                        <label class="layui-form-label">汽车品牌</label>
-                        <div class="layui-input-inline">
-                            <select id="automobileBrand" name="automobileBrand" class="layui-select"></select>
-                        </div>
-                    </div>
-                    <div class="layui-inline">
+
+                    <div class="layui-inline required">
                         <label class="layui-form-label">汽车型号</label>
                         <div class="layui-input-inline">
-                            <select id="automobileType" name="automobileType" class="layui-select"
-                                   ></select>
+                            <select id="automobileType" data-id="汽车型号" name="automobileType" class="layui-select necessary" ></select>
                         </div>
                     </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">固定电话</label>
-                        <div class="layui-input-inline">
-                            <input type="text" id="telephone" name="telephone" class="layui-input"/>
-                        </div>
-                    </div>
-                </div>
-                <div class="layui-form-item">
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">车牌号码</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="licensePlateNumber" name="licensePlateNumber" class="layui-input"/>
+                            <input type="text" id="licensePlateNumber" data-id="车牌号码" name="licensePlateNumber" class="layui-input necessary" />
+                        </div>
+                    </div>
+
+                </div>
+                <div class="layui-form-item ">
+                    <div class="layui-inline required">
+                        <label class="layui-form-label">移动电话</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="cellphone" data-id="移动电话" name="cellphone" class="layui-input necessary" />
+                        </div>
+                    </div>
+                    <div class="layui-inline unrequired">
+                        <label class="layui-form-label">固定电话</label>
+                        <div class="layui-input-inline">
+                            <input type="text" id="telephone"  name="telephone" class="layui-input " />
                         </div>
                     </div>
 
@@ -81,66 +76,61 @@
             <legend>订单信息</legend>
             <div class="layui-field-box layui-form">
                 <div class="layui-form-item">
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">订单编号</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="orderId" name="orderId" class="layui-input"/>
+                            <input type="text" id="orderId" name="orderId" data-id="订单编号" class="layui-input necessary" />
                         </div>
                     </div>
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">电池品牌</label>
                         <div class="layui-input-inline">
-                            <select id="batteryBrand" name="batteryBrand" class="layui-select"
-                                   ></select>
+                            <select id="batteryBrand" name="batteryBrand" data-id="电池品牌" class="layui-select necessary" ></select>
                         </div>
                     </div>
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">电池型号</label>
                         <div class="layui-input-inline">
-                            <select id="batteryType" name="batteryType" class="layui-select"
-                                   ></select>
+                            <select id="batteryType" name="batteryType" data-id="电池型号" class="layui-select necessary" ></select>
                         </div>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">收货地址</label>
                         <div class="layui-input-inline">
-                            <select id="province" name="province" class="layui-select"
-                                    ></select>
+                            <select id="province" name="province" data-id="收货地址" class="layui-select necessary"></select>
                         </div>
                     </div>
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">城市名称</label>
                         <div class="layui-input-inline">
-                            <select id="city" name="city" class="layui-select"
-                                    ></select>
+                            <select id="city" name="city" data-id="城市名称" class="layui-select necessary" ></select>
                         </div>
                     </div>
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">地区/县市</label>
                         <div class="layui-input-inline">
-                            <select id="area" name="area" class="layui-select"
-                                   ></select>
+                            <select id="area" name="area" data-id="地区/县市" class="layui-select necessary" ></select>
                         </div>
                     </div>
                 </div>
 
                 <div class="layui-form-item">
-                    <div class="layui-inline">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">详细地址</label>
                         <div class="layui-input-inline">
-                            <input type="text" id="detailAddress" name="detailAddress" class="layui-input"/>
+                            <input type="text" id="detailAddress" data-id="详细地址" name="detailAddress" class="layui-input necessary" />
                         </div>
                     </div>
-                    <div class="layui-inline">
-                        <label class="layui-form-label">下单时间</label>
+                    <div class="layui-inline required">
+                        <label class="layui-form-label ">下单时间</label>
                         <div class="layui-input-inline">
-                            <input type="date" id="createTime" name="createTime" class="layui-select"/>
+                            <input type="date" id="createTime"  data-id="下单时间" name="createTime" class="layui-select necessary" />
                         </div>
                     </div>
-                    <div class="layui-inline">
+                    <div class="layui-inline unrequired">
                         <label class="layui-form-label">附加信息</label>
                         <div class="layui-input-inline">
                             <input type="text" id="remark" name="remark" class="layui-input">

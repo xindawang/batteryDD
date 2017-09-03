@@ -41,6 +41,7 @@ public class WeixinInitController extends HttpServlet {
             PrintWriter out = resp.getWriter();
             //验证成功，则返回echostr
             if (CheckService.checkSignature(signature, timestamp, nonce)) {
+                System.out.println("check successfully");
                 out.print(echostr);
             }
         }

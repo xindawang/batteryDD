@@ -22,18 +22,16 @@ $(function () {
                 if (data.length>0) {
                     for(var i in data){
                         if(data[i].status <4){
-                            window.location = "wxDispatchProgress.html?orderId=" + data[i].orderId
+                            var dispatchProgressUrl = basicUrl+"/templates/wxDispatchProgress.html?orderId=" + data[i].orderId
+                            window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
+                                .replace("APPID", APPID).replace("REDIRECT",dispatchProgressUrl)
                             return
                         }
                     }
+                }
 
-                    window.location =window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-                        .replace("APPID", APPID).replace("REDIRECT",wxHistoryIndent)
-                }
-                else {
-                    window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-                        .replace("APPID", APPID).replace("REDIRECT",wxGetServiceByPhone)
-                }
+                window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
+                    .replace("APPID", APPID).replace("REDIRECT",wxGetServiceByPhone)
 
             }
         })

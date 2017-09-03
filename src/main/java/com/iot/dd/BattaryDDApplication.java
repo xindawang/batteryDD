@@ -10,6 +10,7 @@ import java.util.Timer;
 @SpringBootApplication
 public class BattaryDDApplication {
 
+
 	public static void main(String[] args) {
 		SpringApplication.run(BattaryDDApplication.class, args);
 		Timer timer=new Timer();

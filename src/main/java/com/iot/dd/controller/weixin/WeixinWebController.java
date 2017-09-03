@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.IdentityHashMap;
 import java.util.List;
 import java.util.Map;
 import javax.servlet.ServletException;
@@ -157,7 +158,6 @@ public class WeixinWebController {
         String result;
 
         String orderId=request.getParameter("orderId");
-
         result=JsonTool.objectToJson(indentService.getAllLocation(orderId));
         return result;
 
@@ -188,6 +188,9 @@ public class WeixinWebController {
         TechnicianEntity message;
         String orderId=request.getParameter("orderId");
         message=indentService.getTechnicainMsg(orderId);
+        if(message ==null){
+            return JsonTool.objectToJson("未指派技师");
+        }
         return JsonTool.objectToJson(message);
     }
 
