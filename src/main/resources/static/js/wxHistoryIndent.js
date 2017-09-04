@@ -37,22 +37,19 @@ $(function () {
     $("#allIndent").click(function () {
 
         var wxHistoryIndent=basicUrl+"/templates/wxHistoryIndent.html?showStyle="+"all"
-        window.location.replace("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-            .replace("APPID", APPID).replace("REDIRECT",wxHistoryIndent))
+        window.location.replace(wxHistoryIndent)
 
     })
 
     $("#workingIndent").click(function () {
 
         var wxHistoryIndent=basicUrl+"/templates/wxHistoryIndent.html?showStyle="+"working"
-        window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-            .replace("APPID", APPID).replace("REDIRECT",wxHistoryIndent)
+        window.location.href=wxHistoryIndent
     })
     $("#doneIndent").click(function () {
 
         var wxHistoryIndent=basicUrl+"/templates/wxHistoryIndent.html?showStyle="+"done"
-        window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-            .replace("APPID", APPID).replace("REDIRECT",wxHistoryIndent)
+        window.location.href=wxHistoryIndent
 
     })
 
@@ -258,8 +255,7 @@ function showNoIndent() {$("#base").append(
 
 function evaTurn(orderId,techId) {
     var cusEvationUrl=basicUrl+"/templates/wxCusEvaluation.html?orderId="+orderId+"&techId="+techId
-    window.location="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-        .replace("APPID", APPID).replace("REDIRECT",cusEvationUrl)
+    window.location.href=cusEvationUrl
 }
 
 function test(value) {

@@ -14,7 +14,7 @@ public class BattaryDDApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(BattaryDDApplication.class, args);
 		Timer timer=new Timer();
-		timer.schedule(new WeixinInitService(),0,36000000);
+		timer.schedule(new WeixinInitService(),0,3600000);
 
 	}
 }

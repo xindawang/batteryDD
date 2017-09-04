@@ -27,6 +27,8 @@ import java.io.IOException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 import java.net.URL;
@@ -69,7 +71,10 @@ public class WeixinInitService extends TimerTask {
     //重写TimerTask的run方法
     @Override
     public void run(){
-        System.out.println("1小时一次");
+        Date date=new Date();
+        DateFormat format=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String time=format.format(date);
+        System.out.println(" one hour update;now time:"+time);
         access_token=getAccessToken().getToken();
 
         JSONObject jsonObject = doGetStr(JSAPI_TICKET_URL.replace("ACCESS_TOKEN",access_token));

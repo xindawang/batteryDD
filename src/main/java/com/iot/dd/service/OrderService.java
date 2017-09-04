@@ -100,15 +100,15 @@ public class OrderService {
 
 
         }
-        //先去除没有地理位置的技师，再进行转码
-        for(int i=techMsg.size()-1;i>=0;i--){
-            //更新坐标系  GPS-高德
-            JSONObject location= IndentService.turnLocation(techMsg.get(i).getLongitude(),techMsg.get(i).getLatitude());
-            if(location !=null){
-                techMsg.get(i).setLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
-                techMsg.get(i).setLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
-            }
-        }
+//        //先去除没有地理位置的技师，再进行转码
+//        for(int i=techMsg.size()-1;i>=0;i--){
+//            //更新坐标系  GPS-高德
+//            JSONObject location= IndentService.turnLocation(techMsg.get(i).getLongitude(),techMsg.get(i).getLatitude());
+//            if(location !=null){
+//                techMsg.get(i).setLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
+//                techMsg.get(i).setLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
+//            }
+//        }
 
 
         return techMsg;

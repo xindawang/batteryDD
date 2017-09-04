@@ -40,7 +40,6 @@ public class UploadController {
                 String technicianID = ss[0];
                 String orderID = ss[1];
                 String batterIMG=filePathPrefix+fileName;
-
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
                         new BufferedOutputStream(new FileOutputStream(new File(filePathPrefix + fileName)));

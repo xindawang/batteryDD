@@ -5,7 +5,7 @@
 APPID="wx653f3498190e7c80"
 APPSECRET = "365c06031424c5e9d5e93e40910a8975"
 
-var basicUrl="http://106.14.190.148:8080"
+var basicUrl="http://www.cxspace.top"
 var wxGetServiceByPhone=basicUrl+"/templates/wxGetServiceByPhone.html"
 
 var wxHistoryIndent=basicUrl+"/templates/wxHistoryIndent.html"

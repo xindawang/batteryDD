@@ -31,8 +31,7 @@ $(function () {
                 }else
                 {
                     var dispatchProgressUrl=basicUrl+"/templates/wxDispatchProgress.html?orderId="+data
-                    window.location.replace("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-                        .replace("APPID", APPID).replace("REDIRECT",dispatchProgressUrl))
+                    window.location.replace(dispatchProgressUrl)
                 }
 
             }

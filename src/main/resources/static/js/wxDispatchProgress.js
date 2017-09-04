@@ -143,14 +143,12 @@ function indentFinishedMsg() {
 
 function turnIndentMap() {
     var indentMapUrl=basicUrl+"/templates/wxIndentMap.html?orderId="+indentId
-    window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-        .replace("APPID", APPID).replace("REDIRECT",indentMapUrl)
+    window.location.href=indentMapUrl
 }
 
 function turnEvaluation() {
     var evaLuationUrl=basicUrl+"/templates/wxCusEvaluation.html?orderId="+indentId+"&techId="+techId
-    window.location.href="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect "
-        .replace("APPID", APPID).replace("REDIRECT",evaLuationUrl)
+    window.location.href=evaLuationUrl
 }
 
 
