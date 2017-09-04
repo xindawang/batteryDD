@@ -260,11 +260,10 @@ public class indentAllocationController {
             longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
             latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
         }
-        entity.setTechnicianLatitude(latitude);
+        entity.setCustomerLatitude(latitude);
         entity.setCustomerLongitude(longitude);
 
-        return JsonTool.javaBeanToJson(entity);
-    }
+        return JsonTool.javaBeanToJson(entity);}
 
     /**
      * 技师接单事务处理
