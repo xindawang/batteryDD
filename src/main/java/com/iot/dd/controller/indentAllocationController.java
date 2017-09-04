@@ -184,7 +184,10 @@ public class indentAllocationController {
                 JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-
+                if (location != null) {
+                    longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+                    latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+                }
                 map1.put("customerLatitude",latitude+ "");
                 map1.put("customerLongitude", longitude + "");
                 map1.put("technicianId", entity.getTechnicianId());
