@@ -37,9 +37,9 @@ public class UploadController {
             try {
                 fileName = file.getOriginalFilename();//文件名包括后缀technicianId_orderID_XXX.jpg
                 String[] ss = fileName.split("_");
-                pathOfImg.technicianID = ss[0];
-                pathOfImg.orderID = ss[1];
-                pathOfImg.batterIMG = "/confirmImg/" + fileName;
+                String technicianID = ss[0];
+                String orderID = ss[1];
+                String batterIMG="/techConfirmImage/"+fileName;
 
                 String path = filePathPrefix + fileName;
 
@@ -48,13 +48,28 @@ public class UploadController {
                         new BufferedOutputStream(new FileOutputStream(new File(path)));
                 buffStream.write(bytes);
                 buffStream.close();
+
+                ConfirmEntity entity0=confirmService.find(orderID,technicianID );
+                if(entity0!=null){
+                    confirmService.updateBatteryPath(batterIMG);
+                }
+                else{
+                    ConfirmEntity entity1=new ConfirmEntity();
+                    entity1.setOrderId(orderID);
+                    entity1.setTechnicianId(technicianID);
+                    entity1.setBatteryImg(batterIMG);
+                    entity1.setTime(new Date());
+                    confirmService.addOneBatteryIMG(entity1);
+                }
+                int statues = 4;
+                //修改indent中的statuew字段
+                boolean t = orderMapper.updateStatues(orderID, statues);
             } catch (Exception e) {
                 return "You     failed to upload" + fileName + ":" + e.getMessage();
             }
         } else {
             return "图片不存在！.";
         }
-
         return "ok";
     }
 
@@ -69,15 +84,30 @@ public class UploadController {
                 fileName = file.getOriginalFilename();//文件名包括后缀
 
                 String[] ss = fileName.split("_");
-                pathOfImg.technicianID = ss[0];
-                pathOfImg.orderID = ss[1];
-                pathOfImg.carNumIMG = "/confirmImg/" + fileName;
+                String technicianID = ss[0];
+                String orderID = ss[1];
+                String carNumIMG = "/techConfirmImage/" + fileName;
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
                         new BufferedOutputStream(new FileOutputStream(new File(filePathPrefix + fileName)));
                 buffStream.write(bytes);
                 buffStream.close();
+
+                ConfirmEntity entity0=confirmService.find(orderID,technicianID );
+                if(entity0!=null){
+                    confirmService.updateCarNumPath(carNumIMG);
+                }
+                else{
+                    ConfirmEntity entity=new ConfirmEntity();
+                    entity.setOrderId(orderID);
+                    entity.setTechnicianId(technicianID);
+                    entity.setLicensePlateNumberImg(carNumIMG);
+                    entity.setTime(new Date());
+                    confirmService.addOneCarNumIMG(entity);
+                }
+
+
 
             } catch (Exception e) {
                 return "You     failed to upload" + fileName + ":" + e.getMessage();
@@ -99,11 +129,10 @@ public class UploadController {
             try {
 
                 fileName = file.getOriginalFilename();//文件名包括后缀
-
                 String[] ss = fileName.split("_");
-                pathOfImg.technicianID = ss[0];
-                pathOfImg.orderID = ss[1];
-                pathOfImg.qualityIMG = "/confirmImg/" + fileName;
+                String technicianID = ss[0];
+                String orderID = ss[1];
+                String qualityIMG = "/techConfirmImage/" + fileName;
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
@@ -111,19 +140,21 @@ public class UploadController {
                 buffStream.write(bytes);
                 buffStream.close();
 
-
-                ConfirmEntity entity3 = new ConfirmEntity();
-                entity3.setOrderId(pathOfImg.orderID);
-                entity3.setTechnicianId(pathOfImg.technicianID);
-                entity3.setBatteryImg(pathOfImg.batterIMG);
-                entity3.setLicensePlateNumberImg(pathOfImg.carNumIMG);
-                entity3.setQualityAssuranceImg(pathOfImg.batterIMG);
-                entity3.setTime(new Date());
-                confirmService.addOneRecord(entity3);
-
-                int statues = 4;//
+                ConfirmEntity entity0=confirmService.find( orderID,technicianID );
+                if(entity0!=null){
+                    confirmService.updateQualityPath(qualityIMG);
+                }
+                else{
+                    ConfirmEntity entity=new ConfirmEntity();
+                    entity.setOrderId(orderID);
+                    entity.setTechnicianId(technicianID);
+                    entity.setQualityAssuranceImg(qualityIMG);
+                    entity.setTime(new Date());
+                    confirmService.addOneQualityIMG(entity);
+                }
+                int statues = 4;
                 //修改indent中的statuew字段
-                boolean t = orderMapper.updateStatues(pathOfImg.orderID, statues);
+                boolean t = orderMapper.updateStatues(orderID, statues);
             } catch (Exception e) {
                 return "You     failed to upload" + fileName + ":" + e.getMessage();
             }

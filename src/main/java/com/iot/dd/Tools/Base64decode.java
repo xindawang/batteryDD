@@ -1,9 +1,9 @@
 package com.iot.dd.Tools;
 
-import sun.misc.BASE64Decoder;
 
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.Base64;
 
 /**
  * Created by admin on 2017/8/28.
@@ -16,14 +16,13 @@ public class Base64decode {
             return false;
         try {
             //  Base64解码
-            byte[] b = new BASE64Decoder().decodeBuffer(imgStr);
+//            byte[] b = new BASE64Decoder().decodeBuffer(imgStr);
+            byte[] b= Base64.getDecoder().decode(imgStr);;
             for (int i = 0; i < b.length; ++i) {
                 if (b[i] < 0) {
-                    //  调整异常数据
                     b[i] += 256;
                 }
             }
-            //  生成Jpeg图片
             OutputStream out = new FileOutputStream(imgFilePath);
             out.write(b);
             out.flush();

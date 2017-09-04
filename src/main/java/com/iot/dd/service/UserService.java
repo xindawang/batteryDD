@@ -41,7 +41,7 @@ public class UserService {
     }
     //技师注册
     public String registerTechnician(TechnicianEntity user){
-        if(userMapper.selectStaffUser(user.getName())== null){
+        if(userMapper.selectTechnician(user.getLoginName())== null){
             userMapper.addTechnician(user);
             return "OK";
         }else{
