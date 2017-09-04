@@ -39,13 +39,10 @@ public class UploadController {
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
-                String batterIMG="/techConfirmImage/"+fileName;
-
-                String path = filePathPrefix + fileName;
-
+                String batterIMG=filePathPrefix+fileName;
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(new File(path)));
+                        new BufferedOutputStream(new FileOutputStream(new File(filePathPrefix + fileName)));
                 buffStream.write(bytes);
                 buffStream.close();
 
@@ -86,7 +83,7 @@ public class UploadController {
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
-                String carNumIMG = "/techConfirmImage/" + fileName;
+                String carNumIMG = filePathPrefix + fileName;
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
@@ -132,7 +129,7 @@ public class UploadController {
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
-                String qualityIMG = "/techConfirmImage/" + fileName;
+                String qualityIMG = filePathPrefix + fileName;
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
