@@ -40,9 +40,14 @@ public class UploadController {
                 String technicianID = ss[0];
                 String orderID = ss[1];
                 String batterIMG=filePathPrefix+fileName;
+
+                File file1=new File(filePathPrefix + fileName);
+                if(!file1.exists()){
+                    file1.mkdirs();
+                }
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(new File(filePathPrefix + fileName)));
+                        new BufferedOutputStream(new FileOutputStream(file1));
                 buffStream.write(bytes);
                 buffStream.close();
 
@@ -85,9 +90,14 @@ public class UploadController {
                 String orderID = ss[1];
                 String carNumIMG =filePathPrefix+ fileName;
 
+                File file1=new File(filePathPrefix + fileName);
+                if(!file1.exists()){
+                    file1.mkdirs();
+                }
+
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(new File(filePathPrefix + fileName)));
+                        new BufferedOutputStream(new FileOutputStream(file1));
                 buffStream.write(bytes);
                 buffStream.close();
 
@@ -129,11 +139,16 @@ public class UploadController {
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
-                String qualityIMG =filePathPrefix + fileName;
+                String qualityIMG =filePathPrefix+fileName;
+
+                File file1=new File(filePathPrefix + fileName);
+                if(!file1.exists()){
+                    file1.mkdirs();
+                }
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(new File(filePathPrefix + fileName)));
+                        new BufferedOutputStream(new FileOutputStream(file1));
                 buffStream.write(bytes);
                 buffStream.close();
 
