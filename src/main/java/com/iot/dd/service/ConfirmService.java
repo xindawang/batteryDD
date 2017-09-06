@@ -5,6 +5,8 @@ import com.iot.dd.dao.mapper.confirmMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 /**
  * Created by admin on 2017/8/28.
  */
@@ -49,7 +51,7 @@ public class ConfirmService {
 
     //查找记录
 
-    public ConfirmEntity find(String orderId, String technicianId) {
+    public List<ConfirmEntity> find(String orderId, String technicianId) {
         return mapper.find(orderId, technicianId);
     }
 

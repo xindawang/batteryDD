@@ -4,14 +4,14 @@ package com.iot.dd.dao.entity.worker;
  * Created by admin on 2017/8/31.
  */
 public class LastIdEntity {
-    private int idNumber;
+    private String idNumber;
     private String idPre;
 
-    public int getIdNumber() {
+    public String getIdNumber() {
         return idNumber;
     }
 
-    public void setIdNumber(int idNumber) {
+    public void setIdNumber(String idNumber) {
         this.idNumber = idNumber;
     }
 

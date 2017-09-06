@@ -7,6 +7,8 @@ import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 /**
  * Created by admin on 2017/8/28.
  */
@@ -46,6 +48,6 @@ public interface confirmMapper {
 
     //用于判断记录是否存在
     @Select("select * from receiving_confirmation where order_id=#{orderId} and technician_id=#{technicianId}")
-    ConfirmEntity find(@Param("orderId") String orderId, @Param("technicianId") String technicianId);
+   List<ConfirmEntity> find(@Param("orderId") String orderId, @Param("technicianId") String technicianId);
 
 }

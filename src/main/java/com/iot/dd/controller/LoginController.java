@@ -2,6 +2,7 @@ package com.iot.dd.controller;
 
 
 import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.service.LastIdService;
 import com.iot.dd.service.ResourceService;
 import com.iot.dd.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class LoginController {
 
     @Autowired
     private ResourceService re;
+    @Autowired
+    private LastIdService lastIdService;
 
 
     //跳转链接，跳转到主页
@@ -122,21 +125,19 @@ public class LoginController {
     //技师注册
     @RequestMapping(value = "/technicianSignUp", method = RequestMethod.GET)
     public String technicianSignUp(HttpServletRequest request,HttpServletResponse response) throws UnsupportedEncodingException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-
         String cityName = request.getParameter("cityName");
 
+        LastIdEntity entity=lastIdService.find();//技师可用编号
+        int id=Integer.parseInt(entity.getIdNumber())+1;
+        lastIdService.update(id+"");//设置下一个可用编号
         //获取城市的编码
         String cityCode = re.findCityCODE(cityName);
         TechnicianEntity user = new TechnicianEntity();
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
-        user.setTechnicianId(request.getParameter("technicianId"));
+        user.setTechnicianId(entity.getIdPre()+entity.getIdNumber());
         user.setName(request.getParameter("name"));
-        user.setSex(request.getParameter("sex"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
+        user.setTelephone(request.getParameter("cellphone"));
         user.setCityCode(cityCode);
         user.setAddress(request.getParameter("address"));
         user.setIdNumber(request.getParameter("idNumber"));

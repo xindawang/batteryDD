@@ -11,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by admin on 2017/9/2.
@@ -41,18 +42,15 @@ public class UploadController {
                 String orderID = ss[1];
                 String batterIMG=filePathPrefix+fileName;
 
-                File file1=new File(filePathPrefix + fileName);
-                if(!file1.exists()){
-                    file1.mkdirs();
-                }
+                File file0=new File(filePathPrefix + fileName);
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(file1));
+                        new BufferedOutputStream(new FileOutputStream(file0));
                 buffStream.write(bytes);
                 buffStream.close();
 
-                ConfirmEntity entity0=confirmService.find(orderID,technicianID );
-                if(entity0!=null){
+                List<ConfirmEntity> list0=confirmService.find(orderID,technicianID );
+                if(list0.size()>0){
                     confirmService.updateBatteryPath(batterIMG);
                 }
                 else{
@@ -63,11 +61,8 @@ public class UploadController {
                     entity1.setTime(new Date());
                     confirmService.addOneBatteryIMG(entity1);
                 }
-                int statues = 4;
-                //修改indent中的statuew字段
-                boolean t = orderMapper.updateStatues(orderID, statues);
             } catch (Exception e) {
-                return "You     failed to upload" + fileName + ":" + e.getMessage();
+                return "上传失败！！";
             }
         } else {
             return "图片不存在！.";
@@ -84,16 +79,12 @@ public class UploadController {
         if (file != null) {
             try {
                 fileName = file.getOriginalFilename();//文件名包括后缀
-
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
                 String carNumIMG =filePathPrefix+ fileName;
 
                 File file1=new File(filePathPrefix + fileName);
-                if(!file1.exists()){
-                    file1.mkdirs();
-                }
 
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
@@ -101,8 +92,8 @@ public class UploadController {
                 buffStream.write(bytes);
                 buffStream.close();
 
-                ConfirmEntity entity0=confirmService.find(orderID,technicianID );
-                if(entity0!=null){
+                List<ConfirmEntity> list1=confirmService.find(orderID,technicianID );
+                if(list1!=null){
                     confirmService.updateCarNumPath(carNumIMG);
                 }
                 else{
@@ -117,7 +108,7 @@ public class UploadController {
 
 
             } catch (Exception e) {
-                return "You     failed to upload" + fileName + ":" + e.getMessage();
+                return "上传失败！！";
             }
         } else {
             return "图片不存在！.";
@@ -141,19 +132,15 @@ public class UploadController {
                 String orderID = ss[1];
                 String qualityIMG =filePathPrefix+fileName;
 
-                File file1=new File(filePathPrefix + fileName);
-                if(!file1.exists()){
-                    file1.mkdirs();
-                }
-
+                File file2=new File(filePathPrefix + fileName);
                 byte[] bytes = file.getBytes();
                 BufferedOutputStream buffStream =
-                        new BufferedOutputStream(new FileOutputStream(file1));
+                        new BufferedOutputStream(new FileOutputStream(file2));
                 buffStream.write(bytes);
                 buffStream.close();
 
-                ConfirmEntity entity0=confirmService.find( orderID,technicianID );
-                if(entity0!=null){
+                List<ConfirmEntity> list2=confirmService.find(orderID,technicianID );
+                if(list2.size()>0){
                     confirmService.updateQualityPath(qualityIMG);
                 }
                 else{
@@ -168,7 +155,7 @@ public class UploadController {
                 //修改indent中的statuew字段
                 boolean t = orderMapper.updateStatues(orderID, statues);
             } catch (Exception e) {
-                return "You     failed to upload" + fileName + ":" + e.getMessage();
+                return "上传失败！！";
             }
         } else {
             return "图片不存在！.";

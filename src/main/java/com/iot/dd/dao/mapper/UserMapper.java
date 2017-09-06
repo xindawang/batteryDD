@@ -44,7 +44,10 @@ public interface UserMapper {
 
 
      //技师注册
-    @Insert("insert into technician (LOGIN_NAME,PASSWORD,TECHNICIAN_ID,NAME,TELEPHONE,ID_NUMBER,ADDRESS,CITY_CODE,LICENSE_PLATE_NUMBER) values(#{loginName},#{password},#{technicianId},#{name},#{telephone},#{idNumber},#{address},#{cityCode},#{licensePlateNumber})")
+    @Insert("insert into technician (LOGIN_NAME,PASSWORD,TECHNICIAN_ID,NAME,TELEPHONE," +
+            "ID_NUMBER,ADDRESS,CITY_CODE,LICENSE_PLATE_NUMBER) values(#{loginName},#{password}," +
+            "#{technicianId},#{name},#{telephone},#{idNumber},#{address},#{cityCode}," +
+            "#{licensePlateNumber})")
     boolean addTechnician(TechnicianEntity user);
 
 
