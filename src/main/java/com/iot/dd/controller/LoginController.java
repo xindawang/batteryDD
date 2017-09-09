@@ -137,7 +137,7 @@ public class LoginController {
         user.setPassword(request.getParameter("password"));
         user.setTechnicianId(entity.getIdPre()+entity.getIdNumber());
         user.setName(request.getParameter("name"));
-        user.setTelephone(request.getParameter("cellphone"));
+        user.setCellphone(request.getParameter("cellphone"));
         user.setCityCode(cityCode);
         user.setAddress(request.getParameter("address"));
         user.setIdNumber(request.getParameter("idNumber"));
