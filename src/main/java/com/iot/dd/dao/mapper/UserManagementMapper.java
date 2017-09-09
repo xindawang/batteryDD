@@ -114,6 +114,12 @@ public interface UserManagementMapper {
     @Update("update customer set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},postcode=#{postcode} where login_name=#{loginName}")
     boolean modifyCustomerInfo(CustomerEntity user);
 
+
+
+    /*
+    *
+    * android端
+    * */
     //技师注册
     @Insert("insert into technician (login_name,technician_id,password,name,sex,telephone,email,address,city_code,id_number,license_plate_number) values(#{loginName},#{technicianId},#{password},#{name},#{sex},#{telephone},#{email},#{address},#{cityCode},#{idNumber},#{licensePlateNumber})")
     boolean technicianLogin(TechnicianEntity user);
@@ -133,5 +139,30 @@ public interface UserManagementMapper {
             @Result(property="cityCode", column="city_code")
     })
     TechnicianEntity selectTechMsgFromCity(String cityCode);
+
+
+    @Update("update technician set name=#{name} where technician_id=#{technicianId}")
+    boolean updateName(@Param("technicianId") String technicianId,@Param("name") String name);
+
+    @Update("update technician set sex=#{gender} where technician_id=#{technicianId}")
+    boolean updateGender(@Param("technicianId") String technicianId,@Param("gender") String gender);
+
+    @Update("update technician set cellphone=#{cellphone} where technician_id=#{technicianId}")
+    boolean updateCellphone(@Param("technicianId") String technicianId,@Param("cellphone") String cellphone);
+
+    @Update("update technician set telephone=#{telephone} where technician_id=#{technicianId}")
+    boolean updateTelephone(@Param("technicianId") String technicianId,@Param("telephone") String telephone);
+
+    @Update("update technician set email=#{email} where technician_id=#{technicianId}")
+    boolean updateEmail(@Param("technicianId") String technicianId,@Param("email") String email);
+
+    @Update("update technician set id_number=#{idNumber} where technician_id=#{technicianId}")
+    boolean updateIdNumber(@Param("technicianId") String technicianId,@Param("idNumber") String idNumber);
+
+    @Update("update technician set license_plate_number=#{carNumber} where technician_id=#{technicianId}")
+    boolean updateCarNumber(@Param("technicianId") String technicianId,@Param("carNumber") String carNumber);
+
+    @Update("update technician set address=#{address},city_code=#{cityCode} where technician_id=#{technicianId}")
+    boolean updateAddress(@Param("technicianId") String technicianId,@Param("cityCode") String cityCode,@Param("address") String  address);
 
 }

@@ -29,10 +29,8 @@ import java.util.Map;
 public class UserInfoManageController {
     @Autowired
     private UserManageService usermanageservice;
-    @Autowired
-    private indentAllocationService indentAlloccation;
 
-    //查询一类用户信息
+    //后台信息管理，查询一类用户信息
     @RequestMapping(value = "customer", method = RequestMethod.GET)
     public String findcustomer(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
@@ -164,8 +162,7 @@ public class UserInfoManageController {
     }
 
 
-    //更新信息
-
+    //管理员更新信息
     @RequestMapping(value = "/staffModify", method = RequestMethod.POST)
     public String staffmodify(HttpServletRequest request) {
 
@@ -263,29 +260,6 @@ public class UserInfoManageController {
 
     }
 
-/*
-* android
-* */
-
-    //更新技师位置信息（indent ，）indent_allocation
-    @RequestMapping(value = "/technicianAddress", method = RequestMethod.GET)
-    public String updataPosition(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        String technicianName= request.getParameter("loginName");
-        double longitude = Double.parseDouble(request.getParameter("longitude"));
-        double latitude = Double.parseDouble(request.getParameter("latitude"));
-
-        //根据登陆名找id
-         TechnicianEntity technician=usermanageservice.findTechnicianOne(technicianName);
-         String technicianId=technician.getTechnicianId();
-
-        //technician表的经纬度
-        usermanageservice.updateTechnicianLocation(technicianId, longitude, latitude);
-        //indent_allocation
-        indentAlloccation.SetTechnicianPosition(technicianId, longitude, latitude);
-        return "Ok";
-    }
 
 
 }

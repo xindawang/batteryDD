@@ -24,7 +24,6 @@ import java.io.*;
 import java.util.*;
 
 
-
 /**
  * Created by admin on 2017/7/31.
  */
@@ -44,7 +43,6 @@ public class indentAllocationController {
 
     @Autowired
     ResourceService resourceService;
-
 
 
     //网页前端的请求
@@ -112,11 +110,14 @@ public class indentAllocationController {
                 location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (location != null) {
-                    longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-                    latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+                if (entity.getCustomerLongitude() != null&&entity.getCustomerLatitude()!=null) {
+                    longitude = entity.getCustomerLongitude();
+                    latitude = entity.getCustomerLatitude();
+                    if (location != null) {
+                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+                    }
                 }
-
                 map.put("customerLatitude", latitude + "");
                 map.put("customerLongitude", longitude + "");
                 map.put("technicianId", entity.getTechnicianId());
@@ -137,11 +138,12 @@ public class indentAllocationController {
                 location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (location != null) {
-                    longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-                    latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
+                    if (location != null) {
+                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+                    }
                 }
-
                 map1.put("customerLatitude", latitude + "");
                 map1.put("customerLongitude", longitude + "");
 
@@ -188,7 +190,7 @@ public class indentAllocationController {
                     longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
                     latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
                 }
-                map1.put("customerLatitude",latitude+ "");
+                map1.put("customerLatitude", latitude + "");
                 map1.put("customerLongitude", longitude + "");
                 map1.put("technicianId", entity.getTechnicianId());
                 map1.put("address", order.getAddress());
@@ -253,9 +255,9 @@ public class indentAllocationController {
         String orderId = request.getParameter("orderId");
         IndentAllocationEntity entity = service.findPosition(orderId);
         //经纬度转码
-       JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
-        Float longitude=entity.getCustomerLongitude();
-        Float latitude=entity.getCustomerLatitude();
+        JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+        Float longitude = entity.getCustomerLongitude();
+        Float latitude = entity.getCustomerLatitude();
         if (location != null) {
             longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
             latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
@@ -263,7 +265,8 @@ public class indentAllocationController {
         entity.setCustomerLatitude(latitude);
         entity.setCustomerLongitude(longitude);
 
-        return JsonTool.javaBeanToJson(entity);}
+        return JsonTool.javaBeanToJson(entity);
+    }
 
     /**
      * 技师接单事务处理

@@ -110,6 +110,10 @@ public class UserManageService {
         }
     }
 
+
+    /*
+    * android
+    * */
     //注册技师信息
     public String technicianLogin(TechnicianEntity user){
         boolean result=usermanage.technicianLogin(user);
@@ -120,13 +124,36 @@ public class UserManageService {
             return "技师注册失败！";
         }
     }
-
-
   //更新技师位置信息
-
     public boolean updateTechnicianLocation(String technician,double longitude,double latitude){
         return usermanage.updateTechnicianLocation(technician,longitude,latitude);
     }
+   public  boolean updateName(String technicianId,String name){
+        return usermanage.updateName(technicianId,name);
+   }
 
+   public  boolean updateGender(String technicianId,String gender){
+       return  usermanage.updateGender(technicianId,gender);
+   }
+   public  boolean updateCellphone(String technicianId,String cellphone){
+       return usermanage.updateCellphone(technicianId,cellphone);
+   }
+   public boolean updateTelephone(String techcicianId,String telephone){
+       return  usermanage.updateTelephone(techcicianId,telephone);
+   }
+   public boolean updateEmial(String technicianId,String email){
+      return usermanage.updateEmail(technicianId,email);
+   }
 
+    public boolean updateIdNumber(String technicianId,String idNumber){
+     return usermanage.updateIdNumber(technicianId,idNumber);
+    }
+
+    public  boolean updateCarNumber(String technicianId,String carNum){
+        return usermanage.updateCarNumber(technicianId,carNum);
+    }
+
+    public  boolean updateAddress(String technicianId,String cityCode,String address){
+        return usermanage.updateAddress(technicianId,cityCode,address);
+    }
 }
