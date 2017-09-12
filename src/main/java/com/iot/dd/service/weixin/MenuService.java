@@ -68,22 +68,22 @@ public class MenuService {
         String serviceInit_url=baseUrl+"/templates/applyServiceValidate.html";
         String cusEvaluation_url=baseUrl+"/templates/wxCusEvaluation.html";
         String historyIndent_url=baseUrl+"/templates/wxHistoryIndent.html";
-
+        String appDownload_url=baseUrl+"/templates/wxAPPDownload.html";
         ComplexButton cx_1 = new ComplexButton();
         cx_1.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",serviceInit_url));
         cx_1.setName("申请服务");
         cx_1.setType("view");
 
 
-//        ViewButton vb_21 = new ViewButton();
-//        vb_21.setName("公司官网");
-//        vb_21.setType("view");
-//        vb_21.setUrl("http://www.baidu.com/");
-//
-//        ViewButton vb_22 = new ViewButton();
-//        vb_22.setName("汽车知识");
-//        vb_22.setType("view");
-//        vb_22.setUrl("https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect ".replace("APPID", WeixinInitService.APPID).replace("REDIRECT",cusEvaluation_url));
+        ViewButton vb_21 = new ViewButton();
+        vb_21.setName("信息查询");
+        vb_21.setType("view");
+        vb_21.setUrl("http://www.baidu.com/");
+
+        ViewButton vb_22 = new ViewButton();
+        vb_22.setName("APP下载");
+        vb_22.setType("view");
+        vb_22.setUrl(appDownload_url);
 //
 //        ViewButton vb_23 = new ViewButton();
 //        vb_23.setName("电池保养");
@@ -92,8 +92,10 @@ public class MenuService {
 
         ComplexButton cx_2 = new ComplexButton();
         cx_2.setName("信息查询");
-        cx_2.setType("view");
-        cx_2.setUrl("http://www.baidu.com/");
+        //cx_2.setType("view");
+        //cx_2.setUrl("http://www.baidu.com/");
+        Buttton[] subButton2={vb_21,vb_22};
+        cx_2.setSub_button(subButton2);
 
         ComplexButton cx_3 = new ComplexButton();
         cx_3.setName("我的订单");

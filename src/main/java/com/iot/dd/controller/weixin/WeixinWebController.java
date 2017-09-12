@@ -9,13 +9,22 @@ import com.iot.dd.service.OrderService;
 import com.iot.dd.service.weixin.IndentService;
 import com.iot.dd.service.weixin.UserInformationService;
 import com.iot.dd.service.weixin.WeixinInitService;
+import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.IdentityHashMap;
 import java.util.List;
@@ -26,6 +35,17 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.swing.text.html.parser.Entity;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 /**
  * Created by huanglin on 2017/7/16.
  *
@@ -33,6 +53,9 @@ import javax.swing.text.html.parser.Entity;
  */
 @RestController
 public class WeixinWebController {
+
+    @Value("${downloadPathPrefix}")
+    private String downloadPathPrefix;
 
     @Autowired
     private IndentService indentService;
@@ -193,5 +216,8 @@ public class WeixinWebController {
         }
         return JsonTool.objectToJson(message);
     }
+
+
+
 
 }
