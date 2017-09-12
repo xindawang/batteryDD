@@ -13,3 +13,6 @@ var wxHistoryIndent=basicUrl+"/templates/wxHistoryIndent.html"
 var wxCusEvaluation=basicUrl+"/templates/wxCusEvaluation.html"
 
 var wxbaseLocation="https://open.weixin.qq.com/connect/oauth2/authorize?appid=APPID&redirect_uri=REDIRECT&response_type=code&scope=snsapi_userinfo&state=123#wechat_redirect"
+
+
+var appId="wx653f3498190e7c80"

@@ -82,7 +82,7 @@ public class UploadController {
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
-                String carNumIMG =filePathPrefix+ fileName;
+                String carNumIMG = filePathPrefix + fileName;
 
                 File file1=new File(filePathPrefix + fileName);
 
@@ -108,7 +108,7 @@ public class UploadController {
 
 
             } catch (Exception e) {
-                return "上传失败！！";
+                return "You     failed to upload" + fileName + ":" + e.getMessage();
             }
         } else {
             return "图片不存在！.";
@@ -130,7 +130,7 @@ public class UploadController {
                 String[] ss = fileName.split("_");
                 String technicianID = ss[0];
                 String orderID = ss[1];
-                String qualityIMG =filePathPrefix+fileName;
+                String qualityIMG = filePathPrefix + fileName;
 
                 File file2=new File(filePathPrefix + fileName);
                 byte[] bytes = file.getBytes();
