@@ -37,18 +37,20 @@ public class ConfirmService {
     }
 
     //设置图片路径
-    public Boolean updateBatteryPath(String batteryPath) {
-        return mapper.updateBatteryPath(batteryPath);
+    public Boolean updateBatteryPath(String batteryPath,String orderId) {
+        return mapper.updateBatteryPath(batteryPath, orderId);
     }
 
-    public Boolean updateCarNumPath(String carPath) {
-        return mapper.updateCarNumPath(carPath);
+    public Boolean updateCarNumPath(String carPath,String orderId) {
+        return mapper.updateCarNumPath(carPath,orderId);
     }
 
-    public Boolean updateQualityPath(String qualityPath) {
-        return mapper.updateQualityPath(qualityPath);
+    public Boolean updateQualityPath(String qualityPath,String orderId) {
+        return mapper.updateQualityPath(qualityPath,orderId);
     }
-
+    public Boolean updateQualityAllPath(ConfirmEntity entity) {
+        return mapper.updateQualityAllPath(entity);
+    }
     //查找记录
 
     public List<ConfirmEntity> find(String orderId, String technicianId) {

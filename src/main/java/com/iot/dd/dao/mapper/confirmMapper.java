@@ -37,14 +37,18 @@ public interface confirmMapper {
     Boolean addOneQualityIMG(ConfirmEntity entity);
 
     //设置图片路径
-    @Update("update receiving_confirmation set battery_img=#{batteryPath}")
-    Boolean updateBatteryPath(@Param("batteryPath") String batteryPath);
+    @Update("update receiving_confirmation set battery_img=#{batteryPath} where order_id=#{orderId}")
+    Boolean updateBatteryPath(@Param("batteryPath") String batteryPath,@Param("orderId") String orderId);
 
-    @Update("update receiving_confirmation set license_plate_number_img=#{carPath}")
-    Boolean updateCarNumPath(@Param("carPath") String carPath);
+    @Update("update receiving_confirmation set license_plate_number_img=#{carPath} where order_id=#{orderId}")
+    Boolean updateCarNumPath(@Param("carPath") String carPath ,@Param("orderId") String orderId);
 
-    @Update("update receiving_confirmation set quality_assurance_img=#{qualityPath}")
-    Boolean updateQualityPath(@Param("qualityPath") String qualityPath);
+    @Update("update receiving_confirmation set quality_assurance_img=#{qualityPath} where order_id=#{orderId}")
+    Boolean updateQualityPath(@Param("qualityPath") String qualityPath,@Param("orderId") String orderId);
+
+    @Update("update receiving_confirmation set battery_img=#{batteryPath},license_plate_number_img=#{carPath},quality_assurance_img=#{qualityPath} where order_id=#{orderId}")
+    Boolean updateQualityAllPath(ConfirmEntity entity);
+
 
     //用于判断记录是否存在
     @Select("select * from receiving_confirmation where order_id=#{orderId} and technician_id=#{technicianId}")

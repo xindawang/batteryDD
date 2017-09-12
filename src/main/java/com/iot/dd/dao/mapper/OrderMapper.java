@@ -9,6 +9,7 @@ import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -209,11 +210,12 @@ public interface OrderMapper {
 
     /*
     * 根据订单编号修改订单状态
-    * 技师接受订单委派时，‘已派单’到‘已接单’变化
-    * 技师拒绝订单委派时，‘’已派单到‘已录入’变化
     * */
     @Update("update indent  set status=#{status} where order_id=#{orderId}")
     boolean updateStatues(@Param("orderId") String orderId, @Param("status") int status);
+
+    @Update("update indent  set finish_time=#{time} where order_id=#{orderId}")
+    boolean setFinishTime(@Param("orderId") String orderId, @Param("time") Date time);
 
 
     @Select("select technician_id from indent_allocation where order_id=#{orderId}")
