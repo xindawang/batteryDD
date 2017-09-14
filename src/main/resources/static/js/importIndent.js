@@ -71,9 +71,7 @@ $(function () {
             $("#automobileBrand").empty()
             $("#automobileBrand").append("<option value= 0>---请选择--</option>")
             for (var i=0;i<data.length;i++){
-                var ii =i+1;
                 $('#automobileBrand').append("<option value="+data[i].id+">"+data[i].brandName+"</option>");
-                document.getElementById("automobileBrand").options[ii]=new Option(data[i].brandName,data[i].id);
                 // var code = data[i].provinceCode
                 // var name = data[i].provinceName
                 // $('#province').append("<option value=" + code + ">" + name +"</option>");
@@ -108,10 +106,12 @@ $(function () {
         data:null,
         dataType:"json",
         success:function(data){
-            document.getElementById("batteryBrand").options[0]=new Option("---请选择---",0);
+            $("#batteryBrand").empty()
+            $('#batteryBrand').append("<option value= 0>---请选择--</option>")
             for (var i=0;i<data.length;i++){
-                var ii =i+1;
-                document.getElementById("batteryBrand").options[ii]=new Option(data[i].brandName,data[i].id);
+                var id=data[i].id;
+                var brandName=data[i].brandName;
+                $('#batteryBrand').append("<option value="+id+">"+brandName+"</option>");
                 // var code = data[i].provinceCode
                 // var name = data[i].provinceName
                 // $('#province').append("<option value=" + code + ">" + name +"</option>");
