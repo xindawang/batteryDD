@@ -9,7 +9,6 @@ import com.iot.dd.service.OrderService;
 import com.iot.dd.service.weixin.IndentService;
 import com.iot.dd.service.weixin.UserInformationService;
 import com.iot.dd.service.weixin.WeixinInitService;
-import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpHeaders;
