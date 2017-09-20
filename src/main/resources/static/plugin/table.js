@@ -1,10 +1,10 @@
-;
+
 (function (window) {
     function Table(jo, opt) {
         this.$element = jo;
         this.defaults = {
             url: null,
-            pageSize: 5,
+            pageSize: 8,//当前页一共最多多少行
             afterDraw: function () {
 
             }
@@ -134,15 +134,20 @@
                 // async : false,
                 context: this,
                 success: function (data) {
-                    this.options.list = data.list;
-                    this.draw(data.list, page);
-                    for (var i in thatArgs) {
-                        if (typeof thatArgs[i] == 'number')
-                            continue;
-                        if (thatArgs[i] == true) {
-                            this.initPagination(data.total);
-                        } else if (typeof thatArgs[i] == 'function') {
-                            thatArgs[i]();
+                    if (data.total == 0 && data.type == "search") {
+                        confirmNoIndent();
+                    } else {
+
+                        this.options.list = data.list;
+                        this.draw(data.list, page);
+                        for (var i in thatArgs) {
+                            if (typeof thatArgs[i] == 'number')
+                                continue;
+                            if (thatArgs[i] == true) {
+                                this.initPagination(data.total);
+                            } else if (typeof thatArgs[i] == 'function') {
+                                thatArgs[i]();
+                            }
                         }
                     }
                 }
@@ -222,6 +227,29 @@
     $.fn.table = function (opt) {
         var table = new Table(this, opt)
         return table.init();
+    }
+
+    function confirmNoIndent() {
+        $.mbox({
+            area: ["300px", "auto"], //弹框大小
+            border: [0, .5, "#666"],
+            title: "未查询到相应订单",
+            dialog: {
+                msg: "请检查订单编号或者电话号码是否正确",
+                btns: 1,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
+                type: 3,   //1:对钩   2：问号  3：叹号
+                btn: ["确认"],  //自定义按钮
+                yes: function () {  //点击左侧按钮：成功
+                    $("#searchNumber").val("").focus()
+                    //window.close();
+
+                },
+                no: function () {
+
+                }
+
+            }
+        })
     }
 
 })(window)

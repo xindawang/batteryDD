@@ -1,0 +1,77 @@
+.indentLink {
+    text-align: center;
+    display: inline-block;
+    width: 10%;
+    height: 8%;
+    font-size: 18px;
+    vertical-align: middle;
+    font-weight: 100;
+    text-decoration: none;
+    color: black;
+    font-family: "Microsoft YaHei", "宋体", "黑体", sans-serif;
+    margin-top: 10px;
+}
+
+.chooseSpan {
+    width: 10%;
+    height: 3px;
+    display: inline-block;
+}
+
+.unChoosedColor {
+    color: black;
+}
+
+.choosedColor {
+    color: #009688;
+}
+
+.unChoosedBkColor {
+    background: #D0D0D0;
+}
+
+.choosedBkColor {
+    background: #009688;
+}
+
+.chooseDiv {
+    width: 100%;
+    height: 5px;
+    display: inline-block;
+    font-size: 0;
+    margin-left: 28%;
+}
+
+.cityAndDateSelect {
+    font-size: 18px;
+    width: 7%;
+    position: absolute;
+    z-index: 1;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+
+.cityAndDateLabel {
+    width: 4%;
+    height: 8%;
+    margin-left: 10px;
+    font-size: 18px;
+    color: #009688;
+
+}
+
+.cityAndDateSpan {
+    display: inline-block;
+    width: 12%;
+    height: 8%;
+    vertical-align: middle;
+    margin-top: 10px;
+    font-family: "Microsoft YaHei", "宋体", "黑体", sans-serif;
+    margin-right: 2%;
+}
+
+.searchDiv {
+    margin: 1%;
+    font-family: "Microsoft YaHei", "宋体", "黑体", sans-serif;
+    font-size: 17px;
+}

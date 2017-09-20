@@ -26,7 +26,7 @@ public class DataBaseConfig {
         // 数据库连接配置
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         //设置useSSL=false
-        dataSource.setUrl("jdbc:mysql://rm-uf6jhajapzy4cza3qo.mysql.rds.aliyuncs.com/batterydd?useUnicode=true&characterEncoding=utf-8&useSSL=false");
+        dataSource.setUrl("jdbc:mysql://rm-uf6jhajapzy4cza3qo.mysql.rds.aliyuncs.com/batterydd?useUnicode=true&characterEncoding=utf-8&useSSL=false&autoReconnect=true");
         dataSource.setUsername("root");
         dataSource.setPassword("huangyan71!!");
         return dataSource;

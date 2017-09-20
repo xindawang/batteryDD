@@ -124,11 +124,13 @@ function selectIndentMsgByCityCode(cityCode) {
         dataType: "json",
         success: function (data) {
             $("#undoneIndent").empty()
-            document.getElementById("undoneIndent").options[0] = new Option("---请选择---", 0);
+            //document.getElementById("undoneIndent").options[0] = new Option("---请选择---", 0);
+            $("#undoneIndent").append("<option value='0'>---请选择---</option>")
             for (var i = 0; i < data.length; i++) {
-                var ii = i + 1;
+                $("#undoneIndent").append("<option value=" + data[i].orderId + ">" + data[i].orderId + "</option>")
                 //使用 $("#undoneIndent")会报错
-                document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
+                //document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
+
             }
 
 
@@ -143,14 +145,15 @@ function selectCityList() {
     $.ajax({
         url: "/getHaveIndentOfCity",
         type: "POST",
-        data: null,
+        data: {"status": "1", "type": "distribute"},
         asyns: false,
         dataType: "json",
         success: function (data) {
 
             for (var i = 0; i < data.length; i++) {
                 //使用 $("#undoneIndent")会报错
-                document.getElementById("city").options[i] = new Option(data[i].cityName, data[i].cityCode);
+                //document.getElementById("city").options[i] = new Option(data[i].cityName, data[i].cityCode);
+                $("#city").append("<option value=" + data[i].cityCode + ">" + data[i].cityName + "</option>")
             }
             var cityName = $("#city option:selected").text()
             if (!cityName) {
@@ -210,7 +213,7 @@ function setCusMsgAndLocation(indentId) {
 
                 //map.remove(techMarkers)
                 //在获取用户位置后更新地图的中心点和放大级别
-                map.setZoom(11)
+                map.setZoom(13)
                 map.setCenter([cusLongitude, cusLatitude])
 
                 //设置用户的图标

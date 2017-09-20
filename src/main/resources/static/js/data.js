@@ -5,7 +5,7 @@
 APPID="wx653f3498190e7c80"
 APPSECRET = "365c06031424c5e9d5e93e40910a8975"
 
-var basicUrl="http://www.cxspace.top"
+var basicUrl = "http://dcdd.tunnel.qydev.com"
 var wxGetServiceByPhone=basicUrl+"/templates/wxGetServiceByPhone.html"
 
 var wxHistoryIndent=basicUrl+"/templates/wxHistoryIndent.html"
@@ -16,3 +16,9 @@ var wxbaseLocation="https://open.weixin.qq.com/connect/oauth2/authorize?appid=AP
 
 
 var appId="wx653f3498190e7c80"
+
+
+var dateRegionArray = ["all", "oneDay", "oneWeek", "oneMonth", "oneYear"]
+
+var statusArray = ["all", "imported", "distributed", "received", "installed", "evaluated"]
+

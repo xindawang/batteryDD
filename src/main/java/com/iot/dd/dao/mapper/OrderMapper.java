@@ -42,6 +42,22 @@ public interface OrderMapper {
     List<OrderEntity> selectIndentMsg(Integer status);
 
 
+    //根据订单状态查询所有订单信息--添加了时间限制
+    @Select("select * from indent where status=#{status} and create_time > #{date}")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "wechatId", column = "wechat_id"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time"),
+    })
+    List<OrderEntity> selectIndentMsg1(@Param("status") Integer status, @Param("date") String date);
     //查询订单状态是已录入，且用户经纬度已经上传的订单编号，用于订单派发
     @Select("select indent.ORDER_ID from indent join indent_allocation" +
             " on indent.ORDER_ID = indent_allocation.ORDER_ID" +
@@ -84,6 +100,52 @@ public interface OrderMapper {
     })
     List<OrderEntity> selectIndentByCity(String cityCode);
 
+    //根据订单所在城市查询所有订单--添加了时间限制
+    @Select("select * from indent where CITY_CODE=#{cityCode} and create_time> #{date}")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "wechatId", column = "wechat_id"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time"),
+    })
+    List<OrderEntity> selectIndentByCity1(@Param("cityCode") String cityCode, @Param("date") String date);
+
+    @Select("select * from indent")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time"),
+    })
+    List<OrderEntity> selectAllIndent();
+
+    @Select("select * from indent where create_time>#{date}")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time"),
+    })
+    List<OrderEntity> selectAllIndent1(String date);
     //根据订单所在城市和订单状态查询所有订单
     @Select("select * from indent where STATUS=#{status} and CITY_CODE=#{cityCode} ")
     @Results({
@@ -101,6 +163,23 @@ public interface OrderMapper {
     })
     List<OrderEntity> selectIndentByStatusAndCity(@Param("status") Integer status, @Param("cityCode") String cityCode);
 
+    //根据订单所在城市和订单状态查询所有订单--添加了时间限制
+    @Select("select * from indent where STATUS=#{status} and CITY_CODE=#{cityCode} and create_time >#{date}")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "wechatId", column = "wechat_id"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time")
+    })
+    List<OrderEntity> selectIndentByStatusAndCity1(@Param("status") Integer status, @Param("cityCode") String cityCode, @Param("date") String date);
+
     //根据城市和订单状态查询该城市所有订单的订单编号
     @Select("select indent.order_id as orderId from indent  join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL ")
     List<OrderEntity> selectIndentIdByStatusAndCity(@Param("status")Integer status,@Param("cityCode")String cityCode);
@@ -108,6 +187,12 @@ public interface OrderMapper {
 
     @Select("select  DISTINCT indent.CITY_CODE  as cityCode from indent join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL")
     List<CityEntity> selectCityCodeByStatus(Integer status);
+
+    @Select("select  DISTINCT CITY_CODE  as cityCode from indent ")
+    List<CityEntity> selectAllCityCode();
+
+    @Select("select DISTINCT CITY_CODE as cityCode from indent where status=#{status}")
+    List<CityEntity> selectCityCodeByStatusManage(Integer status);
 
     @Select("select city_code as cityCode,city_name as cityName from city where city_code=#{cityCode}")
     CityEntity selectCityMsgByCityCode(String cityCode);
@@ -125,9 +210,27 @@ public interface OrderMapper {
             @Result(property = "automobileType", column = "automobile_type"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time")
     })
     List<OrderEntity> selectIndentByOrderId(String orderId);
 
+
+    //根据客户从订单号查询订单信息
+    @Select("select * from indent where order_id=#{number} or customer_cellphone=#{number} ")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "wechatId", column = "wechat_id"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time")
+    })
+    List<OrderEntity> selectIndentByNumber(String number);
     //通过电话号码查询订单状态是已录入的订单编号
     @Select("select order_id from indent where status=#{status} and (customer_cellphone=#{telephone} or customer_telephone=#{telephone})")
     String selectOrderIdbyPhone(@Param("telephone") String telephone, @Param("status") Integer status);

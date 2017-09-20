@@ -1199,11 +1199,11 @@ display: none
 }
 
 .layui-table th {
-    text-align: left
+    text-align: center;
 }
 
 .layui-table td, .layui-table th {
-    padding: 9px 15px;
+    padding: 8px 8px;
     min-height: 20px;
     line-height: 20px;
     border: 1px solid #e2e2e2;
