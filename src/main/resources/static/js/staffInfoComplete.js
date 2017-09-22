@@ -36,6 +36,21 @@ $(function () {
 
 //提交完善后的信息
     $("#submit").click(function () {
+        var tLoginName = $("#loginName").val();
+        var tName = $("#name").val();
+        var password = $("#password").val();
+        if (tLoginName == null || tLoginName == "") {
+            alert("登陆名不能为空！！！");
+            return;
+        }
+        if (tName == null || tName == "") {
+            alert("姓名不能为空！！！");
+            return;
+        }
+        if (password == null || password == "") {
+            alert("密码不能为空！！！");
+            return;
+        }
         $.ajax({
                 type:"POST",
                 url: '/staffModify',
@@ -53,6 +68,7 @@ $(function () {
     $("#address").click(function () {
         $("#address1").hide();
         $("#address2").show();
+        $("#address3").show();
     });
 
     $("#finish").click(function () {
@@ -61,9 +77,11 @@ $(function () {
             $("#area option:selected").text()+ $("#detailAddress").val();
         $("#address").val(ss);
         $("#address2").hide();
+        $("#address2").hide();
         $("#address1").show();
     });
     $("#cancel").click(function () {
+        $("#address2").hide();
         $("#address2").hide();
         $("#address1").show();
     });

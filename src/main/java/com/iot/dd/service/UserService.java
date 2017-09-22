@@ -18,33 +18,34 @@ public class UserService {
     private UserMapper userMapper;
 
 
-//管理员注册
-    public String registerAdmin(AdminEntity user){
-        if(userMapper.selectAdminUser(user.getName())== null){
+    //管理员注册
+    public String registerAdmin(AdminEntity user) {
+        if (userMapper.selectAdminUser(user.getName()) == null) {
             userMapper.addAdminUser(user);
             return "注册成功";
-        }else{
+        } else {
             return "该用户已被使用";
         }
 
     }
 
     //客服注册
-    public String registerStaff(StaffEntity user){
-        if(userMapper.selectStaffUser(user.getName())== null){
+    public String registerStaff(StaffEntity user) {
+        if (userMapper.selectStaffUser(user.getName()) == null) {
             userMapper.addStaffUser(user);
             return "注册成功";
-        }else{
+        } else {
             return "该用户已被使用";
         }
 
     }
+
     //技师注册
-    public String registerTechnician(TechnicianEntity user){
-        if(userMapper.selectTechnician(user.getLoginName())== null){
+    public String registerTechnician(TechnicianEntity user) {
+        if (userMapper.selectTechnician(user.getLoginName()) == null) {
             userMapper.addTechnician(user);
             return "OK";
-        }else{
+        } else {
             return "ERROR";
         }
 
@@ -52,85 +53,91 @@ public class UserService {
 
 
     //客服登陆
-    public String staffLogin(String name,String password){
-        StaffEntity dUser= userMapper.selectStaffUser(name);
-        if(dUser==null){
+    public String staffLogin(String name, String password) {
+        StaffEntity dUser = userMapper.selectStaffUser(name);
+        if (dUser == null) {
             return "该用户不存在";
-        }
-        else if(! dUser.getPassword().equals(password)){
+        } else if (!dUser.getPassword().equals(password)) {
             return "密码错误";
-        }
-        else{
+        } else {
             return "登陆成功";
         }
 
     }
+
     //管理员登陆
-    public String adminLogin(String name,String password){
-        AdminEntity dUser= userMapper.selectAdminUser(name);
-        if(dUser==null){
+    public String adminLogin(String name, String password) {
+        AdminEntity dUser = userMapper.selectAdminUser(name);
+        if (dUser == null) {
             return "该用户不存在";
-        }
-        else if(! dUser.getPassword().equals(password)){
+        } else if (!dUser.getPassword().equals(password)) {
             return "密码错误";
-        }
-        else{
+        } else {
             return "登陆成功";
         }
 
     }
 
-   //技师登陆
-   public String technicianLogin(String name,String password){
-       TechnicianEntity dUser= userMapper.selectTechnician(name);
-       if(dUser==null){
-           return "该用户不存在";
-       }
-       else if(! dUser.getPassword().equals(password)){
-           return "密码错误";
-       }
-       else{
-           return "OK";
-       }
+    //技师登陆
+    public String technicianLogin(String name, String password) {
+        TechnicianEntity dUser = userMapper.selectTechnician(name);
+        if (dUser == null) {
+            return "该用户不存在";
+        } else if (!dUser.getPassword().equals(password)) {
+            return "密码错误";
+        } else {
+            return "OK";
+        }
 
-   }
-
-
+    }
 
 
     //管理员信息完善
-    public String adminInformation(AdminEntity dUser){
-        boolean b= userMapper.modifyAdminInfo(dUser);
-        if(b){
+    public String adminInformation(AdminEntity dUser) {
+        boolean b = userMapper.modifyAdminInfo(dUser);
+        if (b) {
             return "信息设置成功！";
-        }
-        else {
+        } else {
             return "信息设置失败！";
         }
     }
+
     //客服信息完善
-    public String staffInformation(StaffEntity dUser ){
-        boolean b= userMapper.modifyStaffInfo(dUser);
-        if(b){
+    public String staffInformation(StaffEntity dUser) {
+        boolean b = userMapper.modifyStaffInfo(dUser);
+        if (b) {
             return "信息设置成功！";
-        }
-        else {
+        } else {
             return "信息设置失败！";
         }
     }
 
     //查admin返回一个记录
-    public  AdminEntity findAdminByLogin_name(String login_name){
-        AdminEntity aUser=new AdminEntity();
+    public AdminEntity findAdminByLogin_name(String login_name) {
+        AdminEntity aUser = new AdminEntity();
 
-        aUser= userMapper.selectAdminUser(login_name);
+        aUser = userMapper.selectAdminUser(login_name);
         return aUser;
     }
 
     //查staff返回一个记录
-    public  StaffEntity findStaffByLogin_name(String login_name){
-        StaffEntity sUser=new StaffEntity();
-        sUser= userMapper.selectStaffUser(login_name);
+    public StaffEntity findStaffByLogin_name(String login_name) {
+        StaffEntity sUser = new StaffEntity();
+        sUser = userMapper.selectStaffUser(login_name);
         return sUser;
     }
+
+    //添加
+    public Boolean addTechnician(TechnicianEntity entity) {
+        return userMapper.addTechnician(entity);
+    }
+
+    public Boolean addStaff(StaffEntity entity) {
+        return userMapper.addStaff(entity);
+    }
+
+    public  Boolean addAdmin(AdminEntity entity){
+        return userMapper.addAdmin(entity);
+    }
+
 }

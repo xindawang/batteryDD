@@ -207,6 +207,8 @@ public class indentAllocationController {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         String loginName = request.getParameter("loginName");
+        String time=request.getParameter("data");
+        time=time+"%";
         //查找technicianId
         TechnicianEntity technician = user.findTechnicianOne(loginName);
         //根据技师编号查早，接下的订单
@@ -216,31 +218,34 @@ public class indentAllocationController {
         OrderEntity order;
         for (int i = 0; i < listAllocation.size(); i++) {
             IndentAllocationEntity entity = listAllocation.get(i);
-            order = orderMapper.findOrder(entity.getOrderId());
-            String cityName = resourceService.findCityName(order.getCityCode());
-            if (order.getStatus() == 4) {//订单已完成
+            order = orderMapper.findOrderBytime(entity.getOrderId(),time);
+            if(order==null){
+                continue;
+            }
+//            String cityName = resourceService.findCityName(order.getCityCode());
+            if (order.getStatus() == 4||order.getStatus() == 5) {//订单已完成
                 //用城市名替换cityCode
                 Map<String, String> map = new HashMap<String, String>();
-                map.put("mask", "0");
                 map.put("orderId", order.getOrderId());
                 map.put("batteryType", order.getBatteryType());
-                map.put("cityName", cityName);
-                map.put("licenseNumber", order.getLicensePlateNumber());
+                map.put("name",order.getCustomerName());
+                map.put("cellphone",order.getCustomerCellphone());
+                map.put("address",order.getAddress());
+                map.put("technicianId",entity.getTechnicianId());
+//                map.put("cityName", cityName);
+//                map.put("licenseNumber", order.getLicensePlateNumber());
                 map.put("finishTime", order.getFinishTime() + "");
-                map.put("starNum", "0");
                 maplist.add(map);
             }
-            if (order.getStatus() == 5) {
-                Map<String, String> map = new HashMap<String, String>();
-                map.put("mask", "1");
-                map.put("orderId", order.getOrderId());
-                map.put("batteryType", order.getBatteryType());
-                map.put("cityName", cityName);
-                map.put("licenseNumber", order.getLicensePlateNumber());
-                map.put("finishTime", order.getFinishTime() + "");
-                map.put("starNum", "4");
-                maplist.add(map);
-            }
+//            if (order.getStatus() == 5) {
+//                Map<String, String> map = new HashMap<String, String>();
+//                map.put("orderId", order.getOrderId());
+//                map.put("batteryType", order.getBatteryType());
+////                map.put("cityName", cityName);
+////                map.put("licenseNumber", order.getLicensePlateNumber());
+//                map.put("finishTime", order.getFinishTime() + "");
+//                maplist.add(map);
+//            }
         }
         //将orderList已json格式字符串返回
         return JsonTool.listToJson(maplist).toString();

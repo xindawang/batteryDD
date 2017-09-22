@@ -7,6 +7,7 @@ public class AdminEntity {
     private Integer id;
     private String loginName;
     private String name;
+    private String sex;
     private String password;
     private String cellphone;
     private String telephone;
@@ -37,6 +38,14 @@ public class AdminEntity {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getSex() {
+        return sex;
+    }
+
+    public void setSex(String sex) {
+        this.sex = sex;
     }
 
     public String getPassword() {

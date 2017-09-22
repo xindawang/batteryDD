@@ -1,8 +1,12 @@
 package com.iot.dd.controller;
 
+import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.dao.entity.Indent.IndentEvaluationEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import com.iot.dd.service.UserManageService;
 import com.iot.dd.service.indentAllocationService;
+import com.iot.dd.service.indentEvaluationService;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -23,9 +27,21 @@ public class TechnicianController {
     @Autowired
     private indentAllocationService indentAlloccation;
 
+    @Autowired
+    private indentEvaluationService evaluation;
+
     /*
     * android
     * */
+
+    @RequestMapping(value = "/findOneTechnician", method = RequestMethod.GET)
+    public String findeOneTechnician(HttpServletRequest request, HttpServletResponse response) {
+        String loginName = request.getParameter("loginName");
+        TechnicianEntity user = new TechnicianEntity();
+        user = usermanageservice.findTechnicianOne(loginName);
+        return JsonTool.objectToJson(user);
+    }
+
 
     //更新技师经纬度位置信息（indent ，）indent_allocation
     @RequestMapping(value = "/technicianAddress", method = RequestMethod.GET)
@@ -131,6 +147,7 @@ public class TechnicianController {
             return "ERROR";
         }
     }
+
     @RequestMapping(value = "/technicianUpdateCarNumber", method = RequestMethod.GET)
     public String updateCarNumber(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
         request.setCharacterEncoding("utf-8");
@@ -160,5 +177,17 @@ public class TechnicianController {
         }
     }
 
+
+    //查找订单的评价
+    @RequestMapping(value = "/findOneEvaluation", method = RequestMethod.GET)
+    public String findOne(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        String orderId = request.getParameter("orderId");
+        IndentEvaluationEntity entity = new IndentEvaluationEntity();
+        entity = evaluation.findOne(orderId);
+        return JsonTool.objectToJson(entity);
+
+    }
 
 }

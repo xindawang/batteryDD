@@ -74,6 +74,13 @@ public interface UserManagementMapper {
     TechnicianEntity findTechnicianOne(String loginName) ;
 
 
+    @Insert("insert into technician (LOGIN_NAME,PASSWORD,TECHNICIAN_ID,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL," +
+            "ID_NUMBER,ADDRESS,CITY_CODE,LICENSE_PLATE_NUMBER) values(#{loginName},#{password}," +
+            "#{technicianId},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address},#{cityCode}," +
+            "#{licensePlateNumber})")
+    boolean addTechnician(TechnicianEntity user);
+
+
 
     //客户
     @Select("select * from customer")
@@ -105,7 +112,7 @@ public interface UserManagementMapper {
     @Delete("delete from technician where login_name=#{loginName}")
     int deleteTechnician(String loginName);
 
-    @Update("update admin set password=#{password}, name=#{name} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName}")
+    @Update("update admin set password=#{password}, name=#{name},sex=#{sex} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName}")
     boolean modifyAdminInfo(AdminEntity user);
 
     @Update("update staff set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role}, organization_id=#{organizationId} where login_name=#{loginName} ")

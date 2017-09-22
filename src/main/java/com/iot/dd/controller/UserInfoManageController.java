@@ -5,11 +5,11 @@ import com.github.pagehelper.PageHelper;
 import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.entity.customer.CustomerEntity;
 import com.iot.dd.dao.entity.worker.AdminEntity;
+import com.iot.dd.dao.entity.worker.LastIdEntity;
 import com.iot.dd.dao.entity.worker.StaffEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
 import com.iot.dd.dao.mapper.indentAllocationMapper;
-import com.iot.dd.service.UserManageService;
-import com.iot.dd.service.indentAllocationService;
+import com.iot.dd.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -29,6 +29,15 @@ import java.util.Map;
 public class UserInfoManageController {
     @Autowired
     private UserManageService usermanageservice;
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private LastIdService lastIdService;
+
+    @Autowired
+    private ResourceService re;
 
     //后台信息管理，查询一类用户信息
     @RequestMapping(value = "customer", method = RequestMethod.GET)
@@ -200,6 +209,7 @@ public class UserInfoManageController {
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setCellphone(request.getParameter("cellphone"));
+        user.setSex(request.getParameter("sex"));
         user.setTelephone(request.getParameter("telephone"));
         user.setEmail(request.getParameter("email"));
         user.setIdNumber(request.getParameter("idNumber"));
@@ -248,6 +258,8 @@ public class UserInfoManageController {
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
 
+        //citycode??????????????
+
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
 
         if (request.getParameter("organizationId") == "" || request.getParameter("organizationId") == null) {
@@ -261,5 +273,77 @@ public class UserInfoManageController {
     }
 
 
+    //管理员添加用户
+    @RequestMapping(value = "/addAdmin", method = RequestMethod.POST)
+    public String addAdmin(HttpServletRequest request, HttpServletResponse response) {
+
+        AdminEntity user = new AdminEntity();
+
+        user.setLoginName(request.getParameter("loginName"));
+        user.setPassword(request.getParameter("password"));
+        user.setName(request.getParameter("name"));
+        user.setCellphone(request.getParameter("cellphone"));
+        user.setTelephone(request.getParameter("telephone"));
+        user.setEmail(request.getParameter("email"));
+        user.setIdNumber(request.getParameter("idNumber"));
+        user.setAddress(request.getParameter("address"));
+        user.setRole("admin");
+        userService.addAdmin(user);
+        return "ok";
+
+    }
+
+
+    @RequestMapping(value = "/addStaff", method = RequestMethod.POST)
+    public String addStaff(HttpServletRequest request, HttpServletResponse response) {
+        StaffEntity user = new StaffEntity();
+        user.setLoginName(request.getParameter("loginName"));
+        user.setPassword(request.getParameter("password"));
+        user.setName(request.getParameter("name"));
+        user.setSex(request.getParameter("sex"));
+        user.setCellphone(request.getParameter("cellphone"));
+        user.setTelephone(request.getParameter("telephone"));
+        user.setEmail(request.getParameter("email"));
+        user.setIdNumber(request.getParameter("idNumber"));
+        user.setAddress(request.getParameter("address"));
+
+        userService.addStaff(user);
+
+
+        return "ok";
+    }
+
+
+    @RequestMapping(value = "/addTechnician", method = RequestMethod.POST)
+    public String addTechnician(HttpServletRequest request, HttpServletResponse response) {
+
+        TechnicianEntity user = new TechnicianEntity();
+        user.setTechnicianId(request.getParameter("technicianId"));
+        user.setLoginName(request.getParameter("loginName"));
+        user.setPassword(request.getParameter("password"));
+        user.setName(request.getParameter("name"));
+        user.setSex(request.getParameter("sex"));
+        user.setCellphone(request.getParameter("cellphone"));
+        user.setTelephone(request.getParameter("telephone"));
+        user.setEmail(request.getParameter("email"));
+        user.setIdNumber(request.getParameter("idNumber"));
+        user.setAddress(request.getParameter("address"));
+        user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+
+        String cityCode = null;
+        String cityName = request.getParameter("cityName");
+        if (cityName != null) {
+            cityCode = re.findCityCODE(cityName);
+        }
+        user.setCityCode(cityCode);
+
+        Boolean t = userService.addTechnician(user);
+
+        LastIdEntity entity = lastIdService.find();//技师可用编号
+        int id = Integer.parseInt(entity.getIdNumber()) + 1;
+        lastIdService.update(id + "");//设置下一个可用编号
+
+        return "ok";
+    }
 
 }
