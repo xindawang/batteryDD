@@ -133,10 +133,33 @@ public class OrderService {
         return orderMapper.setFinishTime(orderId, time);
     }
 
-    public List<CityEntity> selectCity() {
+
+    public List<OrderEntity> selectOrderIdByCity(String cityCode) {
         Integer status = 1;
-        List<CityEntity> cityEntityList = orderMapper.selectCityCodeByStatus(status);
-        List<CityEntity> cityMsgList = new ArrayList<>();
+        List<OrderEntity> orderEntities = new ArrayList<>();
+        orderEntities = orderMapper.selectIndentIdByStatusAndCity(status, cityCode);
+        return orderEntities;
+    }
+
+
+    //-----------订单管理
+    private final String disType = "distribute";
+    private final String manageType = "manage";
+
+    public List<CityEntity> selectCityByStatus(Integer status, String type) {
+
+
+        //status如果为0表明是不区分状态（全部状态）
+        List<CityEntity> cityEntityList = new ArrayList<>();
+        if (status > 0 && type.equals(disType)) {//派发订单时查询城市
+            cityEntityList = orderMapper.selectCityCodeByStatus(status);
+        } else if (status > 0 && type.equals(manageType)) {//管理订单时按订单状态查询订单
+            cityEntityList = orderMapper.selectCityCodeByStatusManage(status);
+        } else {
+            cityEntityList = orderMapper.selectAllCityCode();//管理订单时查询所有订单
+        }
+
+        List<CityEntity> cityMsgList = new ArrayList<CityEntity>();
         if (cityEntityList != null) {
             for (int i = 0; i < cityEntityList.size(); i++) {
                 String cityCode = cityEntityList.get(i).getCityCode();
@@ -147,11 +170,5 @@ public class OrderService {
         return cityMsgList;
     }
 
-    public List<OrderEntity> selectOrderIdByCity(String cityCode) {
-        Integer status = 1;
-        List<OrderEntity> orderEntities = new ArrayList<>();
-        orderEntities = orderMapper.selectIndentIdByStatusAndCity(status, cityCode);
-        return orderEntities;
-    }
 
 }

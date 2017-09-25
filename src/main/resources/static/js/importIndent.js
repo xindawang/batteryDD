@@ -12,13 +12,11 @@ $(function () {
         data:null,
         dataType:"json",
         success:function(data){
-            document.getElementById("province").options[0]=new Option("---请选择---",0);
+            $('#province').empty();
+            $('#province').append("<option value= 0>---请选择--</option>");
             for (var i=0;i<data.length;i++){
-                var ii =i+1;
-                document.getElementById("province").options[ii]=new Option(data[i].provinceName,data[i].provinceCode);
-                // var code = data[i].provinceCode
-                // var name = data[i].provinceName
-                // $('#province').append("<option value=" + code + ">" + name +"</option>");
+
+                $("#province").append("<option value=" + data[i].provinceCode + ">" + data[i].provinceName + "</option>")
             }
         }
 
@@ -72,9 +70,7 @@ $(function () {
             $("#automobileBrand").append("<option value= 0>---请选择--</option>")
             for (var i=0;i<data.length;i++){
                 $('#automobileBrand').append("<option value="+data[i].id+">"+data[i].brandName+"</option>");
-                // var code = data[i].provinceCode
-                // var name = data[i].provinceName
-                // $('#province').append("<option value=" + code + ">" + name +"</option>");
+
             }
         }
 
@@ -107,14 +103,12 @@ $(function () {
         dataType:"json",
         success:function(data){
             $("#batteryBrand").empty()
-            $('#batteryBrand').append("<option value= 0>---请选择--</option>")
+            $('#batteryBrand').append("<option value= 0>---请选择---</option>")
             for (var i=0;i<data.length;i++){
                 var id=data[i].id;
                 var brandName=data[i].brandName;
                 $('#batteryBrand').append("<option value="+id+">"+brandName+"</option>");
-                // var code = data[i].provinceCode
-                // var name = data[i].provinceName
-                // $('#province').append("<option value=" + code + ">" + name +"</option>");
+
             }
         }
 
@@ -128,7 +122,7 @@ $(function () {
             dataType: "json",
             success:function(data){
                 $('#batteryType').empty();//清空下拉列表
-                $('#batteryType').append("<option value= 0>---请选择--</option>");
+                $('#batteryType').append("<option value= 0>---请选择---</option>");
                 for(var i in data){
                     var id=data[i].id;
                     var type=data[i].type;

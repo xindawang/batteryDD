@@ -5,13 +5,12 @@ import com.thoughtworks.xstream.XStream;
 import net.sf.json.JSONObject;
 import org.dom4j.Document;
 import org.dom4j.DocumentException;
+import org.dom4j.DocumentHelper;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -49,18 +48,34 @@ public class NewsService {
 
         Map<String, String> map=new HashMap<String,String>();
 
-        SAXReader reader=new SAXReader();
-
-        //从request获取输入流
+//        SAXReader reader=new SAXReader();
+//
+//        //从request获取输入流
         InputStream ins=request.getInputStream();
-        Document doc=reader.read(ins);
+//        Document doc=reader.read(ins);
+//
+        Document dom = null;
+        try {
+            StringBuffer content = new StringBuffer();
+            BufferedReader br = new BufferedReader(new InputStreamReader(ins, "UTF-8"));
+            String line = null;
+            while ((line = br.readLine()) != null) {
+                content.append(line + "\n");
+            }
+            br.close();
+            dom = DocumentHelper.parseText(content.toString());
+            Element root = dom.getRootElement();
+            List<Element> list = root.elements();
+            for (Element e : list)
+                map.put(e.getName(), e.getText());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
-        Element root=doc.getRootElement();
+//        Element root=doc.getRootElement();
+//        List<Element> list=root.elements();
 
-        List<Element> list=root.elements();
 
-        for(Element e: list)
-            map.put(e.getName(),e.getText());
         ins.close();
 
         return map;

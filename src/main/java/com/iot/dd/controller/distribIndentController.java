@@ -49,7 +49,9 @@ public class distribIndentController {
 
     @RequestMapping(value="/getHaveIndentOfCity",method=RequestMethod.POST)
     String getHaveIndentOfCity(HttpServletRequest request){
-        List<CityEntity> cityEntityList=orderService.selectCity();
+        Integer status = Integer.parseInt(request.getParameter("status"));
+        String type = request.getParameter("type");
+        List<CityEntity> cityEntityList = orderService.selectCityByStatus(status, type);
         return JsonTool.objectToJson(cityEntityList);
     }
 
