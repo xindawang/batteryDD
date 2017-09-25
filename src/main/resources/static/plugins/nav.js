@@ -11,16 +11,16 @@ var navs = [{
         "icon": "&#xe63c;",
         "href": "distributeIndent.html"
     }, {
-        "title": "订单转发记录",
-        "icon": "&#xe63c;",
-        "href": "indentAllocation.html"
-    }, {
-        "title": "订单监控",
+        "title": "订单管理",
         "icon": "&#xe63c;",
         "href": "indentManage.html"
+    }, {
+        "title": "全景监控",
+        "icon": "&#xe63c;",
+        "href": "IndentMonitor.html"
     }]
 }, {
-    "title": "电池",
+    "title": "电池管理",
     "icon": "fa-cubes",
     "spread": true,
     "children": [{

@@ -155,6 +155,25 @@
         }
         return this;
     }
+
+    /*
+ * 清理当前页显示
+ */
+    Table.prototype.clearTBody = function () {
+        this.$element.find('tbody>tr').remove();
+        return this;
+    };
+
+    /*
+    清理插件
+     */
+    Table.prototype.destroy = function () {
+        this.$element.children('table').empty();
+        this.simplePagination.pagination('destroy');
+        this.$element.children('div .page-nav').remove();
+
+    };
+
     /*
      * 初始化分页插件
      */
@@ -171,6 +190,7 @@
                 },
                 onInit: function () {
                     var pages = this.pages
+                    this.$element.children('div .addon').remove()
                     var nav = that.$element.append('<div class="addon"><span>共' + this.pages + '页&nbsp;第</span>' + '<span><input class="page"/>页</span>'
                         + '<span><button class="jump">确认</button></span></div>');
 
@@ -185,23 +205,7 @@
         return this;
     }
 
-    /*
-     * 清理当前页显示
-     */
-    Table.prototype.clearTBody = function () {
-        this.$element.find('tbody>tr').remove();
-        return this;
-    };
 
-    /*
-    清理插件
-     */
-    Table.prototype.destroy = function () {
-        this.$element.children('table').empty();
-        this.simplePagination.pagination('destroy');
-        this.$element.children('div .page-nav').remove();
-        this.$element.children('div .addon').remove()
-    };
 
     /*
      * 构建表格头

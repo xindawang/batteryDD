@@ -1,6 +1,7 @@
 package com.iot.dd.dao.mapper;
 
 import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
+import com.iot.dd.dao.entity.Indent.IndentMonitorEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.entity.resource.CityEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
@@ -336,6 +337,14 @@ public interface OrderMapper {
 
     @Select("select order_id from indent_evaluation where order_id=#{orderId}")
     String selectOrderIdFromEva(String orderId);
+
+
+    //订单监控
+    @Select("select indent.order_id as orderId ,indent.address,indent_allocation.customer_longitude as customerLongitude," +
+            "indent_allocation.customer_latitude as customerLatitude from indent join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID")
+    List<IndentMonitorEntity> selectAllMonitorMsg();
+
+
 }
 
 
