@@ -1,5 +1,6 @@
 package com.iot.dd.dao.entity.resource;
 
+
 /**
  * Created by huanglin on 2017/7/20.
  */

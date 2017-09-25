@@ -22,6 +22,8 @@ public class TechnicianEntity {
     private String licensePlateNumber;//车牌号
     private Integer organizationId;//机构编号
 
+
+
     public Integer getId() {
         return id;
     }
