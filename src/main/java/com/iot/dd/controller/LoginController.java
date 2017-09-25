@@ -130,6 +130,8 @@ public class LoginController {
         LastIdEntity entity=lastIdService.find();//技师可用编号
         int id=Integer.parseInt(entity.getIdNumber())+1;
         lastIdService.update(id+"");//设置下一个可用编号
+
+
         //获取城市的编码
         String cityCode = re.findCityCODE(cityName);
         TechnicianEntity user = new TechnicianEntity();

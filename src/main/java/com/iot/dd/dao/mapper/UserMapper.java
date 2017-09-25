@@ -42,23 +42,28 @@ public interface UserMapper {
     })
     StaffEntity selectStaffUser(String name);
 
+    /*
+    * 添加一个用户
+    * */
 
-     //技师注册
-    @Insert("insert into technician (LOGIN_NAME,PASSWORD,TECHNICIAN_ID,NAME,CELLPHONE," +
-            "ID_NUMBER,ADDRESS,CITY_CODE,LICENSE_PLATE_NUMBER) values(#{loginName},#{password}," +
-            "#{technicianId},#{name},#{cellphone},#{idNumber},#{address},#{cityCode}," +
-            "#{licensePlateNumber})")
+    //添加technician
+    @Insert("insert into technician(TECHNICIAN_ID,LOGIN_NAME,PASSWORD,NAME,SEX,EMAIL,CELLPHONE,TELEPHONE,ID_NUMBER,LICENSE_PLATE_NUMBER,ADDRESS,CITY_CODE)" +
+            "values(#{technicianId},#{loginName},#{password},#{name},#{sex},#{email},#{cellphone},#{telephone},#{idNumber},#{licensePlateNumber},#{address},#{cityCode})")
     boolean addTechnician(TechnicianEntity user);
 
+    //添加staff
+    @Insert("insert into  staff(LOGIN_NAME,PASSWORD,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS)" +
+            "values(#{loginName},#{password},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address})")
+    boolean addStaff(StaffEntity entity);
+
+    //添加管理员
+    @Insert("insert into admin(LOGIN_NAME,PASSWORD,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS)" +
+            "values(#{loginName},#{password},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address})")
+    boolean addAdmin(AdminEntity entity);
 
     //查询
     @Select("select * from technician where LOGIN_NAME=#{loginName} limit 1")
     TechnicianEntity selectTechnician(String loginName);
-
-
-
-    //更新经纬度
-
    //客服信息更新
     @Update("update staff set name=#{name},sex=#{sex} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName} ")
     boolean modifyStaffInfo(StaffEntity user);

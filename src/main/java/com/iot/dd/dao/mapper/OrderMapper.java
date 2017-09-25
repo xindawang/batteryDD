@@ -312,6 +312,23 @@ public interface OrderMapper {
     })
     OrderEntity findOrder(String orderId);
 
+
+    @Select("select * from indent where order_id=#{orderId} and finish_time like #{time}")
+    @Results({
+            @Result(property = "orderId", column = "order_id"),
+            @Result(property = "batteryType", column = "battery_type"),
+            @Result(property = "customerName", column = "customer_name"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "customerCellphone", column = "customer_cellphone"),
+            @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "wechatId", column = "wechat_id"),
+            @Result(property = "automobileType", column = "automobile_type"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "createTime", column = "create_time"),
+            @Result(property = "finishTime", column = "finish_time")
+    })
+    OrderEntity findOrderBytime(@Param("orderId") String orderId,@Param("time") String time);
+
     /*
     * 根据订单编号修改订单状态
     * */

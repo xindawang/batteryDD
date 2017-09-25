@@ -41,7 +41,7 @@ $(function () {
                 data:$("#form").serialize(),
                 //dataType:text,
                 success:function (data) {
-                    document.getElementById("showMsg").innerHTML=data.toString();
+                    alert(data.toString());
                 }
             }
         );

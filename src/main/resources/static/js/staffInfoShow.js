@@ -19,45 +19,50 @@ $(function () {
             {
                 title: '序号',
                 increment: 1,
-                width: '50px'
+                width: '30px'
             },
             {
                 title: '用户名',
-                data: 'loginName'
+                data: 'loginName',
+                width: '50px'
             },
             {
                 title: '性别',
-                data: 'sex'
+                data: 'sex',
+                width: '30px'
             },
             {
                 title: '姓名',
-                data: 'name'
+                data: 'name',
+                width: '30px'
             },
             {
                 title: '手机号码',
-                data: 'cellphone'
+                data: 'cellphone',
+                width: '80px'
             },
             {
                 title: '电话号码',
-                data: 'telephone'
+                data: 'telephone',
+                width: '80px'
             },
             {
                 title: '邮箱',
-                data: 'email'
+                data: 'email',
+                width: '90px'
             },
             {
                 title: '地址',
                 data: 'address'
             },
             {
-                title: '机构编号',
-                data: 'organizationId'
-            },
-            {
                 title: '操作',
                 //element: "<button onclick='return deleteInfo(this)'>删除</button><button onclick='return editInfo(this)'>编辑</button>"
-                element:"<a href='javascript:;' onclick='return editInfo(this)'  class='layui-btn layui-btn-mini'>编辑</a><a href='javascript:;' onclick='return deleteInfo(this)' class='layui-btn layui-btn-danger layui-btn-mini'>删除</a>"
-            },
+                element:"<a href='javascript:;' onclick='return editInfo(this)'  class='layui-btn layui-btn-mini'>编辑</a>" +
+                "<a href='javascript:;' onclick='return deleteInfo(this)' class='layui-btn layui-btn-danger layui-btn-mini'>删除</a>",
+                width:'100px'
+
+            }
         ]
     })
 
@@ -84,7 +89,6 @@ function getRowObj(obj)
 function deleteInfo(obj){
     if(window.confirm("确定删除该用户吗？")) {
         var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
-        alert(personType);
         var tr = getRowObj(obj);
         var m = tr.rowIndex;
         m = m - 1;
@@ -97,7 +101,6 @@ function deleteInfo(obj){
                 loginName: loginName,
             },
             success: function (data) {
-                alert(data);
                 tr.parentNode.removeChild(tr);//移除该行
             }
         });
