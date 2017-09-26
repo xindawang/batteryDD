@@ -15,7 +15,7 @@ public class StaffEntity {
     private String email;
     private String idNumber;
     private String address;
-    private String role;
+   String role;
     private Integer organizationId;
 
     public Integer getId() {
