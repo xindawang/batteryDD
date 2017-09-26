@@ -2,18 +2,16 @@ package com.iot.dd.controller;
 
 import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.entity.resource.*;
+import com.iot.dd.dao.mapper.ResourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
 import java.util.List;
-
-import com.iot.dd.dao.mapper.ResourceMapper;
 
 /**
  * Created by huanglin on 2017/7/20.
@@ -80,7 +78,7 @@ public class ImportResourceController {
     @RequestMapping(value = "/importBatteryType", method = RequestMethod.POST)
     String getBatteryType(HttpServletRequest request) {
         Integer batteryBrandId = Integer.valueOf(request.getParameter("batteryBrand"));
-        List<BatteryEntity> batteryList = resourceMapper.selectBatteryType(batteryBrandId);
+        List<BatteryEntity> batteryList = resourceMapper.selectBatteryTypeById(batteryBrandId);
 
         return JsonTool.objectToJson(batteryList);
     }

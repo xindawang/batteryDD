@@ -2,7 +2,7 @@ package com.iot.dd.dao.mapper;
 
 
 import com.iot.dd.dao.entity.resource.*;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -59,15 +59,40 @@ public interface ResourceMapper {
     List<BatteryBrandEntity> selectBatteryBrand();
 
     @Select("select ID,TYPE from battery where BATTERY_BRAND_ID=#{brandId}")
-    List<BatteryEntity>selectBatteryType(Integer brandId);
+    List<BatteryEntity> selectBatteryTypeById(Integer brandId);
 
-    @Select("select BRAND_NAME from battery_brand where ID=#{id}")
-    String selectBatteryBrandName(Integer id);
+    @Select("select BRAND_NAME from battery_brand where Brand_name=#{brandName}")
+    String selectBatteryBrandNameByName(String brandName);
+
+    @Select("select TYPE from battery where type=#{type}")
+    String selectBatteryTypeNameByType(String type);
 
     @Select("select TYPE from battery where ID=#{id}")
-    String selectBatteryTypeName(Integer id);
+    String selectBatteryTypeNameById(Integer id);
 
     @Select("select id from battery where type=#{type}")
     Integer selectBatteryTypeId(String type);
+
+    @Select("select id from battery_brand where brand_name=#{brandName}")
+    Integer selectBatteryBrandIdByName(String brandName);
+
+    @Select("select type ,battery.id ,brand_name brandName from battery join battery_brand on battery.battery_brand_id =battery_brand.id order by battery_brand_id")
+    List<BatteryTypeEntity> selectAllBatteryType();
+
+    @Update("update battery set type=#{type} where id=#{batteryId}")
+    void updateBattery(@Param("type") String type, @Param("batteryId") Integer batteryId);
+
+    @Delete("delete from battery where id=#{batteryId}")
+    void deleteBattery(Integer batteryId);
+
+    @Update("update battery_brand set brand_name=#{brandName}")
+    void updateBatteryBrand(String brandName);
+
+    @Insert("insert into battery_brand values(null,#{brandName})")
+    void insertBatteryBrand(String brandName);
+
+    @Insert("insert into battery (type,battery_brand_id)values(#{type},#{batteryBrandId})")
+    void insertBattery(@Param("type") String type, @Param("batteryBrandId") Integer batteryBrandId);
+
 
 }

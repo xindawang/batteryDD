@@ -1,9 +1,9 @@
 package com.iot.dd.controller;
 
 import com.iot.dd.Tools.JsonTool;
-import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.Tools.TimeTool;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
+import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,7 +36,7 @@ public class ImportIndentController {
         OrderEntity orderEntity=new OrderEntity();
         orderEntity.setOrderId(request.getParameter("orderId"));
         Integer batteryTypeId=Integer.valueOf(request.getParameter("batteryType"));
-        String BatteryTypeName= resourceMapper.selectBatteryTypeName(batteryTypeId);
+        String BatteryTypeName = resourceMapper.selectBatteryTypeNameById(batteryTypeId);
         orderEntity.setBatteryType(BatteryTypeName);
 
         orderEntity.setCustomerName(request.getParameter("customerName"));

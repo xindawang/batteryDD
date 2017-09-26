@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../js/commonPlugin.js"></script>
+    <script type="text/javascript" src="../plugin/jm-qi.js"></script>
+    <script type="text/javascript" src="../plugin/table.js"></script>
+    <script type="text/javascript" src="../js/batteryTypeShow.js"></script>
+    <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all"/>
+    <link rel="stylesheet" href="../css/global.css" media="all">
+    <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="../css/table.css"/>
+    <link rel="stylesheet" type="text/css" href="../plugin/simplePagination.css">
+    <link rel="stylesheet" type="text/css" href="../css/mbox.css">
+    <title>电池品牌型号信息</title>
+</head>
+<body>
+<input type="hidden"/><!--类型-->
+<div class="admin-main">
+    <fieldset class="layui-elem-field">
+        <legend><label id="caption"></label>
+            <button class="layui-btn" onclick=addBatteryType()>添加电池型号</button>
+        </legend>
+        <div class="layui-field-box layui-form" id="Table" style="width:1100px;overflow: auto;overflow-y:hidden">
+            <table id="tb" class="layui-table admin-table">
+            </table>
+        </div>
+    </fieldset>
+</div>
+
+</body>
+</html>

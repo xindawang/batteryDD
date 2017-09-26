@@ -171,7 +171,7 @@
         this.$element.children('table').empty();
         this.simplePagination.pagination('destroy');
         this.$element.children('div .page-nav').remove();
-
+        this.$element.children('div .addon').remove()
     };
 
     /*
@@ -190,7 +190,7 @@
                 },
                 onInit: function () {
                     var pages = this.pages
-                    this.$element.children('div .addon').remove()
+
                     var nav = that.$element.append('<div class="addon"><span>共' + this.pages + '页&nbsp;第</span>' + '<span><input class="page"/>页</span>'
                         + '<span><button class="jump">&nbsp;确认</button></span></div>');
 
