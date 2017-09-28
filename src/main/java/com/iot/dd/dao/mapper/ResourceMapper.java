@@ -34,10 +34,11 @@ public interface ResourceMapper {
     @Select("select AREA_NAME from area where AREA_CODE=#{areaCode} ")
     String  selectAreaName(String areaCode);
 
-    @Select("select CITY_CODE  from city where CITY_NAME=#{cityName}")
-    String selectCityCode(String cityName);
+    @Select("select CITY_CODE  from city join province on province.province_code=city.province_code where city.CITY_NAME=#{cityName} and province.province_name=#{provinceName}")
+    String selectCityCode1(@Param("cityName") String cityName, @Param("provinceName") String provinceName);
 
-
+    @Select("select CITY_CODE  from city  where city.CITY_NAME=#{cityName} ")
+    String selectCityCode(@Param("cityName") String cityName);
     //选择订单状态
     @Select("select STATE from indent_state where ID=#{id}")
     String selectStatus(Integer id);

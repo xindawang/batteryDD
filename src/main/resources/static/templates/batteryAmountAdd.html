@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>添加电池库存</title>
+    <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all"/>
+    <script type="text/javascript" src="../js/commonPlugin.js"></script>
+    <script type="text/javascript" src="../js/importIndent.js"></script>
+    <script type="text/javascript" src="../js/batteryAmountAdd.js"></script>
+</head>
+<body>
+<div style=" position: relative; width: 100%;height:100%">
+    <div style="width: 30%;height: 100%;position: absolute;margin:auto; top: 0%;left: 0;right: 0;bottom: 0;">
+        <br/>
+        <form id="form" class="layui-form">
+            <fieldset class="layui-elem-field">
+                <legend>添加库存</legend>
+                <div class="layui-field-box layui-form">
+
+                    <div class="layui-form-item ">
+                        <div class="layui-inline required">
+                            <label class="layui-form-label ">省份</label>
+                            <div class="layui-input-inline">
+                                <select id="province" name="customerName" class="layui-select necessary"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item ">
+                        <div class="layui-inline required">
+                            <label class="layui-form-label ">城市</label>
+                            <div class="layui-input-inline">
+                                <select id="city" name="city" class="layui-input necessary"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item ">
+                        <div class="layui-inline required">
+                            <label class="layui-form-label ">电池品牌</label>
+                            <div class="layui-input-inline">
+                                <select id="batteryBrand" name="batteryBrand" class="layui-input necessary"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item ">
+                        <div class="layui-inline required">
+                            <label class="layui-form-label ">电池型号</label>
+                            <div class="layui-input-inline">
+                                <select id="batteryType" name="batteryType" class="layui-input necessary"></select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item ">
+                        <div class="layui-inline required">
+                            <label class="layui-form-label ">库存量</label>
+                            <div class="layui-input-inline">
+                                <input type="text" id="batteryStock" name="batteryStock" class="layui-input necessary">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="layui-form-item" style="text-align: center">
+                        <div class="layui-inline">
+                            <div class="layui-input-inline">
+                                <input class="layui-btn" type="button" id="add" value="添加库存"/>
+                                <a href="batteryAmount.html" class="layui-btn layui-btn-primary">返回</a>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+
+</div>
+</body>
+</html>

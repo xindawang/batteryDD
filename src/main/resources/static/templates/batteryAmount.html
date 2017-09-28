@@ -8,18 +8,19 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="format-detection" content="telephone=no">
-
+    <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all"/>
     <script type="text/javascript" src="../js/commonPlugin.js"></script>
+    <script type="text/javascript" src="../plugin/jm-qi.js"></script>
     <script type="text/javascript" src="../js/batteryAmount.js"></script>
-    <script type="text/javascript" src="../js/importIndent.js"></script>
     <script type="text/javascript" src="../plugin/table.js"></script>
     <link rel="stylesheet" type="text/css" href="../plugin/simplePagination.css">
 
-    <link rel="stylesheet" href="../plugins/layui/css/layui.css" media="all" />
+
     <link rel="stylesheet" href="../plugins/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="../css/mbox.css">
 
 
-    <title>电池数量监控</title>
+    <title>电池库存管理</title>
 </head>
 <body>
  <form class="layui-form">
@@ -36,34 +37,16 @@
              <select id="city" name="city"  style="display: inherit " class="layui-input">
              </select>
          </div>
+         <input type=”button" id="addAmount" class="layui-btn" onclick="window.location='batteryAmountAdd.html'"
+                value="添加电池库存"></input>
      </div>
 
-     <div class="layui-form-item">
-         <label class="layui-form-label">电池品牌</label>
-         <div class="layui-input-inline">
-             <select  id="batteryBrand" name="batteryBrand" style="display: inherit " class="layui-input">
-             </select>
-         </div>
-         <label class="layui-form-label">电池型号</label>
-         <div class="layui-input-inline">
-             <select id="batteryType" name="batteryType" style="display: inherit " class="layui-input">
-             </select>
-         </div>
-     </div>
 
      <div class="admin-main">
          <fieldset class="layui-elem-field">
              <legend>数据列表</legend>
              <div class="layui-field-box layui-form" id="Table">
-                 <table class="layui-table admin-table">
-                     <thead>
-                     <tr>
-                         <th>序号</th>
-                         <th>电池型号</th>
-                         <th>城市</th>
-                         <th>电池库存量</th>
-                     </tr>
-                     </thead>
+                 <table id="tb" class="layui-table admin-table">
                  </table>
              </div>
          </fieldset>

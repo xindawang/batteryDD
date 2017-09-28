@@ -26,7 +26,7 @@ public class BatteryAmountController {
     private StockService stock;
 
      //按城市查询库存
-    @RequestMapping(value="/batteryAmountCity",method = RequestMethod.GET )
+     @RequestMapping(value = "/getBatteryAmountByCity", method = RequestMethod.GET)
     public String findStockByCity(int pageSize, int page,HttpServletRequest request){
 
         String cityCode=request.getParameter("cityCode");
@@ -40,48 +40,57 @@ public class BatteryAmountController {
         return JsonTool.objectToJson(map);
     }
 
-    //按电池型号查询库存
-    @RequestMapping(value="/batteryAmountType",method = RequestMethod.GET )
-    public String findStockByType(int pageSize, int page,HttpServletRequest request){
 
-        String batteryType=request.getParameter("batteryType");
+
+    //删除库存
+    @RequestMapping(value = "/batteryAmountDelete", method = RequestMethod.POST)
+    public String deletebattery(HttpServletRequest request) {
+     String cityName=request.getParameter("cityName");
+     String batteryType=request.getParameter("batteryType");
+        String provinceName = request.getParameter("province");
+        return stock.deletebatteryStock(cityName, batteryType, provinceName);
+    }
+
+    //编辑库存量
+    @RequestMapping(value = "/updateBatteryStock", method = RequestMethod.POST)
+    public String Addbatterycount(HttpServletRequest request) {
+        String province = request.getParameter("province");
+        String cityName = request.getParameter("cityName");
+        String batteryType = request.getParameter("batteryType");
+        String inventory = request.getParameter("stock");
+        String result = stock.updateBatteryStock(cityName, batteryType, province, inventory);
+        return JsonTool.objectToJson(result);
+
+
+    }
+
+
+    @RequestMapping(value = "/getAllBatteryAmount", method = RequestMethod.GET)
+    public String getAllBatteryAmount(int pageSize, int page, HttpServletRequest request) {
         PageHelper.startPage(page, pageSize);
-
-        List<BatteryStockEntity> list = stock.findStockByType(Integer.parseInt(batteryType));
+        List<BatteryStockEntity> list = stock.selectAllBatteryStock();
         long total = ((Page<BatteryStockEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
         map.put("total", total);
         return JsonTool.objectToJson(map);
+
     }
 
-    //删除库存
-    @RequestMapping(value="/batteryAmountDelete",method = RequestMethod.GET )
-    public String deletebattery(int pageSize, int page,HttpServletRequest request){
-     String cityName=request.getParameter("cityName");
-     String batteryType=request.getParameter("batteryType");
+    @RequestMapping(value = "/addBatteryAmount", method = RequestMethod.POST)
+    public String AddBatteryStock(HttpServletRequest request) {
+        String id = request.getParameter("batteryType");
+        Integer batteryId = Integer.parseInt(id);
+        String cityCode = request.getParameter("cityCode");
+        String batteryStock = request.getParameter("batteryStock");
+        Integer batteryInventory = null;
+        if (batteryStock != null) {
+            batteryInventory = Integer.parseInt(batteryStock);
+        }
 
-        Integer batteryId=stock.findbatteryId(batteryType);
-        String cityCode=stock.findcityId(cityName);
-        return stock.deletebatteryStock(cityCode,batteryId);
+
+        return JsonTool.objectToJson(stock.addBatteryStock(batteryId, cityCode, batteryInventory));
     }
-
-    //编辑库存量
-    @RequestMapping(value="/batteryAmountEdit",method = RequestMethod.GET )
-    public String Addbatterycount(int pageSize, int page,HttpServletRequest request){
-
-
-        return "";
-    }
-
-    //增加一个城市的电池库
-    @RequestMapping(value="/batteryAmountAdd",method = RequestMethod.GET )
-    public String Addbattery(int pageSize, int page,HttpServletRequest request){
-
-
-        return "";
-    }
-
 
 
 

@@ -20,6 +20,7 @@ var batteryMsg = [
     {
         title: '电池型号',
         data: 'type'
+
     },
     {
         title: '操作',

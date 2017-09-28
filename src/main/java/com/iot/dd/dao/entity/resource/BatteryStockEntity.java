@@ -5,12 +5,45 @@ package com.iot.dd.dao.entity.resource;
  */
 public class BatteryStockEntity {
     private Integer id;
-    private  Integer batteryId;
-    private  String cityCode;
-    private Integer inventory;
 
-    private BatteryEntity battery;
-    private CityEntity city;
+    private Integer batteryId;
+    private Integer inventory;
+    private String provinceName;
+    private String cityName;
+    private String batteryType;
+    private String batteryBrand;
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
+    public String getBatteryType() {
+        return batteryType;
+    }
+
+    public void setBatteryType(String batteryType) {
+        this.batteryType = batteryType;
+    }
+
+    public String getBatteryBrand() {
+        return batteryBrand;
+    }
+
+    public void setBatteryBrand(String batteryBrand) {
+        this.batteryBrand = batteryBrand;
+    }
+
+    public String getProvinceName() {
+        return provinceName;
+    }
+
+    public void setProvinceName(String provinceName) {
+        this.provinceName = provinceName;
+    }
 
     public Integer getId() {
         return id;
@@ -20,21 +53,9 @@ public class BatteryStockEntity {
         this.id = id;
     }
 
-    public BatteryEntity getBattery() {
-        return battery;
-    }
 
-    public void setBattery(BatteryEntity battery) {
-        this.battery = battery;
-    }
 
-    public CityEntity getCity() {
-        return city;
-    }
 
-    public void setCity(CityEntity city) {
-        this.city = city;
-    }
 
     public Integer getBatteryId() {
         return batteryId;
@@ -44,13 +65,7 @@ public class BatteryStockEntity {
         this.batteryId = batteryId;
     }
 
-    public String getCityCode() {
-        return cityCode;
-    }
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
-    }
 
     public Integer getInventory() {
         return inventory;
