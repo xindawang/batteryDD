@@ -122,6 +122,11 @@ public interface UserManagementMapper {
     boolean modifyCustomerInfo(CustomerEntity user);
 
 
+    @Update("update technician set password=#{password}," +
+            "name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email}," +
+            "id_number=#{idNumber},address=#{address},license_plate_number=#{licensePlateNumber}," +
+            "city_code=#{cityCode} where technician_id=#{technicianId}")
+    boolean modifyTechnician(TechnicianEntity user);
 
     /*
     *

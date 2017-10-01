@@ -2,6 +2,9 @@ package com.iot.dd.dao.mapper;
 
 
 import com.iot.dd.dao.entity.resource.*;
+import org.apache.ibatis.annotations.Result;
+import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -18,7 +21,6 @@ public interface ResourceMapper {
     List<ProvinceEntity> selectProvince();
 
 
-
     @Select("select ID,CITY_CODE as cityCode,CITY_NAME as cityName from city where PROVINCE_CODE=#{provinceCode}")
     List<CityEntity> selectCity(String provinceCode);
 
@@ -26,13 +28,13 @@ public interface ResourceMapper {
     List<AreaEntity> selectArea(String cityCode);
 
     @Select("select PROVINCE_NAME from province where PROVINCE_CODE=#{provinceCode} ")
-    String  selectProvinceName(String provinceCode);
+    String selectProvinceName(String provinceCode);
 
     @Select("select CITY_NAME from city where CITY_CODE=#{cityCode} ")
-    String  selectCityName(String cityCode);
+    String selectCityName(String cityCode);
 
     @Select("select AREA_NAME from area where AREA_CODE=#{areaCode} ")
-    String  selectAreaName(String areaCode);
+    String selectAreaName(String areaCode);
 
     @Select("select CITY_CODE  from city join province on province.province_code=city.province_code where city.CITY_NAME=#{cityName} and province.province_name=#{provinceName}")
     String selectCityCode1(@Param("cityName") String cityName, @Param("provinceName") String provinceName);
@@ -59,6 +61,7 @@ public interface ResourceMapper {
     @Select("select ID,BRAND_NAME as brandName from battery_brand")
     List<BatteryBrandEntity> selectBatteryBrand();
 
+
     @Select("select ID,TYPE from battery where BATTERY_BRAND_ID=#{brandId}")
     List<BatteryEntity> selectBatteryTypeById(Integer brandId);
 
@@ -67,6 +70,16 @@ public interface ResourceMapper {
 
     @Select("select TYPE from battery where type=#{type}")
     String selectBatteryTypeNameByType(String type);
+
+    @Select("select * from automobile_battery where automobile_type_id=#{id}")
+    @Results({
+            @Result(column = "automobile_type_id", property = "automobileTypeId"),
+            @Result(column = "battery_type_id", property = "batteryTypeId")
+    })
+    List<AutomobileTypeBatteryEntity> selectAutomobileBattery(Integer automobileTypeId);
+
+    @Select("select BRAND_NAME from battery_brand where ID=#{id}")
+    String selectBatteryBrandName(Integer id);
 
     @Select("select TYPE from battery where ID=#{id}")
     String selectBatteryTypeNameById(Integer id);

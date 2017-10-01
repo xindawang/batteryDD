@@ -4,15 +4,15 @@
 
 $(function () {
     //显示初始信息
-    var userName=GetQueryString('loginName');
+    var userName = GetQueryString('loginName');
     $.ajax({
-        type:"post",
-        url:"/findOneTechnician",
-        data:{
-            loginName:userName,
+        type: "post",
+        url: "/findOneTechnician",
+        data: {
+            loginName: userName,
         },
         dataType: "json",
-        success:function(data) {
+        success: function (data) {
             $("#technicianId").val(data.technicianId);
             $("#loginName").val(data.loginName);
             $("#password").val(data.password);
@@ -24,7 +24,7 @@ $(function () {
             $("#idNumber").val(data.idNumber);
             $("#address").val(data.address);
             $("#licensePlateNumber").val(data.licensePlateNumber);
-            $("#organizationId").val(data.organizationId);
+            // $("#organizationId").val(data.organizationId);
 
         }
     });
@@ -36,6 +36,9 @@ $(function () {
         var tLoginName = $("#loginName").val();
         var tName = $("#name").val();
         var password = $("#password").val();
+        var idNumber = $("#idNumber").val();
+        var licensePlateNumber = $("#licensePlateNumber").val();
+        var address = $("#address").val();
         if (tID == null || tID == "") {
             alert("编号不能为空！！！");
             return;
@@ -52,12 +55,24 @@ $(function () {
             alert("密码不能为空！！！");
             return;
         }
+        if (idNumber == null || idNumber == "") {
+            alert("身份证号不能为空！！！");
+            return;
+        }
+        if (licensePlateNumber == null || licensePlateNumber == "") {
+            alert("车牌号不能为空！！！");
+            return;
+        }
+        if (address == null || address == "") {
+            alert("地址不能为空不能为空！！！");
+            return;
+        }
         $.ajax({
-                type:"POST",
+                type: "POST",
                 url: '/technicianModify',
-                data:$("#form").serialize(),
+                data: $("#form").serialize(),
                 //dataType:text,
-                success:function (data) {
+                success: function (data) {
                     alert(data.toString());
                 }
             }
@@ -74,8 +89,21 @@ $(function () {
 
     $("#finish").click(function () {
 
-        var ss = $("#province option:selected").text()+ $("#city option:selected").text()+
-            $("#area option:selected").text()+ $("#detailAddress").val();
+        var ss = $("#province option:selected").text() + $("#city option:selected").text() +
+            $("#area option:selected").text() + $("#detailAddress").val();
+
+        var provinceCode = $("#province option:selected").val();
+        var citycode = $("#city option:selected").val();
+        if (provinceCode == '0') {
+            alert("请选择省份！");
+            return;
+        }
+        if (citycode == "0") {
+
+            alert("请选择城市 ！");
+            return;
+        }
+        $("#cityCode").val(citycode);
         $("#address").val(ss);
         $("#address2").hide();
         $("#address3").hide();
@@ -93,22 +121,21 @@ $(function () {
         $("#sex1").hide();
         $("#sex2").show();
     });
-    $("#sexType").mouseleave (function () {
-        var sex= $("#sexType option:selected").text()
+    $("#sexType").mouseleave(function () {
+        var sex = $("#sexType option:selected").text()
         $("#sex").val(sex);
         $("#sex1").show();
         $("#sex2").hide();
     });
 
 
-
 });
 
 
 //取地址中的参数
-function GetQueryString(name)
-{
-    var reg = new RegExp("(^|&)"+ name +"=([^&]*)(&|$)");
+function GetQueryString(name) {
+    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if(r!=null)return  unescape(r[2]); return null;
+    if (r != null)return unescape(r[2]);
+    return null;
 }

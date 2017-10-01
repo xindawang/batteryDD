@@ -110,6 +110,15 @@ public class UserManageService {
         }
     }
 
+    public String updateOneTechnician(TechnicianEntity user) {
+        boolean b=usermanage.modifyTechnician(user);
+        if(b) {
+            return "信息修改成功！";
+        }
+        else {
+            return "信息修改失败！";
+        }
+    }
 
     /*
     * android

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,7 +77,7 @@ public class UserInfoManageController {
     @RequestMapping(value = "/technician", method = RequestMethod.GET)
     public String findtechnician(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
-        List<TechnicianEntity> list = usermanageservice.findTechnicianall();
+        List<TechnicianEntity> list= usermanageservice.findTechnicianall();
         long total = ((Page<TechnicianEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
@@ -247,8 +248,10 @@ public class UserInfoManageController {
     public String technicianmodify(HttpServletRequest request) {
 
         TechnicianEntity user = new TechnicianEntity();
+
         user.setTechnicianId(request.getParameter("technicianId"));
         user.setLoginName(request.getParameter("loginName"));
+
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
@@ -257,17 +260,10 @@ public class UserInfoManageController {
         user.setEmail(request.getParameter("email"));
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
-
-        //citycode??????????????
-
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+        user.setCityCode(request.getParameter("cityCode"));
 
-        if (request.getParameter("organizationId") == "" || request.getParameter("organizationId") == null) {
-            user.setOrganizationId(0);
-        } else {
-            user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
-        }
-        return usermanageservice.technicianLogin(user);
+        return usermanageservice.updateOneTechnician(user);
 
 
     }
@@ -335,6 +331,8 @@ public class UserInfoManageController {
         if (cityName != null) {
             cityCode = re.findCityCODE(cityName);
         }
+
+
         user.setCityCode(cityCode);
 
         Boolean t = userService.addTechnician(user);

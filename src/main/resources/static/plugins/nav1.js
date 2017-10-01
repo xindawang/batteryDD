@@ -13,6 +13,10 @@ var navs = [{
         "title": "订单查询",
         "icon": "&#xe63c;",
         "href": "indentManage.html"
+    },{
+        "title": "汽车",
+        "icon": "&#xe641;",
+        "href": "automobileShow.html"
     }]
 },{
     "title": "员工管理",

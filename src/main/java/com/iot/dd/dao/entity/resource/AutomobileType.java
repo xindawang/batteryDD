@@ -7,7 +7,9 @@ public class AutomobileType {
     private Integer id;
     private String name;
     private Integer automobileBrandId;
-    private Integer batteryId;
+    private AutomobileBrand autoBrand;
+    private String batteryType;
+//    private Integer batteryId;
 
     public Integer getId() {
         return id;
@@ -33,11 +35,27 @@ public class AutomobileType {
         this.automobileBrandId = automobileBrandId;
     }
 
-    public Integer getBatteryId() {
-        return batteryId;
+    public AutomobileBrand getAutoBrand() {
+        return autoBrand;
     }
 
-    public void setBatteryId(Integer batteryId) {
-        this.batteryId = batteryId;
+    public void setAutoBrand(AutomobileBrand autoBrand) {
+        this.autoBrand = autoBrand;
     }
+
+    public String getBatteryType() {
+        return batteryType;
+    }
+
+    public void setBatteryType(String batteryType) {
+        this.batteryType = batteryType;
+    }
+
+    //    public Integer getBatteryId() {
+//        return batteryId;
+//    }
+//
+//    public void setBatteryId(Integer batteryId) {
+//        this.batteryId = batteryId;
+//    }
 }

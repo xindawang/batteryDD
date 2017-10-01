@@ -22,4 +22,5 @@ public class AutomobileBrand {
     public void setBrandName(String brandName) {
         this.brandName = brandName;
     }
+
 }
