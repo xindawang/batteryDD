@@ -13,10 +13,6 @@ var navs = [{
         "title": "订单查询",
         "icon": "&#xe63c;",
         "href": "indentManage.html"
-    },{
-        "title": "汽车",
-        "icon": "&#xe641;",
-        "href": "automobileShow.html"
     }]
 },{
     "title": "员工管理",
@@ -47,6 +43,7 @@ var navs = [{
 },{
     "title": "汽车品牌管理",
     "icon": "fa-cubes",
+    "href": "automobileShow.html"
 
 },{
     "title": "电池库存管理",

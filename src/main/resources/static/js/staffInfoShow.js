@@ -67,6 +67,10 @@ $(function () {
     })
 
 
+    $("#addStaff").click(function () {
+        window.location.href="staffAdd.html"
+    })
+
 
 });
 
