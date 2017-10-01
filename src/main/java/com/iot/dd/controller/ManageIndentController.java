@@ -4,6 +4,7 @@ package com.iot.dd.controller;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.dao.entity.Indent.IndentShowEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.entity.resource.CityEntity;
 import com.iot.dd.service.IndentManageService;
@@ -31,7 +32,7 @@ public class ManageIndentController {
         Integer status = Integer.parseInt(request.getParameter("status"));
         String type = request.getParameter("type");
 
-        List<CityEntity> cityEntityList = new ArrayList<>();
+        List<CityEntity> cityEntityList ;
         cityEntityList = orderService.selectCityByStatus(status, type);
 
         return JsonTool.objectToJson(cityEntityList);
@@ -47,12 +48,12 @@ public class ManageIndentController {
         int IntStatus = Integer.parseInt(status);
         String cityCode = request.getParameter("cityCode");
         String dateRegion = request.getParameter("dateRegion");
-        List<OrderEntity> list = new ArrayList<>();
+        List<IndentShowEntity> list = new ArrayList<>();
 
 
         list = indentManageService.findIndentMsg(IntStatus, cityCode, dateRegion);
 
-        long total = ((Page<OrderEntity>) list).getTotal();
+        long total = ((Page<IndentShowEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
         map.put("total", total);
@@ -64,11 +65,11 @@ public class ManageIndentController {
     String findIndentByNumber(int pageSize, int page, HttpServletRequest request) {
         PageHelper.startPage(page, pageSize);
         String Number = request.getParameter("searchNumber");
-        List<OrderEntity> list = new ArrayList<>();
+        List<IndentShowEntity> list = new ArrayList<>();
 
         list = indentManageService.findIndentByNumber(Number);
 
-        long total = ((Page<OrderEntity>) list).getTotal();
+        long total = ((Page<IndentShowEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
         map.put("total", total);

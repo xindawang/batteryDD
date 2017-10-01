@@ -28,10 +28,14 @@ public class OrderService {
     //导入订单
     public String importOrder(OrderEntity orderEntity) {
         String result = null;
-        if (orderMapper.addOrder(orderEntity)) {
-            result = "订单导入成功";
-        } else {
-            result = "订单导入失败";
+        if(orderMapper.selectIdByOrderId(orderEntity.getOrderId())==null) {
+            if (orderMapper.addOrder(orderEntity)) {
+                result = "订单导入成功";
+            } else {
+                result = "订单导入失败";
+            }
+        }else{
+            result="该订单编号已经存在";
         }
         return result;
     }
@@ -56,11 +60,14 @@ public class OrderService {
     public String InsertOrderId(String orderId) {
         if (orderMapper.selectIndentAllocationMsg(orderId) == null) {
             orderMapper.insertAllocationOderId(orderId);
+            return "订单编号成功导入订单转发表";
         } else {
             return "订单编号已存在，不需重复导入";
         }
-        return "订单编号成功导入订单转发表";
+
     }
+
+
 
 
     //通过订单编号查询用户的地理位置
@@ -151,12 +158,12 @@ public class OrderService {
 
         //status如果为0表明是不区分状态（全部状态）
         List<CityEntity> cityEntityList = new ArrayList<>();
-        if (status > 0 && type.equals(disType)) {//派发订单时查询城市
-            cityEntityList = orderMapper.selectCityCodeByStatus(status);
-        } else if (status > 0 && type.equals(manageType)) {//管理订单时按订单状态查询订单
+        if (type.equals(disType)) {//派发订单时查询城市
+            cityEntityList = orderMapper.selectDisCityCodeByStatus(status);
+        } else if (status > 0 && type.equals(manageType)) {//管理订单时按订单状态查询城市列表
             cityEntityList = orderMapper.selectCityCodeByStatusManage(status);
         } else {
-            cityEntityList = orderMapper.selectAllCityCode();//管理订单时查询所有订单
+            cityEntityList = orderMapper.selectAllCityCode();//管理订单时查询所有城市列表
         }
 
         List<CityEntity> cityMsgList = new ArrayList<CityEntity>();

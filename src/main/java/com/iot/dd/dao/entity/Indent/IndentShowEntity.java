@@ -1,46 +1,28 @@
 package com.iot.dd.dao.entity.Indent;
 
-import org.omg.CORBA.INTERNAL;
-
 import java.sql.Date;
 
 /**
  * Created by huanglin on 2017/7/21.
  */
 //订单实体类
-public class OrderEntity {
-    private Integer id;
+public class IndentShowEntity {
+
     private String orderId;
     private String batteryType;//电池型号
     private String customerName;
     private String customerCellphone;
-    private String customerTelephone;
-    private String wechatId;
     private String address;
     private String automobileType;//车型
     private String licensePlateNumber;
-    private String cityCode;
+    private String technicianName;
+    private String technicianPhone;
     private Date createTime;
     private Date finishTime;
     private Integer status;
     private String remark;
-    private Integer wechatStatus;
 
-    public Integer getWechatStatus() {
-        return wechatStatus;
-    }
 
-    public void setWechatStatus(Integer wechatStatus) {
-        this.wechatStatus = wechatStatus;
-    }
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getOrderId() {
         return orderId;
@@ -74,21 +56,7 @@ public class OrderEntity {
         this.customerCellphone = customerCellphone;
     }
 
-    public String getCustomerTelephone() {
-        return customerTelephone;
-    }
 
-    public void setCustomerTelephone(String customerTelephone) {
-        this.customerTelephone = customerTelephone;
-    }
-
-    public String getWechatId() {
-        return wechatId;
-    }
-
-    public void setWechatId(String wechatId) {
-        this.wechatId = wechatId;
-    }
 
     public String getAddress() {
         return address;
@@ -114,12 +82,20 @@ public class OrderEntity {
         this.licensePlateNumber = licensePlateNumber;
     }
 
-    public String getCityCode() {
-        return cityCode;
+    public String getTechnicianName() {
+        return technicianName;
     }
 
-    public void setCityCode(String cityCode) {
-        this.cityCode = cityCode;
+    public void setTechnicianName(String technicianName) {
+        this.technicianName = technicianName;
+    }
+
+    public String getTechnicianPhone() {
+        return technicianPhone;
+    }
+
+    public void setTechnicianPhone(String technicianPhone) {
+        this.technicianPhone = technicianPhone;
     }
 
     public Date getCreateTime() {

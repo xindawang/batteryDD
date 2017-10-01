@@ -97,22 +97,8 @@ public class distribIndentController {
         String techId=request.getParameter("techId");
         orderService.allocIndent(indentId,techId);
 
-        return JsonTool.objectToJson("success");
+        return JsonTool.objectToJson("订单派发成功");
 
     }
-
-//    @RequestMapping(value="/getHaveUnIndentOfCity",method = RequestMethod.POST)
-//    public String getHaveUnIndentOfCity(HttpServletRequest request){
-//
-//    }
-
-
-
-
-
-
-
-
-
 
 }

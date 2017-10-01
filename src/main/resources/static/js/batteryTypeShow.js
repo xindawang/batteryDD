@@ -154,7 +154,8 @@ function dropBatteryType(batteryBrand, batteryType, batteryId) {
         border: [0, .5, "#666"],
         title: "删除电池型号与品牌",
         dialog: {
-            msg: "<p style='color:red'>确认删除" + batteryBrand + "品牌下的<br/>" + batteryType + "电池型号？</p>",
+            msg: "<p >确认删除" + batteryBrand + "品牌下的<br/>" + batteryType + "电池型号？</p>" +
+            "<p style='color:red'>警告：删除当前电池型号同时将删除该电池型号的所有库存</p>",
             btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
             type: 2,   //1:对钩   2：问号  3：叹号
             btn: ["确认删除", "取消"],  //自定义按钮

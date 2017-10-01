@@ -34,13 +34,10 @@ $(function () {
             data: 'customerName'
         },
         {
-            title: '手机号码',
+            title: '客户手机',
             data: 'customerCellphone'
-        },
-        {
-            title: '客户电话',
-            data: 'customerTelephone'
-        },
+        }
+        ,
         {
             title: '地址',
             data: 'address'
@@ -56,6 +53,12 @@ $(function () {
         {
             title: '下单时间',
             data: 'createTime'
+        },{
+            title:"接单技师",
+            data:'technicianName'
+        },{
+            title:'技师电话',
+            data:'technicianPhone'
         },
         {
             title: '完成时间',
@@ -142,7 +145,7 @@ $(function () {
     $("#searchButton").click(function () {
         var searchNumber = $("#searchNumber").val()
         if (searchNumber == "") {
-            confirmemptyNumber()
+            confirmEmptyNumber()
         } else {
             updateTable1(searchNumber)
         }
@@ -231,7 +234,7 @@ $(function () {
     }
 
 
-    function confirmemptyNumber() {
+    function confirmEmptyNumber() {
         $.mbox({
             area: ["300px", "auto"], //弹框大小
             border: [0, .5, "#666"],

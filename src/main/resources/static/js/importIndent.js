@@ -150,11 +150,14 @@ $(function () {
                 dataType: "json",
                 success: function (data) {
                     //清空表清单
+
                     $(':input', '#form')
                         .not(':button, :submit, :reset, :hidden')
                         .val('')
                         .removeAttr('checked')
                         .removeAttr('selected');
+                    window.confirm(data)
+
                 }
             })
         }

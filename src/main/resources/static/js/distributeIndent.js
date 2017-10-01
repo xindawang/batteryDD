@@ -31,12 +31,18 @@ $(function () {
     $("#undoneIndent").change(function () {
 
         disIndentId = $("#undoneIndent option:selected").val()
-        setCusMsgAndLocation(disIndentId)
+        disIndentText=$("#undoneIndent option:selected").text()
 
-        if(disIndentId ==0){//当订单是---请选择时---
+        if(disIndentId ==="0"){//当订单是---请选择时---
             $("#indentDetail").hide()
+        }else if(disIndentText.lastIndexOf("非微信申请")>0) {
+            $("#indentDetail").show()
+            setCusMsg(disIndentId)
+
         }else{
             $("#indentDetail").show()
+            setCusMsg(disIndentId)
+            setCusLocation(disIndentId)
         }
     })
 
@@ -99,6 +105,7 @@ function confirmIndent(techId, indentId) {
         data: {"techId": techId, "indentId": indentId},
         dataType: "json",
         success: function (data) {
+            window.confirm(data)
             map.remove(userMarkers)
             map.remove(techMarkers)
             selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
@@ -127,7 +134,11 @@ function selectIndentMsgByCityCode(cityCode) {
             //document.getElementById("undoneIndent").options[0] = new Option("---请选择---", 0);
             $("#undoneIndent").append("<option value='0'>---请选择---</option>")
             for (var i = 0; i < data.length; i++) {
-                $("#undoneIndent").append("<option value=" + data[i].orderId + ">" + data[i].orderId + "</option>")
+                if(data[i].wechatStatus == 0) {//不从微信申请服务
+                    $("#undoneIndent").append("<option value=" + data[i].orderId+">" + data[i].orderId+"(非微信申请)" + "</option>")
+                }else{
+                    $("#undoneIndent").append("<option value=" + data[i].orderId+">" + data[i].orderId+ "</option>")
+                }
                 //使用 $("#undoneIndent")会报错
                 //document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
 
@@ -171,12 +182,7 @@ function selectCityList() {
 }
 
     //当选择一个订单时，显示订单位置和设置订单信息
-function setCusMsgAndLocation(indentId) {
-
-    var cusLongitude;//用户地理位置-经度
-    var cusLatitude;//纬度
-
-    map.remove(userMarkers)//重新选择订单后也清除地图
+function setCusMsg(indentId) {
     if (indentId != 0) {//点击订单编号
         //通过orderId获取用户和订单的信息
         $.ajax({
@@ -186,7 +192,6 @@ function setCusMsgAndLocation(indentId) {
             dataType: "json",
             success: function (data) {
                 $("#customerName").val(data[0].customerName);
-                $("#wechatId").val(data[0].wechatId);
                 $("#telephone").val(data[0].customerTelephone);
                 $("#cellphone").val(data[0].customerCellphone);
                 $("#automobileType").val(data[0].automobileType);
@@ -199,6 +204,15 @@ function setCusMsgAndLocation(indentId) {
         })
 
         $("#indentDetail").show();//订单详情按钮显示
+    }
+}
+function setCusLocation(indentId) {
+
+    var cusLongitude;//用户地理位置-经度
+    var cusLatitude;//纬度
+
+    map.remove(userMarkers)//重新选择订单后也清除地图
+
 
         //通过orderIda获取用户的地理位置作为位置中间
         $.ajax({
@@ -219,7 +233,7 @@ function setCusMsgAndLocation(indentId) {
                 //设置用户的图标
                 var icon = new AMap.Icon({
                     image: '../bgimg/user.png',
-                    size: new AMap.Size(24, 24)
+                    size: new AMap.Size(32, 32)
                 });
                 marker = new AMap.Marker({
                     icon: icon,
@@ -232,9 +246,7 @@ function setCusMsgAndLocation(indentId) {
                 userMarkers.push(marker)
             }
         })
-    }else{
-        $("#indentDetail").hide() //隐藏订单详情按钮
-    }
+
 }
 
 //更新城市时，更新当前城市的技师信息

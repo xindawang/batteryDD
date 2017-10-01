@@ -1,5 +1,6 @@
 package com.iot.dd.service;
 
+import com.iot.dd.dao.entity.Indent.IndentShowEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.mapper.OrderMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,25 +21,25 @@ public class IndentManageService {
     private OrderMapper   ordermapper;
 
 
-    //根据订单状态查询所有订单
-    public List<OrderEntity> findIndentByState(Integer state){
-        return ordermapper.selectIndentMsg(state);
+//    //根据订单状态查询所有订单
+//    public List<OrderEntity> findIndentByState(Integer state){
+//        return ordermapper.selectIndentMsg(state);
+//
+//    }
+//
+//    //根据订单所在城市查询所有订单
+//    public List<OrderEntity> findIndentByCity(String cityCode){
+//        return ordermapper.selectIndentByCity(cityCode);
+//
+//    }
+//
+//    //根据城市及订单状态查找所有订单
+//    public List<OrderEntity> findIndentByStateAndCity(Integer status,String cityCode){
+//        return ordermapper.selectIndentByStatusAndCity(status,cityCode);
+//    }
 
-    }
 
-    //根据订单所在城市查询所有订单
-    public List<OrderEntity> findIndentByCity(String cityCode){
-        return ordermapper.selectIndentByCity(cityCode);
-
-    }
-
-    //根据城市及订单状态查找所有订单
-    public List<OrderEntity> findIndentByStateAndCity(Integer status,String cityCode){
-        return ordermapper.selectIndentByStatusAndCity(status,cityCode);
-    }
-
-
-    public List<OrderEntity> findIndentMsg(Integer status, String cityCode, String dateRegion) {
+    public List<IndentShowEntity> findIndentMsg(Integer status, String cityCode, String dateRegion) {
         SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
         Calendar c = Calendar.getInstance();
@@ -88,9 +89,9 @@ public class IndentManageService {
                 return ordermapper.selectIndentByStatusAndCity1(status, cityCode, compareDate);
             }
         }
-    }
 
-    public List<OrderEntity> findIndentByNumber(String number) {
+    }
+    public List<IndentShowEntity> findIndentByNumber(String number) {
         return ordermapper.selectIndentByNumber(number);
     }
 }

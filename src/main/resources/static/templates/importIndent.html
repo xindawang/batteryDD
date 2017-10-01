@@ -17,10 +17,10 @@
 </head>
 <body>
 <div style="margin-left: 15px;margin-right: 15px">
-    <form id="form" class="layui-form">
+    <form id="form" >
         <fieldset class="layui-elem-field">
             <legend>客户信息</legend>
-            <div class="layui-field-box layui-form">
+            <div class="layui-field-box ">
 
                 <div class="layui-form-item ">
                     <div class="layui-inline required">
@@ -67,6 +67,14 @@
                         </div>
                     </div>
 
+                </div>
+                <div class="layui-form-item  ">
+                    <div class="required layui-inline">
+                    <label style="margin: 9px 8px; ">是否从微信端申请服务</label>
+                        <input type="radio"   name="wechatStatus"  checked="checked" style="margin: 9px 5px;" value= "1" />是
+                        <input type="radio"   name="wechatStatus" style="margin: 9px 5px; " value="0" />否
+
+                </div>
                 </div>
             </div>
         </fieldset>
@@ -147,6 +155,9 @@
                 </div>
             </div>
         </fieldset>
+
+
+
     </form>
 </div>
 </body>

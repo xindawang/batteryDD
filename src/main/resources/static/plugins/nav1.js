@@ -2,41 +2,52 @@
  * Created by admin on 2017/7/27.
  */
 var navs = [{
-    "title": "全景监控",
+    "title": "订单监控",
     "icon": "fa-cubes",
     "spread": true,
     "children": [{
-        "title": "电池库存",
+        "title": "全景监控",
         "icon": "&#xe641;",
-        "href": "batteryAmount.html"
+        "href": "IndentMonitor.html"
     }, {
-        "title": "订单监控",
+        "title": "订单查询",
         "icon": "&#xe63c;",
         "href": "indentManage.html"
     }]
 },{
-    "title": "信息管理",
+    "title": "员工管理",
     "icon": "fa-cubes",
     "spread": true,
     "children": [{
-        "title": "客户管理",
-        "icon": "&#xe641;",
-        "href": "customerInfoShow.html"
-    },{
-        "title": "客服信息管理",
+        "title": "客服管理",
         "icon": "&#xe641;",
         "href": "staffInfoShow.html"
 
     },{
-        "title": "技术人员信息管理",
+        "title": "技师管理",
         "icon": "&#xe641;",
         "href": "technicianInfoShow.html"
 
     },{
-        "title": "管理员信息管理",
+        "title": "管理员管理",
         "icon": "&#xe641;",
         "href": "adminInfoShow.html"
     }]
 
 
-}];
+},{
+    "title": "电池品牌管理",
+    "icon": "fa-cubes",
+    "href": "batteryTypeShow.html"
+
+},{
+    "title": "汽车品牌管理",
+    "icon": "fa-cubes",
+
+},{
+    "title": "电池库存管理",
+    "icon": "fa-cubes",
+    "href": "batteryAmount.html"
+
+}
+];

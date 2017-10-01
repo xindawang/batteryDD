@@ -22,6 +22,9 @@ public interface StockMapper {
     @Delete("delete from battery_stock where battery_id=#{batteryId} and city_code=#{cityCode}")
     boolean deleteStock(@Param("cityCode") String cityCode, @Param("batteryId") Integer batteryId);
 
+    @Delete("delete from battery_stock where battery_id=#{batteryId} ")
+    boolean deleteAllStockByBatteryId( Integer batteryId);
+
     @Select("select battery_brand.brand_name as batteryBrand, battery.type as batteryType ,province.province_name as provinceName,city.city_name as cityName," +
             "battery_stock.inventory from battery_stock join battery on battery_stock.battery_id=battery.id join battery_brand on battery.battery_brand_id=battery_brand.id " +
             "join city on battery_stock.city_code=city.city_code join province on city.province_code=province.province_code order by battery_stock.city_code ,battery.battery_brand_id")

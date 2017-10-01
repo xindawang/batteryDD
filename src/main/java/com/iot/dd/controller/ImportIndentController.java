@@ -43,7 +43,7 @@ public class ImportIndentController {
         orderEntity.setCustomerCellphone(request.getParameter("cellphone"));
         orderEntity.setCustomerTelephone(request.getParameter("telephone"));
 
-        orderEntity.setWechatId(request.getParameter("wechatId"));
+
 
         String address= resourceMapper.selectProvinceName(request.getParameter("province"))+
                 resourceMapper.selectCityName(request.getParameter("city"))+
@@ -72,12 +72,18 @@ public class ImportIndentController {
         orderEntity.setStatus(1);//状态：已录入
         orderEntity.setRemark(request.getParameter("remark"));
 
+        String wechatStatus=request.getParameter("wechatStatus");
+        Integer wxStatus=Integer.parseInt(wechatStatus);
+        orderEntity.setWechatStatus(wxStatus);
+
         if(orderService.selectOrderId(request.getParameter("orderId"))==null) {
             result = orderService.importOrder(orderEntity);
 
             //同时向订单转发表中插入订单编号
             orderService.InsertOrderId(request.getParameter("orderId"));
         }
+
+
 
         return JsonTool.objectToJson(result);
 
