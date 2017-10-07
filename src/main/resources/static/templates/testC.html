@@ -1,17 +1,51 @@
-<!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <title>test</title>
+    <title>聊天室用户C</title>
 </head>
 <body>
-<form>
-    <div class="">
-        <input type="radio"   name="wechatStatus" value="1"   >是
-        <input type="radio"   name="wechatStatus" value="0"  >否
-    </div>
-    <input type="radio" name="test">是
-    <input type="radio" name="test">否
-</form>
+<button onclick="connect()">建立连接</button>
+<button onclick="sendCusLocation()">发送数据</button>
 </body>
+<script type="text/javascript" src="../plugin/sockjs-0.3.4.min.js"></script>
+<script type="text/javascript" src="../plugin/stomp.min.js"></script>
+
+
+<script>
+
+
+    function connect() {
+        var socket = new SockJS('/endpointDCDD');
+        stompClient = Stomp.over(socket);
+        stompClient.connect({}, function () {
+            console.log('开始连接')
+
+//2、接收数据
+            stompClient.subscribe('/topic/getResponse', function (ex) {
+                console.log(ex)
+                console.log('B发来了数据')
+            });
+
+            stompClient.subscribe('/topic/notice789',function(ex){
+                //alert(JSON.parse(greeting.body).content);
+                console.log(ex);
+                console.log("一对一消息")
+            });
+
+
+        })
+    }
+
+
+    function sendCusLocation() {
+        var content = "{'type':'text','content':'" + "要什么自行车" + "','toType':'USER','receiver':'"+"huang"+"'}";
+        //stompClient.send("/app/chat", {}, content);
+        stompClient.send("/app/all", {}, "456");
+
+    }
+
+
+
+
+</script>
 </html>

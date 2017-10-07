@@ -90,15 +90,15 @@ public class distribIndentController {
 
     }
 
-    @RequestMapping(value="/allocationIndent",method=RequestMethod.POST)
-    public String  allocationIndent(HttpServletRequest request){
-
-        String indentId=request.getParameter("indentId");
-        String techId=request.getParameter("techId");
-        orderService.allocIndent(indentId,techId);
-
-        return JsonTool.objectToJson("订单派发成功");
-
-    }
+//    @RequestMapping(value="/allocationIndent",method=RequestMethod.POST)
+//    public String  allocationIndent(HttpServletRequest request){
+//
+//        String indentId=request.getParameter("indentId");
+//        String techId=request.getParameter("techId");
+//        orderService.allocIndent(indentId,techId);
+//
+//        return JsonTool.objectToJson("订单派发成功");
+//
+//    }
 
 }

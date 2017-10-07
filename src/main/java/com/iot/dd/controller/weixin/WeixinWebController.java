@@ -91,7 +91,7 @@ public class WeixinWebController {
             indentList = indentService.getOrderIdByOpenId(openId);
         }
 
-        // 跳转到index.jsp
+
         return JsonTool.objectToJson(indentList);
     }
 
@@ -159,8 +159,8 @@ public class WeixinWebController {
 
     @RequestMapping(value="/getIndentMsgByOrderId",method=RequestMethod.POST)
     String getCusMsgByphone(HttpServletRequest request){
-        String cellphone=request.getParameter("orderId");
-        List<OrderEntity> indentMsg=indentService.getIndentMsgByOrderId(cellphone);
+        String orderId=request.getParameter("orderId");
+        List<OrderEntity> indentMsg=indentService.getIndentMsgByOrderId(orderId);
 
         return JsonTool.objectToJson(indentMsg);
     }

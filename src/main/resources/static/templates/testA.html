@@ -1,7 +1,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>聊天室用户1</title>
+    <title>聊天室用户A</title>
 </head>
 <body>
 <button onclick="connect()">建立连接</button>
@@ -13,7 +13,7 @@
 
 <script>
 
-
+var stompClient
     function connect() {
         var socket = new SockJS('/endpointDCDD');
         stompClient = Stomp.over(socket);
@@ -21,16 +21,31 @@
             console.log('开始连接')
 
 //2、接收数据
-            stompClient.subscribe('/topic/MsgFromB', function (ex) {
+            stompClient.subscribe('/topic/getResponse', function (ex) {
                 console.log(ex)
                 console.log('B发来了数据')
             });
+
+            stompClient.subscribe('/topic/notice456',function(ex){
+                //alert(JSON.parse(greeting.body).content);
+                console.log(ex);
+                console.log("一对一消息")
+            });
+
+
         })
     }
 
 
-    function sendCusLocation(longitude,latiutde) {
-        stompClient.send("/sendMsgToB",{},JSON.stringify({'customerLongitude':longitude,'customerLatitude':latiutde}))
+    function sendCusLocation() {
+        var content = "{'type':'text','content':'" + "要什么自行车" + "','toType':'USER','receiver':'"+"huang"+"'}";
+        //stompClient.send("/app/chat", {}, content);
+        stompClient.send("/app/all", {}, "123");
+
+    }
+
+    function setDisconnect() {
+        stompClient.disconnect()
     }
 
 

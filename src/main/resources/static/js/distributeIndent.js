@@ -87,7 +87,9 @@ function confirmTech(techMsg,techId,indentId) {
                 yes: function () {  //点击左侧按钮：成功
 
                     //更新未派发订单下拉框，并且清空技师下拉框
-                    confirmIndent(techId, indentId)
+                    //confirmIndent(techId, indentId)
+                    connect(techId,indentId)
+
                 },
                 no: function () { //点击右侧按钮：失败
                     return false;
@@ -146,6 +148,38 @@ function selectIndentMsgByCityCode(cityCode) {
 
 
         }
+    })
+}
+
+
+function connect(techId,indentId) {
+    var socket = new SockJS('/endpointDCDD');
+    var stompClient = Stomp.over(socket);
+    stompClient.connect({}, function () {
+        console.log('开始连接')
+
+//2、接收数据
+        stompClient.subscribe('/topic/dis_tech'+techId, function (ex) {
+            console.log(JSON.parse(ex.body).orderId)
+        });
+
+        stompClient.subscribe('/topic/dis_res'+indentId, function (ex) {//订单派发收到回复
+
+            window.confirm(ex.body)
+            map.remove(userMarkers)
+            map.remove(techMarkers)
+            selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
+
+            $("#indentDetail").hide()//隐藏订单详情按钮
+            $("#indentDetailShow").hide();//隐藏订单详情内容
+        });
+
+        var msg=JSON.stringify({'technicianId':techId,'orderId':indentId})
+        stompClient.send("/app/distributeIndent",{},msg)
+
+
+
+
     })
 }
 

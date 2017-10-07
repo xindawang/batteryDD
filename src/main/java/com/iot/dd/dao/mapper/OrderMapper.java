@@ -26,21 +26,9 @@ public interface OrderMapper {
             ",#{cityCode},#{createTime},#{status},#{remark})")
     boolean addOrder(OrderEntity orderEntity);
 
-    //根据订单状态查询所有订单信息
-    @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
-            " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            " left join technician on indent_allocation.technician_id=technician.technician_id  where indent.status=#{status} order by indent.create_time desc")
-    List<IndentShowEntity> selectIndentMsg(Integer status);
 
 
-    //根据订单状态查询所有订单信息--添加了时间限制
-    @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
-            " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            " left join technician on indent_allocation.technician_id=technician.technician_id  where indent.status=#{status} and indent.create_time > #{date} order by indent.create_time desc ")
 
-    List<IndentShowEntity> selectIndentMsg1(@Param("status") Integer status, @Param("date") String date);
     //查询订单状态是已录入，且用户经纬度已经上传的订单编号，用于订单派发
     @Select("select indent.ORDER_ID from indent join indent_allocation" +
             " on indent.ORDER_ID = indent_allocation.ORDER_ID" +
@@ -66,6 +54,21 @@ public interface OrderMapper {
     List<OrderEntity> importIndentMsg(@Param("status") Integer status, @Param("orderId") String orderId);
 
 //---------------------订单查询Mapper 以下 ----------------------------------------------------------------------------------
+//根据订单状态查询所有订单信息
+@Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
+        " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
+        " indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+        " left join technician on indent_allocation.technician_id=technician.technician_id  where indent.status=#{status} order by indent.create_time desc")
+List<IndentShowEntity> selectIndentMsg(Integer status);
+
+
+    //根据订单状态查询所有订单信息--添加了时间限制
+    @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
+            " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
+            " indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            " left join technician on indent_allocation.technician_id=technician.technician_id  where indent.status=#{status} and indent.create_time > #{date} order by indent.create_time desc ")
+
+    List<IndentShowEntity> selectIndentMsg1(@Param("status") Integer status, @Param("date") String date);
     //根据订单所在城市查询所有订单
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
@@ -118,7 +121,7 @@ public interface OrderMapper {
     //--------------------------------------查询管理Mapper 以上--------------------------------------------
 
     //根据城市和订单状态查询该城市所有订单的订单编号
-    @Select("select indent.order_id as orderId ,indent.wechat_status as wechatStatus  from indent  join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} and (indent_allocation.CUSTOMER_LATITUDE IS NOT NULL or indent.wechat_status=0)")
+    @Select("select indent.order_id as orderId ,indent.wechat_status as wechatStatus  from indent  left join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} and (indent_allocation.CUSTOMER_LATITUDE IS NOT NULL or indent.wechat_status=0)")
     List<OrderEntity> selectIndentIdByStatusAndCity(@Param("status")Integer status,@Param("cityCode")String cityCode);
 
 
