@@ -81,5 +81,8 @@ public class indentAllocationService {
 
     }
 
+    public  boolean updateTechIsWork(String technicianId,String state){
+        return indentAllocatMapper.updateTechIsWork(technicianId,state);
+    }
 
 }

@@ -63,6 +63,9 @@ public interface UserMapper {
 
     //查询
     @Select("select * from technician where LOGIN_NAME=#{loginName} limit 1")
+    @Results({
+            @Result(property = "technicianId", column = "technician_id"),
+    })
     TechnicianEntity selectTechnician(String loginName);
    //客服信息更新
     @Update("update staff set name=#{name},sex=#{sex} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName} ")

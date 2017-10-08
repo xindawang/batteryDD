@@ -18,13 +18,13 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
         stompEndpointRegistry.addEndpoint("/endpointDCDD").withSockJS();
 
     }
-//    @Override
-//    public void configureMessageBroker(MessageBrokerRegistry registry) {
-//        registry.enableSimpleBroker("/topic", "/user");
-//        registry.setApplicationDestinationPrefixes("/app/");//Android客户端发送消息的url="/app/xxx"
-//        registry.setUserDestinationPrefix("/userTest");//网页客户端url="/browser/xxx"
-//    }
-
+////    @Override
+////    public void configureMessageBroker(MessageBrokerRegistry registry) {
+////        registry.enableSimpleBroker("/topic", "/user");
+////        registry.setApplicationDestinationPrefixes("/app/");//Android客户端发送消息的url="/app/xxx"
+////        registry.setUserDestinationPrefix("/userTest");//网页客户端url="/browser/xxx"
+////    }
+//
 
     @Override
     public void configureMessageBroker(MessageBrokerRegistry messageBrokerRegistry) {
@@ -38,6 +38,9 @@ public class WebSocketConfig extends AbstractWebSocketMessageBrokerConfigurer {
 // 2.如果要使用@SendToUser,就不能设置这个，里面会自动实现一套方法，是在@SendToUser的URL前加“user+sessionId"组成
         messageBrokerRegistry.setUserDestinationPrefix("/userTest");
     }
+
+
+
 }
 
 

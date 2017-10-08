@@ -232,6 +232,7 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
             @Result(property = "cityCode", column = "city_code"),
             @Result(property = "customerCellphone", column = "customer_cellphone"),
             @Result(property = "customerTelephone", column = "customer_telephone"),
+            @Result(property = "wechatStatus", column = "wechat_status"),
             @Result(property = "wechatId", column = "wechat_id"),
             @Result(property = "automobileType", column = "automobile_type"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),

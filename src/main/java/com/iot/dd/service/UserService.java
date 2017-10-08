@@ -82,11 +82,11 @@ public class UserService {
     public String technicianLogin(String name, String password) {
         TechnicianEntity dUser = userMapper.selectTechnician(name);
         if (dUser == null) {
-            return "该用户不存在";
+            return "该用户不存在！";
         } else if (!dUser.getPassword().equals(password)) {
-            return "密码错误";
+            return "密码错误！";
         } else {
-            return "OK";
+            return "OK,"+dUser.getTechnicianId();
         }
 
     }

@@ -110,7 +110,7 @@ public class indentAllocationController {
                 location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (entity.getCustomerLongitude() != null&&entity.getCustomerLatitude()!=null) {
+                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
                     longitude = entity.getCustomerLongitude();
                     latitude = entity.getCustomerLatitude();
                     if (location != null) {
@@ -186,7 +186,7 @@ public class indentAllocationController {
                 JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (location != null) {
+                if (location != null && longitude != null && latitude != null) {
                     longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
                     latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
                 }
@@ -207,8 +207,8 @@ public class indentAllocationController {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         String loginName = request.getParameter("loginName");
-        String time=request.getParameter("data");
-        time=time+"%";
+        String time = request.getParameter("data");
+        time = time + "%";
         //查找technicianId
         TechnicianEntity technician = user.findTechnicianOne(loginName);
         //根据技师编号查早，接下的订单
@@ -218,37 +218,29 @@ public class indentAllocationController {
         OrderEntity order;
         for (int i = 0; i < listAllocation.size(); i++) {
             IndentAllocationEntity entity = listAllocation.get(i);
-            order = orderMapper.findOrderBytime(entity.getOrderId(),time);
-            if(order==null){
+            order = orderMapper.findOrderBytime(entity.getOrderId(), time);
+            if (order == null) {
                 continue;
             }
 //            String cityName = resourceService.findCityName(order.getCityCode());
-            if (order.getStatus() == 4||order.getStatus() == 5) {//订单已完成
+            if (order.getStatus() == 4 || order.getStatus() == 5) {//订单已完成
                 //用城市名替换cityCode
                 Map<String, String> map = new HashMap<String, String>();
                 map.put("orderId", order.getOrderId());
                 map.put("batteryType", order.getBatteryType());
-                map.put("name",order.getCustomerName());
-                map.put("cellphone",order.getCustomerCellphone());
-                map.put("address",order.getAddress());
-                map.put("technicianId",entity.getTechnicianId());
+                map.put("name", order.getCustomerName());
+                map.put("cellphone", order.getCustomerCellphone());
+                map.put("address", order.getAddress());
+                map.put("technicianId", entity.getTechnicianId());
 //                map.put("cityName", cityName);
 //                map.put("licenseNumber", order.getLicensePlateNumber());
                 map.put("finishTime", order.getFinishTime() + "");
                 maplist.add(map);
             }
-//            if (order.getStatus() == 5) {
-//                Map<String, String> map = new HashMap<String, String>();
-//                map.put("orderId", order.getOrderId());
-//                map.put("batteryType", order.getBatteryType());
-////                map.put("cityName", cityName);
-////                map.put("licenseNumber", order.getLicensePlateNumber());
-//                map.put("finishTime", order.getFinishTime() + "");
-//                maplist.add(map);
-//            }
+
         }
         //将orderList已json格式字符串返回
-        return JsonTool.listToJson(maplist).toString();
+        return JsonTool.listToJson(maplist);
     }
 
 
@@ -258,19 +250,25 @@ public class indentAllocationController {
         request.setCharacterEncoding("utf-8");
         response.setCharacterEncoding("utf-8");
         String orderId = request.getParameter("orderId");
+        List<Map<String, String>> list = new ArrayList<>();
+
+        //取wechat_status
+        OrderEntity orderEntity = orderMapper.findOrder(orderId);
+
         IndentAllocationEntity entity = service.findPosition(orderId);
         //经纬度转码
         JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
         Float longitude = entity.getCustomerLongitude();
         Float latitude = entity.getCustomerLatitude();
-        if (location != null) {
+        if (location != null && latitude != null && longitude != null) {
             longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
             latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
         }
-        entity.setCustomerLatitude(latitude);
-        entity.setCustomerLongitude(longitude);
-
-        return JsonTool.javaBeanToJson(entity);
+        Map<String, String> map = new HashMap<>();
+        map.put("wechatStatus", orderEntity.getWechatStatus() + "");
+        map.put("customerLatitude", latitude + "");
+        map.put("customerLongitude", longitude + "");
+        return JsonTool.objectToJson(map);
     }
 
     /**
@@ -310,5 +308,22 @@ public class indentAllocationController {
         boolean t2 = service.deleteByOrderId(orderId, technicianId);
         return "OK";
     }
+
+    //技师开工/手工
+    @RequestMapping(value = "/technicianWork", method = RequestMethod.GET)
+
+    public String StartOrEndWork(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("utf-8");
+        response.setCharacterEncoding("utf-8");
+        String technicianId = request.getParameter("technicianId");
+        String state = request.getParameter("state");
+        boolean t = service.updateTechIsWork(technicianId, state);
+        if (t) {
+            return "ok";
+        } else {
+            return "error";
+        }
+    }
+
 
 }
