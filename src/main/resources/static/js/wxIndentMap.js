@@ -145,15 +145,17 @@ $(function () {
     }
 
 
-    function getGPSLocation(orderId) {//
+    function getGPSLocation(orderId) {//通过ajax来更新地理位置
 
 
         wx.getLocation({
             type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
             success: function (res) {
 
+
                 userLatitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 userLongitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                confirm(userLatitude+userLongitude)
                 sendLocationToTech(orderId,userLongitude,userLatitude)
 
 

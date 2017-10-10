@@ -71,7 +71,7 @@ public class WebsocketController {
         String orderId=jsonObject.getString("orderId");
         String uLongitude=jsonObject.getString("longitude");
         String uLatitude=jsonObject.getString("latitude");
-
+        System.out.println(orderId+uLatitude+uLongitude);
         Float longitude,latitude;
         if((uLongitude!=null)  &&(uLatitude  != null)){
             longitude=Float.parseFloat(uLongitude);
