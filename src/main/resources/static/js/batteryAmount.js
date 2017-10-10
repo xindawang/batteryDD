@@ -42,6 +42,9 @@ $(function () {
     //按城市查看
     $("#city").change(function () {
         var cityCode = $("#city").val()
+        var provinceCode=$("#province").val()
+        if(provinceCode ==0 && cityCode==0)
+            cityCode=-1 //表明查询全部省份的全部
         updateStockTable("/getBatteryAmountByCity?cityCode=" + cityCode)
 
     });

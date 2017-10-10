@@ -22,8 +22,11 @@ public class StockService {
 
     //返回多表查询结果集
     public List<BatteryStockEntity> findStockByCity(String cityCode){
-
-      return   stockMapper.findBatteryStockByCity(cityCode);
+        if(cityCode.equals("-1"))
+            return stockMapper.selectAllBatteryStock();
+        else{
+            return   stockMapper.findBatteryStockByCity(cityCode);
+        }
 
     }
 

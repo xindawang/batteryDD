@@ -123,6 +123,10 @@ public class IndentService {
             return orderMapper.selectTechIdByOrderId(orderId);
     }
 
+    public String getCityName(String orderId){
+        return orderMapper.selectCityNameByOrderId(orderId);
+    }
+
 
     public TechnicianEntity getTechnicainMsg(String orderId){
         String techId=orderMapper.selectTechIdByOrderId(orderId);

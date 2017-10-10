@@ -5,6 +5,7 @@ import com.iot.dd.dao.entity.Indent.IndentAllocationEntity;
 
 import com.alibaba.fastjson.JSON;
 import com.iot.dd.service.OrderService;
+import com.iot.dd.service.weixin.IndentService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -27,6 +28,9 @@ public class WebsocketController {
 
     @Autowired
     private OrderService orderService;
+
+    @Autowired
+    private IndentService indentService;
 
 
     @MessageMapping("/all")
@@ -58,11 +62,31 @@ public class WebsocketController {
     * 期望的数据格式：["latitude":纬度
     *                 "longitude":经度]
     * */
-    @MessageMapping("/custom_position")
+    @MessageMapping("/customer_position")
     public void sendPosition(String msg) {
+        String result;
+
+        JSONObject jsonObject = JSONObject.fromObject(msg);
+
+        String orderId=jsonObject.getString("orderId");
+        String uLongitude=jsonObject.getString("longitude");
+        String uLatitude=jsonObject.getString("latitude");
+
+        Float longitude,latitude;
+        if((uLongitude!=null)  &&(uLatitude  != null)){
+            longitude=Float.parseFloat(uLongitude);
+            latitude=Float.parseFloat(uLatitude);
+            result=indentService.updateCustomerLocation(orderId,longitude,latitude);
+        }
+
+        String techId=indentService.getTechId(orderId);
+
+        String cityName=indentService.getCityName(orderId);
+
+        String chatMessage="{\"latitude\":"+uLatitude+",\"longitude\":"+uLongitude+",\"cityName\":"+cityName+"}";
 
         //msg to json
-        template.convertAndSend("/topic/dis_tech" + "技师编号+ 订单编号", "");//将客户位置信息转发给技师
+        template.convertAndSend("/topic/cus_location" +techId+orderId, chatMessage);//将客户位置信息转发给技师
     }
 
 
