@@ -204,6 +204,7 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "cityCode", column = "city_code"),
             @Result(property = "organizationId", column = "organization_id")
+
     })
     List<TechnicianEntity> selectTechMsg(String cityCode);
 

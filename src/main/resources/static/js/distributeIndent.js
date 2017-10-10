@@ -143,6 +143,7 @@ function selectIndentMsgByCityCode(cityCode) {
                 }else{
                     $("#undoneIndent").append("<option value=" + data[i].orderId+">" + data[i].orderId+ "</option>")
                 }
+
                 //使用 $("#undoneIndent")会报错
                 //document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
 
@@ -302,7 +303,8 @@ function importTechMsgFromCity(cityCode) {
     var techLatitude
     var techSex
     var techId
-
+    var iswork
+    var workStatus
     map.remove(techMarkers)//清除之前的技师在地图的图标
 
     $.ajax({
@@ -321,11 +323,18 @@ function importTechMsgFromCity(cityCode) {
                     techId = data[i].technicianId
                     techSex = data[i].sex
                     techCellphone = data[i].cellphone
+                    iswork=data[i].iswork
+                    if(iswork == '1'){//技师正在工作状态
+                        workStatus="(工作中)"
+                    }
+                    else{//技师不在工作人状态
+                        workStatus="(休息中)"
+                    }
+                    $("#technician").append('<option value=' + techId + '>' + techName + '-' + techId + workStatus+'</option>')
 
-                    $("#technician").append('<option value=' + techId + '>' + techName + '-' + techId + '</option>')
 
                     var title = setTechTitle(techName, techId)
-                    var msg = setTechMsg(techCellphone, techSex)
+                    var msg = setTechMsg(techCellphone, techSex,workStatus)
 
                     distributeTechMap(map, techLongitude, techLatitude, title, msg);
 
@@ -341,8 +350,8 @@ function setTechTitle(name, techId) {
     return name + '<b style="color:#F00;">编号:' + techId + '<b>'
 }
 
-function setTechMsg(cellphone, sex) {
-    return '电话号码：' + cellphone + '<br/>' + '性别：' + sex
+function setTechMsg(cellphone, sex,status) {
+    return '电话号码：' + cellphone + '<br/>' + '性别：' + sex+"  状态："+status
 }
 
 

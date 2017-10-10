@@ -133,14 +133,6 @@ public class WebsocketController {
     *          "technicianId":技师编号,
     *         "message":正在前往安装]
     * */
-    @MessageMapping("/tech_conduct")
-    public void technicianGoWork(String message) {
-
-        JSONObject jsonObject = JSONObject.fromObject(message);
-        String orderId = jsonObject.getString("orderId");
-        System.out.println(jsonObject.getString("message"));
-        template.convertAndSend("/topic/order_start" + orderId, message);//通知客户，技师已经接单
-    }
 
 
     /*技师通知，电池安装完成
@@ -163,13 +155,7 @@ public class WebsocketController {
     *         "message":开工or收工]
     * */
 
-    @MessageMapping("/tech_Work")
-    public void technicianWork(String message) {
-        JSONObject jsonObject = JSONObject.fromObject(message);
-        String technicianId=jsonObject.getString("technicianId");
-        System.out.println(jsonObject.getString("message"));
-        template.convertAndSend("/topic/tech_work" + technicianId, message);//通知客户，技师已经接单
-    }
+
 
 }
 

@@ -15,7 +15,7 @@ public class TechnicianEntity {
     private String email;
     private String idNumber;
     private String address;//地址
-    private  String isWork;
+    private String iswork;
 
     private String cityCode;
     private Float longitude;
@@ -113,12 +113,12 @@ public class TechnicianEntity {
         this.address = address;
     }
 
-    public String getIsWork() {
-        return isWork;
+    public String getIswork() {
+        return iswork;
     }
 
-    public void setIsWork(String isWork) {
-        this.isWork = isWork;
+    public void setIswork(String iswork) {
+        this.iswork = iswork;
     }
 
     public String getCityCode() {
