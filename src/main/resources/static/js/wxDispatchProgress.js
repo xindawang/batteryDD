@@ -11,7 +11,6 @@ var cusCellphone;
 var techId
 
 
-
 var strMsg = window.location.search.substring(1)
 var param = strMsg.split("&")
 for(var node in param){
@@ -26,12 +25,25 @@ var checkStatusID
 
 $(function() {
     //首先上传一次用户位置方便派单
-    UpdateCusLocation(indentId)
-    //正在派单状态
-    setMsg();
+    setMsg();//订单状态查询初始化
 
-    checkStatusID=window.setInterval(setMsg,10000)
-    
+    configVerify(indentId)//通过微信js调用接口的验证--验证完成后通过ajax
+
+    websocketStatusInit(indentId) //websocket初始化
+
+    checkStatusID=window.setInterval(function(){
+
+        setMsg()//为防止websocket通信失败，每五分钟查询一次订单状态，同时服务器压力也不会过大
+
+
+    },1000*60*5)
+
+    window.setInterval(function () {
+
+            getGPSLocation(indentId)//10秒更新一次地理位置
+
+        },
+        10000)
 
 
 })
@@ -171,4 +183,43 @@ function getIndentMsg() {
 
         }
     })
+}
+
+
+
+
+//------------------------websocket----------------------------
+
+function websocketStatusInit(indentId) {
+    var socket = new SockJS('/endpointDCDD');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function () {
+        window.confirm('开始连接')
+
+        stompClient.subscribe('/topic/order_accept' + indentId, function (ex) {//技师已接单
+
+            var status=JSON.parse(ex.body).status
+            confirm(status)
+            if(status =="accept"){
+                bsStep(2)
+                indentAcceptedMsg()
+            }
+
+
+        });
+
+        stompClient.subscribe('/topic/order_finish' + indentId, function (ex) {//订单完成
+
+            var status=JSON.parse(ex.body).status
+            confirm(status)
+            if(status =="finish"){
+                bsStep(3)
+                indentFinishedMsg()
+            }
+
+
+        });
+    })
+
 }

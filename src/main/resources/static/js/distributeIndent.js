@@ -13,6 +13,8 @@ $(function () {
         // zoom: 5
     });
 
+    websocketInit()//建立websocket连接
+
     selectCityList()//同步
 
     //-------建立所有控件的监控----------------
@@ -141,6 +143,7 @@ function selectIndentMsgByCityCode(cityCode) {
                 }else{
                     $("#undoneIndent").append("<option value=" + data[i].orderId+">" + data[i].orderId+ "</option>")
                 }
+
                 //使用 $("#undoneIndent")会报错
                 //document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
 
@@ -151,36 +154,42 @@ function selectIndentMsgByCityCode(cityCode) {
     })
 }
 
-
-function connect(techId,indentId) {
+function websocketInit(){
     var socket = new SockJS('/endpointDCDD');
-    var stompClient = Stomp.over(socket);
+    stompClient = Stomp.over(socket);
+
     stompClient.connect({}, function () {
         console.log('开始连接')
+    })
+
+
+}
+
+function connect(techId,indentId) {
 
 //2、接收数据
-        stompClient.subscribe('/topic/dis_tech'+techId, function (ex) {
-            console.log(JSON.parse(ex.body).orderId)
-        });
+    stompClient.subscribe('/topic/dis_res'+indentId, function (ex) {//订单派发收到回复
 
-        stompClient.subscribe('/topic/dis_res'+indentId, function (ex) {//订单派发收到回复
+        window.confirm(ex.body)
+        map.remove(userMarkers)
+        map.remove(techMarkers)
+        selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
 
-            window.confirm(ex.body)
-            map.remove(userMarkers)
-            map.remove(techMarkers)
-            selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
-
-            $("#indentDetail").hide()//隐藏订单详情按钮
-            $("#indentDetailShow").hide();//隐藏订单详情内容
-        });
-
-        var msg=JSON.stringify({'technicianId':techId,'orderId':indentId})
-        stompClient.send("/app/distributeIndent",{},msg)
+        $("#indentDetail").hide()//隐藏订单详情按钮
+        $("#indentDetailShow").hide();//隐藏订单详情内容
+    });
 
 
+    var msg=JSON.stringify({'technicianId':techId,'orderId':indentId})
+    stompClient.send("/app/distributeIndent",{},msg)
 
+    // if(stompClient !=null) {
+    //     stompClient.disconnect()
+    //     if (stompClient != null) {
+    //         console.log("连接成功3")
+    //     }
+    // }
 
-    })
 }
 
 
@@ -294,7 +303,8 @@ function importTechMsgFromCity(cityCode) {
     var techLatitude
     var techSex
     var techId
-
+    var iswork
+    var workStatus
     map.remove(techMarkers)//清除之前的技师在地图的图标
 
     $.ajax({
@@ -313,11 +323,18 @@ function importTechMsgFromCity(cityCode) {
                     techId = data[i].technicianId
                     techSex = data[i].sex
                     techCellphone = data[i].cellphone
+                    iswork=data[i].iswork
+                    if(iswork == '1'){//技师正在工作状态
+                        workStatus="(工作中)"
+                    }
+                    else{//技师不在工作人状态
+                        workStatus="(休息中)"
+                    }
+                    $("#technician").append('<option value=' + techId + '>' + techName + '-' + techId + workStatus+'</option>')
 
-                    $("#technician").append('<option value=' + techId + '>' + techName + '-' + techId + '</option>')
 
                     var title = setTechTitle(techName, techId)
-                    var msg = setTechMsg(techCellphone, techSex)
+                    var msg = setTechMsg(techCellphone, techSex,workStatus)
 
                     distributeTechMap(map, techLongitude, techLatitude, title, msg);
 
@@ -333,8 +350,8 @@ function setTechTitle(name, techId) {
     return name + '<b style="color:#F00;">编号:' + techId + '<b>'
 }
 
-function setTechMsg(cellphone, sex) {
-    return '电话号码：' + cellphone + '<br/>' + '性别：' + sex
+function setTechMsg(cellphone, sex,status) {
+    return '电话号码：' + cellphone + '<br/>' + '性别：' + sex+"  状态："+status
 }
 
 

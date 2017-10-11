@@ -4,15 +4,15 @@
 
 
 
-var orderId;
+var orderId
 
 var strMsg = window.location.search.substring(1)
 var param = strMsg.split("&")
-for(var node in param){
+for (var node in param) {
 
-    var nodeDn=param[node].split("=")
-    if(nodeDn[0]==='orderId')
-        orderId=nodeDn[1]
+    var nodeDn = param[node].split("=")
+    if (nodeDn[0] === 'orderId')
+        orderId = nodeDn[1]
 
 }
 //定义技师的经纬度和用户的经纬度为全局变量。
@@ -22,108 +22,149 @@ var userLongitude
 var techLatitude
 var techLongitude
 
-
-
-
-var Maps=[]
+var map
+var Maps = []
 $(function () {
-    //connect();
-    var map = new AMap.Map("container", {
+
+    configVerify(orderId)//通过微信js调用接口的验证
+    websocketMapInit(orderId) //websocket初始化
+     map = new AMap.Map("container", {
         resizeEnable: true,
         center: [116.397428, 39.90923],//地图中心点
         zoom: 13 //地图显示的缩放级别
     });
-    UpdateCusLocation(orderId)
-    getLocation()
-    getTechMsg()
 
 
-    window.setInterval(function(){
-        UpdateCusLocation(orderId);
-        getLocation()
+
+    getAllLocation(orderId)  //先从后台获取一次地理位置进行更新
+    getTechMsg(orderId)
 
 
-    },
+    window.setInterval(function () {
+
+             getGPSLocation(orderId)
+
+        },
         10000)
 
-
-function setDriving(uLongitude,uLatitude,tLongitude,tLatitude) {
-
-    //
-    //map.remove(Maps)
-    map.clearMap()
-    //构造路线导航类
-    var driving = new AMap.Driving({
-        map: map
-
-    });
-    // 根据起终点名称规划驾车导航路线
-    driving.search(
-        [tLongitude, tLatitude],
-        [uLongitude, uLatitude]
-    );
-    Maps.push(driving)
+})
 
 
-}
+    function setDriving(uLongitude, uLatitude, tLongitude, tLatitude) {
+
+        //
+        //map.remove(Maps)
+        map.clearMap()
+        //构造路线导航类
+        var driving = new AMap.Driving({
+            map: map
+
+        });
+        // 根据起终点名称规划驾车导航路线
+        driving.search(
+            [tLongitude, tLatitude],
+            [uLongitude, uLatitude]
+        );
+        Maps.push(driving)
 
 
+    }
+
+
+
+
+
+
+    function getAllLocation(orderId) {
+        $.ajax({
+            url: "/getAllLocation",
+            type: "POST",
+            data: {"orderId": orderId},
+            dataType: "json",
+            async: true,
+            success: function (data) {
+                techLongitude = data.technicianLongitude
+                techLatitude = data.technicianLatitude
+                userLongitude = data.customerLongitude
+                userLatitude = data.customerLatitude
+                //window.confirm(techLatitude+techLongitude+userLatitude+userLongitude)
+                setDriving(userLongitude, userLatitude, techLongitude, techLatitude)
+            }
+
+        })
+    }
+
+    function getTechMsg(orderId) {
+        $.ajax({
+            url: "/getTechMsg",
+            type: "POST",
+            data: {"orderId": orderId},
+            dataType: "json",
+            success: function (data) {
+                $("#name").text("姓名:" + data.name)
+                $("#sex").text("性别:" + data.sex)
+                $("#techId").text("编号:" + data.technicianId)
+                $("#lincePlaNum").text("车牌号:" + data.licensePlateNumber)
+                $("#phoneNumber").text("电话:" + data.cellphone)
+                $("#cellToTech").attr("href", "tel:" + data.cellphone)
+
+            }
+        })
+    }
 
 //    ------------websocket----------------------
-    function connect() {
+    function websocketMapInit(indentId) {
         var socket = new SockJS('/endpointDCDD');
         stompClient = Stomp.over(socket);
-        stompClient.connect({}, function () {
-            console.log('开始连接')
 
-            stompClient.subscribe('/topic/sendLocation', function (ex) {
-                console.log(ex)
-                console.log('ok?')
+        stompClient.connect({}, function () {
+            window.confirm('开始连接')
+
+            stompClient.subscribe('/topic/tech_location' + indentId, function (ex) {//订单派发收到回复
+
+                techLongitude=JSON.parse(ex.body).longitude
+                techLatitude=JSON.parse(ex.body).latitude
+                confirm("tech:"+techLongitude+techLatitude+" user:"+userLongitude+userLatitude)
+                setDriving(userLongitude, userLatitude, techLongitude, techLatitude)
+
+
             });
         })
+
+
     }
 
-    function sendCusLocation(longitude,latiutde) {
-        stompClient.send("/setCustomerLocation",{},JSON.stringify({'customerLongitude':longitude,'customerLatitude':latiutde}))
+    function sendLocationToTech(orderId,uLongitude,uLatitude) {
+
+
+        var msg = JSON.stringify({'orderId': orderId,'longitude':uLongitude,'latitude':uLatitude})
+        stompClient.send("/app/customer_position", {}, msg)
+
+
     }
 
 
-    function getLocation() {
-        $.ajax({
-            url:"/getAllLocation",
-            type:"POST",
-            data:{"orderId":orderId},
-            dataType:"json",
-            async:true,
-            success:function (data) {
-                techLongitude=data.technicianLongitude
-                techLatitude=data.technicianLatitude
-                userLongitude=data.customerLongitude
-                userLatitude=data.customerLatitude
-                //window.confirm(techLatitude+techLongitude+userLatitude+userLongitude)
-                setDriving(userLongitude,userLatitude,techLongitude,techLatitude)
+    function getGPSLocation(orderId) {//通过ajax来更新地理位置
+
+
+        wx.getLocation({
+            type: 'wgs84', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
+            success: function (res) {
+
+
+                userLatitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
+                userLongitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
+                confirm(userLatitude+userLongitude)
+                sendLocationToTech(orderId,userLongitude,userLatitude)
+
+
+            },
+            error: function (err) {
+                alert(err)
             }
+        });
 
-        })
-    }
 
-    function getTechMsg() {
-        $.ajax({
-            url:"/getTechMsg",
-            type:"POST",
-            data:{"orderId":orderId},
-            dataType:"json",
-            success:function (data) {
-                $("#name").text("姓名:"+data.name)
-                $("#sex").text("性别:"+data.sex)
-                $("#techId").text("编号:"+data.technicianId)
-                $("#lincePlaNum").text("车牌号:"+data.licensePlateNumber)
-                $("#phoneNumber").text("电话:"+data.cellphone)
-                $("#cellToTech").attr("href","tel:"+data.cellphone)
-
-            }
-        })
     }
 
 
-})

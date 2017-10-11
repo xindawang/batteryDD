@@ -204,11 +204,12 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "cityCode", column = "city_code"),
             @Result(property = "organizationId", column = "organization_id")
+
     })
     List<TechnicianEntity> selectTechMsg(String cityCode);
 
-    @Select("select city_code from indent where order_id=#{orderId}")
-    String selectCityCodeByOrderId(String orderId);
+    @Select("select city.city_name from indent join city on indent.city_code=city.city_code where indent.order_id=#{orderId}")
+    String selectCityNameByOrderId(String orderId);
 
     @Select("select status from indent where order_id=#{orderId}")
     String selectStautsByOrderId(String orderId);
