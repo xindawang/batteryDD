@@ -199,7 +199,7 @@ function websocketStatusInit(indentId) {
 
         stompClient.subscribe('/topic/order_accept' + indentId, function (ex) {//技师已接单
 
-            var status=ex.body
+            var status=JSON.parse(ex.body).status
             confirm(status)
             if(status =="accept"){
                 bsStep(2)
@@ -211,7 +211,7 @@ function websocketStatusInit(indentId) {
 
         stompClient.subscribe('/topic/order_finish' + indentId, function (ex) {//订单完成
 
-            var status=ex.body
+            var status=JSON.parse(ex.body).status
             confirm(status)
             if(status =="finish"){
                 bsStep(3)

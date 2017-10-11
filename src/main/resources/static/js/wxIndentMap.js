@@ -132,7 +132,6 @@ $(function () {
         })
 
 
-
     }
 
     function sendLocationToTech(orderId,uLongitude,uLatitude) {

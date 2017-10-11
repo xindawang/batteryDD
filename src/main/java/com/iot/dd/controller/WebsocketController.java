@@ -106,9 +106,9 @@ public class WebsocketController {
     public void technicianAceept(String message) {
         JSONObject jsonObject = JSONObject.fromObject(message);
         String orderId = jsonObject.getString("orderId");
-        String technicianId=jsonObject.getString("technicianId");
-        template.convertAndSend("/topic/dis_custom" +technicianId+ orderId, message);//通知客户，技师已经接单
-        System.out.println(jsonObject.getString("message"));
+        System.out.println(message);
+        template.convertAndSend("/topic/order_accept" + orderId, message);//通知客户，技师已经接单
+
     }
 
     /*技师通知位置改变，并提供位置信息
@@ -120,11 +120,11 @@ public class WebsocketController {
     public void technicianPosit(String message) {
         //解析message 获取technicianId   查询数据库 获得客户id  通知客户技师位置改变
         JSONObject jsonObject = JSONObject.fromObject(message);
-        String technicianId = jsonObject.getString("technicianId");
-        System.out.println(technicianId + "地理位置");
+        String orderId = jsonObject.getString("orderId");
+
         System.out.println(message);
         //考虑在此处将技师地理位置保存数据库（更新）
-        template.convertAndSend("/topic/dis_custom" + technicianId, message);//将技师位置信息传给客户
+        template.convertAndSend("/topic/tech_location" + orderId, message);//将技师位置信息传给客户
     }
 
 
@@ -144,7 +144,7 @@ public class WebsocketController {
     public void technicianFinish(String message) {
         JSONObject jsonObject = JSONObject.fromObject(message);
         String orderId = jsonObject.getString("orderId");
-        System.out.println(jsonObject.getString("message"));
+
         template.convertAndSend("/topic/order_finish" + orderId, message);//通知客户，技师已经接单
     }
 
