@@ -76,9 +76,10 @@ public class UploadController {
         } else {
             confirmService.addOneRecord(entity);
         }
-        int statues = 4;
-        orderService.updateStatues(orderId, statues);
         orderService.setFinishTime(orderId, new Date());
+        int statues =4;
+        orderService.updateStatues(orderId, statues);
+
         return "ok";
     }
 }
