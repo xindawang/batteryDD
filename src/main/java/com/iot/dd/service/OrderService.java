@@ -76,15 +76,15 @@ public class OrderService {
         Map<String, Float> result = new HashMap<>();
 
         IndentAllocationEntity indentAllocationEntity = orderMapper.selectCustomerLocation(orderId);
-        JSONObject location;
+
         Float cusLongitude = indentAllocationEntity.getCustomerLongitude();
         Float cusLatitude = indentAllocationEntity.getCustomerLatitude();
 
-        location = IndentService.turnLocation(cusLongitude, cusLatitude);
 
 
-        result.put("cusLongitude", Float.parseFloat(location.getString("locations").split(",")[0]));
-        result.put("cusLatitude", Float.parseFloat(location.getString("locations").split(",")[1]));
+
+        result.put("cusLongitude", cusLongitude);
+        result.put("cusLatitude", cusLatitude);
         return result;
     }
 

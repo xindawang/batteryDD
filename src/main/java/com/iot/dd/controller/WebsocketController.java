@@ -95,9 +95,10 @@ public class WebsocketController {
         String cityName = indentService.getCityName(orderId);
 
         String chatMessage = "{\"latitude\":" + uLatitude + ",\"longitude\":" + uLongitude + ",\"cityName\":" + cityName + "}";
-
+        System.out.println(chatMessage);
         //msg to json
-        template.convertAndSend("topic/cus_location" + orderId, chatMessage);//将客户位置信息转发给技师
+        System.out.println("/topic/cus_location"+orderId+techId);
+        template.convertAndSend("/topic/cus_location" + orderId, chatMessage);//将客户位置信息转发给技师
     }
 
 

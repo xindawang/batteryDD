@@ -80,15 +80,15 @@ public class IndentService {
     public IndentAllocationEntity getAllLocation(String orderId){
         IndentAllocationEntity indentAllocationEntity;
         indentAllocationEntity=orderMapper.selectIndentAllocationMsg(orderId);
-        JSONObject location;
-        Float cusLongitude=indentAllocationEntity.getCustomerLongitude();
-        Float cusLatitude=indentAllocationEntity.getCustomerLatitude();
-
-        location=turnLocation(cusLongitude,cusLatitude);
-        if(location !=null){
-            indentAllocationEntity.setCustomerLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
-            indentAllocationEntity.setCustomerLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
-        }
+//        JSONObject location;
+//        Float cusLongitude=indentAllocationEntity.getCustomerLongitude();
+//        Float cusLatitude=indentAllocationEntity.getCustomerLatitude();
+//
+//        location=turnLocation(cusLongitude,cusLatitude);
+//        if(location !=null){
+//            indentAllocationEntity.setCustomerLongitude(Float.parseFloat(location.getString("locations").split(",")[0]));
+//            indentAllocationEntity.setCustomerLatitude(Float.parseFloat(location.getString("locations").split(",")[1]));
+//        }
 
 //        Float techLongitude=indentAllocationEntity.getTechnicianLongitude();
 //        Float techLatitude=indentAllocationEntity.getTechnicianLatitude();

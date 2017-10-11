@@ -66,7 +66,7 @@ $(function () {
         },
         {
             title: '订单状态',
-            data: 'status'
+            data: 'state'
         },
         {
             title: '备注',

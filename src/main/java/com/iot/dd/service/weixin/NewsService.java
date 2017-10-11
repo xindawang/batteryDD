@@ -110,7 +110,7 @@ public class NewsService {
         sb.append("欢迎您关注电池滴滴微信公众号，请按照菜单提示操作：\n");
         sb.append("1、如果您已在电商平台下单，请点击\"申请服务\"进行电池更换申请。\n");
         sb.append("注意：申请服务时请填写您在电商平台下单时填写的电话号码 \n");
-        sb.append("2、您也可以点击\"我的订单\"查看您的订单");
+        sb.append("2、您也可以点击\"我的订单\"查看您的订单\n" );
         sb.append("3、技师可以通过\"APP下载\"下载App");
         return sb.toString();
     }
