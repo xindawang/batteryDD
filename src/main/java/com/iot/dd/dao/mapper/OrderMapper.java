@@ -6,7 +6,7 @@ import com.iot.dd.dao.entity.Indent.IndentShowEntity;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.entity.resource.CityEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
-import com.sun.org.apache.xpath.internal.operations.Bool;
+
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
@@ -57,65 +57,65 @@ public interface OrderMapper {
 //根据订单状态查询所有订单信息
 @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
         " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-        " indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-        " left join technician on indent_allocation.technician_id=technician.technician_id  where indent.status=#{status} order by indent.create_time desc")
+        " indent_state.state  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+        " left join technician on indent_allocation.technician_id=technician.technician_id  left join  indent_state on indent.status=indent_state.id where indent.status=#{status} order by indent.create_time desc")
 List<IndentShowEntity> selectIndentMsg(Integer status);
 
 
     //根据订单状态查询所有订单信息--添加了时间限制
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            " left join technician on indent_allocation.technician_id=technician.technician_id  where indent.status=#{status} and indent.create_time > #{date} order by indent.create_time desc ")
+            " indent_state.state  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            " left join technician on indent_allocation.technician_id=technician.technician_id  left join  indent_state on indent.status=indent_state.id where indent.status=#{status} and indent.create_time > #{date} order by indent.create_time desc ")
 
     List<IndentShowEntity> selectIndentMsg1(@Param("status") Integer status, @Param("date") String date);
     //根据订单所在城市查询所有订单
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.address,indent.status  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            " left join technician on indent_allocation.technician_id=technician.technician_id where indent.CITY_CODE=#{cityCode} order by indent.create_time desc" )
+            " indent.address,indent_state.state  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            " left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id where indent.CITY_CODE=#{cityCode} order by indent.create_time desc" )
     List<IndentShowEntity> selectIndentByCity(String cityCode);
 
     //根据订单所在城市查询所有订单--添加了时间限制
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.address,indent.status  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            " left join technician on indent_allocation.technician_id=technician.technician_id where indent.CITY_CODE=#{cityCode} and create_time> #{date} order by indent.create_time desc")
+            " indent.address,indent_state.state  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            " left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id where indent.CITY_CODE=#{cityCode} and create_time> #{date} order by indent.create_time desc")
 
     List<IndentShowEntity> selectIndentByCity1(@Param("cityCode") String cityCode, @Param("date") String date);
 
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.address,indent.status  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            "left join technician on indent_allocation.technician_id=technician.technician_id order by indent.create_time desc")
+            " indent.address,indent_state.state  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            "left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id order by indent.create_time desc")
     List<IndentShowEntity> selectAllIndent();
 
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.address,indent.status  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            "left join technician on indent_allocation.technician_id=technician.technician_id where indent.create_time>#{date} order by indent.create_time desc" )
+            " indent.address,indent_state.state  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            "left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id where indent.create_time>#{date} order by indent.create_time desc" )
 
     List<IndentShowEntity> selectAllIndent1(String date);
     //根据订单所在城市和订单状态查询所有订单
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            "indent.address, indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            "left join technician on indent_allocation.technician_id=technician.technician_id where indent.CITY_CODE=#{cityCode} and indent.STATUS=#{status}  order by indent.create_time desc")
+            "indent.address, indent_state.state  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            "left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id where indent.CITY_CODE=#{cityCode} and indent.STATUS=#{status}  order by indent.create_time desc")
 
     List<IndentShowEntity> selectIndentByStatusAndCity(@Param("status") Integer status, @Param("cityCode") String cityCode);
 
     //根据订单所在城市和订单状态查询所有订单--添加了时间限制
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            "indent.address, indent.STATUS  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            "left join technician on indent_allocation.technician_id=technician.technician_id where indent.CITY_CODE=#{cityCode} and indent.STATUS=#{status} and indent.create_time >#{date} order by indent.create_time desc ")
+            "indent.address, indent_state.state  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            "left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id where indent.CITY_CODE=#{cityCode} and indent.STATUS=#{status} and indent.create_time >#{date} order by indent.create_time desc ")
     List<IndentShowEntity> selectIndentByStatusAndCity1(@Param("status") Integer status, @Param("cityCode") String cityCode, @Param("date") String date);
 
     //根据客户从订单号查询订单信息
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent.address,indent.status  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
-            "left join technician on indent_allocation.technician_id=technician.technician_id where #{number} in(indent.customer_cellphone,indent.order_id ,indent_allocation.technician_id )order by indent.create_time desc")
+            " indent.address,indent_state.state  ,indent.remark,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            "left join technician on indent_allocation.technician_id=technician.technician_id left join  indent_state on indent.status=indent_state.id where #{number} in(indent.customer_cellphone,indent.order_id ,indent_allocation.technician_id )order by indent.create_time desc")
     List<IndentShowEntity> selectIndentByNumber(String number);
 
     //--------------------------------------查询管理Mapper 以上--------------------------------------------

@@ -19,7 +19,7 @@ public class IndentShowEntity {
     private String technicianPhone;
     private Date createTime;
     private Date finishTime;
-    private Integer status;
+    private String state;
     private String remark;
 
 
@@ -114,12 +114,12 @@ public class IndentShowEntity {
         this.finishTime = finishTime;
     }
 
-    public Integer getStatus() {
-        return status;
+    public String getState() {
+        return state;
     }
 
-    public void setStatus(Integer status) {
-        this.status = status;
+    public void setState(String state) {
+        this.state = state;
     }
 
     public String getRemark() {

@@ -63,7 +63,7 @@ public class MenuService {
     public static Menu getMenu(){
 
 
-        String baseUrl = "http://dcdd.tunnel.qydev.com";
+        String baseUrl = "http://www.batterydd.cn";
         String location_url=baseUrl+"/templates/wxIndentMap.html";
         String serviceInit_url=baseUrl+"/templates/applyServiceValidate.html";
         String cusEvaluation_url=baseUrl+"/templates/wxCusEvaluation.html";

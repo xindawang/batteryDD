@@ -36,7 +36,6 @@ var batteryAmountArray = [
 $(function () {
 
     getAllProvince()
-    getAllBatteryBrand()
     updateStockTable("/getAllBatteryAmount")
     //--------------------------事件监听 以下-----------------------------------
     //按城市查看
@@ -51,7 +50,13 @@ $(function () {
 
 
     $("#province").change(function () {
-        getAllCityByProvince()
+        var provinceCode=$("#province").val()
+        if(provinceCode == 0){
+            updateStockTable("/getAllBatteryAmount")
+        }
+            getAllCityByProvince()
+
+
     })
 
 
