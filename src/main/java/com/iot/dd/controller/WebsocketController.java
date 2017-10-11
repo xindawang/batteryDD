@@ -62,6 +62,7 @@ public class WebsocketController {
 
         orderService.allocIndent(indentId, techId);
         String chatMessage = "{\"orderId\":\"" + indentId + "\"}";
+        System.out.println(chatMessage);
         template.convertAndSend("/topic/dis_tech" + allocationEntity.getTechnicianId(), chatMessage);//将消息转发给技师
         template.convertAndSend("/topic/dis_res" + allocationEntity.getOrderId(), "订单派发成功");//通过客服订单派发成功
     }
@@ -78,25 +79,25 @@ public class WebsocketController {
 
         JSONObject jsonObject = JSONObject.fromObject(msg);
 
-        String orderId=jsonObject.getString("orderId");
-        String uLongitude=jsonObject.getString("longitude");
-        String uLatitude=jsonObject.getString("latitude");
-        System.out.println(orderId+uLatitude+uLongitude);
-        Float longitude,latitude;
-        if((uLongitude!=null)  &&(uLatitude  != null)){
-            longitude=Float.parseFloat(uLongitude);
-            latitude=Float.parseFloat(uLatitude);
-            result=indentService.updateCustomerLocation(orderId,longitude,latitude);
+        String orderId = jsonObject.getString("orderId");
+        String uLongitude = jsonObject.getString("longitude");
+        String uLatitude = jsonObject.getString("latitude");
+        System.out.println(orderId + uLatitude + uLongitude);
+        Float longitude, latitude;
+        if ((uLongitude != null) && (uLatitude != null)) {
+            longitude = Float.parseFloat(uLongitude);
+            latitude = Float.parseFloat(uLatitude);
+            result = indentService.updateCustomerLocation(orderId, longitude, latitude);
         }
 
-        String techId=indentService.getTechId(orderId);
+        String techId = indentService.getTechId(orderId);
 
-        String cityName=indentService.getCityName(orderId);
+        String cityName = indentService.getCityName(orderId);
 
-        String chatMessage="{\"latitude\":"+uLatitude+",\"longitude\":"+uLongitude+",\"cityName\":"+cityName+"}";
+        String chatMessage = "{\"latitude\":" + uLatitude + ",\"longitude\":" + uLongitude + ",\"cityName\":" + cityName + "}";
 
         //msg to json
-        template.convertAndSend("/topic/cus_location" +techId+orderId, chatMessage);//将客户位置信息转发给技师
+        template.convertAndSend("/topic/dis_tech" + techId + orderId, chatMessage);//将客户位置信息转发给技师
     }
 
 
@@ -116,9 +117,8 @@ public class WebsocketController {
     public void technicianAceept(String message) {
         JSONObject jsonObject = JSONObject.fromObject(message);
         String orderId = jsonObject.getString("orderId");
-        System.out.println(message);
         template.convertAndSend("/topic/order_accept" + orderId, message);//通知客户，技师已经接单
-
+        System.out.println("accept"+message);
     }
 
     /*技师通知位置改变，并提供位置信息
@@ -126,54 +126,34 @@ public class WebsocketController {
     *         "latitude":纬度
     *         "longitude":经度]
     */
-    @MessageMapping("/tech_Position")
+    @MessageMapping("/tech_position")
     public void technicianPosit(String message) {
         JSONObject jsonObject = JSONObject.fromObject(message);
-        String orderId = jsonObject.getString("orderId");
-
-        System.out.println(message);
-        //考虑在此处将技师地理位置保存数据库（更新）
-        template.convertAndSend("/topic/tech_location" + orderId, message);//将技师位置信息传给客户
         String technicianId = jsonObject.getString("technicianId");
         List<IndentAllocationEntity> listAllocation = allocation.findAllocation(technicianId);//查找与技师有关的订单
         for (int i = 0; i < listAllocation.size(); i++) {
-
             IndentAllocationEntity entity = listAllocation.get(i);
             OrderEntity order = orderMapper.findOrder(entity.getOrderId());//只给尚未完成的订单对应的用户，发送位置消息
             if (order.getStatus() == 3) {
-                template.convertAndSend("/topic/dis_custom" + order.getOrderId(), message);//将技师位置信息传给客户
+                template.convertAndSend("/topic/tech_location" + order.getOrderId(), message);//将技师位置信息传给客户
             }
         }
+
+        System.out.println("tech_Position"+message);
     }
-
-
-    /*技师通知客户，正在前往安装电池
-    * 数据格式 ["orderId":订单编号,
-    *          "technicianId":技师编号,
-    *         "message":正在前往安装]
-    * */
-
 
     /*技师通知，电池安装完成
     * 数据格式 ["orderId":订单编号,
     *          "technicianId":技师编号,
     *         "message":电池安装完成]
     * */
-    @MessageMapping("/tech_finish")
+    @MessageMapping("/orderFinish")
     public void technicianFinish(String message) {
         JSONObject jsonObject = JSONObject.fromObject(message);
         String orderId = jsonObject.getString("orderId");
-
         template.convertAndSend("/topic/order_finish" + orderId, message);//通知客户，技师已经接单
+        System.out.println(message);
     }
-
-    /*
-    * 技师下线通知/技师上线通知
-    *数据格式 [
-    *          "technicianId":技师编号,
-    *         "message":开工or收工]
-    * */
-
 
 
 }

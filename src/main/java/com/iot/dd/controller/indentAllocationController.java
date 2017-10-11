@@ -284,7 +284,7 @@ public class indentAllocationController {
         //修改indent中的statuew字段
         service.setAcceptTime(orderId, new Date());
         boolean t = orderMapper.updateStatues(orderId, statues);
-        if (t == true)
+        if (t)
             return "OK";
         else
             return "error";

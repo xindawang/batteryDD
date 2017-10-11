@@ -46,7 +46,7 @@ public interface confirmMapper {
     @Update("update receiving_confirmation set quality_assurance_img=#{qualityPath} where order_id=#{orderId}")
     Boolean updateQualityPath(@Param("qualityPath") String qualityPath,@Param("orderId") String orderId);
 
-    @Update("update receiving_confirmation set battery_img=#{batteryPath},license_plate_number_img=#{carPath},quality_assurance_img=#{qualityPath} where order_id=#{orderId}")
+    @Update("update receiving_confirmation set battery_img=#{batteryImg},license_plate_number_img=#{licensePlateNumberImg},quality_assurance_img=#{qualityAssuranceImg} where order_id=#{orderId}")
     Boolean updateQualityAllPath(ConfirmEntity entity);
 
 
