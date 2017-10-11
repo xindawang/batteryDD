@@ -107,17 +107,17 @@ public class indentAllocationController {
                 map.put("licensePlateNumber", order.getLicensePlateNumber());
 
                 //经纬度转码
-                location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+               // location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
-                    longitude = entity.getCustomerLongitude();
-                    latitude = entity.getCustomerLatitude();
-                    if (location != null) {
-                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-                    }
-                }
+//                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
+//                    longitude = entity.getCustomerLongitude();
+//                    latitude = entity.getCustomerLatitude();
+//                    if (location != null) {
+//                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+//                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+//                    }
+//                }
                 map.put("customerLatitude", latitude + "");
                 map.put("customerLongitude", longitude + "");
                 map.put("technicianId", entity.getTechnicianId());
@@ -135,15 +135,15 @@ public class indentAllocationController {
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
 
                 //经纬度转码
-                location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+              //  location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
-                    if (location != null) {
-                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-                    }
-                }
+//                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
+//                    if (location != null) {
+//                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+//                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+//                    }
+//                }
                 map1.put("customerLatitude", latitude + "");
                 map1.put("customerLongitude", longitude + "");
 
@@ -183,13 +183,13 @@ public class indentAllocationController {
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
 
                 //经纬度转码
-                JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+              //  JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
-                if (location != null && longitude != null && latitude != null) {
-                    longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-                    latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-                }
+//                if (location != null && longitude != null && latitude != null) {
+//                    longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+//                    latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+//                }
                 map1.put("customerLatitude", latitude + "");
                 map1.put("customerLongitude", longitude + "");
                 map1.put("technicianId", entity.getTechnicianId());
@@ -222,7 +222,6 @@ public class indentAllocationController {
             if (order == null) {
                 continue;
             }
-//            String cityName = resourceService.findCityName(order.getCityCode());
             if (order.getStatus() == 4 || order.getStatus() == 5) {//订单已完成
                 //用城市名替换cityCode
                 Map<String, String> map = new HashMap<String, String>();
@@ -232,8 +231,7 @@ public class indentAllocationController {
                 map.put("cellphone", order.getCustomerCellphone());
                 map.put("address", order.getAddress());
                 map.put("technicianId", entity.getTechnicianId());
-//                map.put("cityName", cityName);
-//                map.put("licenseNumber", order.getLicensePlateNumber());
+
                 map.put("finishTime", order.getFinishTime() + "");
                 maplist.add(map);
             }
@@ -257,13 +255,13 @@ public class indentAllocationController {
 
         IndentAllocationEntity entity = service.findPosition(orderId);
         //经纬度转码
-        JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+       // JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
         Float longitude = entity.getCustomerLongitude();
         Float latitude = entity.getCustomerLatitude();
-        if (location != null && latitude != null && longitude != null) {
-            longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-            latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-        }
+//        if (location != null && latitude != null && longitude != null) {
+//            longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
+//            latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
+//        }
         Map<String, String> map = new HashMap<>();
         map.put("wechatStatus", orderEntity.getWechatStatus() + "");
         map.put("customerLatitude", latitude + "");

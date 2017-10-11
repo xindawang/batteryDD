@@ -97,7 +97,7 @@ public class WebsocketController {
         String chatMessage = "{\"latitude\":" + uLatitude + ",\"longitude\":" + uLongitude + ",\"cityName\":" + cityName + "}";
 
         //msg to json
-        template.convertAndSend("/topic/dis_tech" + techId + orderId, chatMessage);//将客户位置信息转发给技师
+        template.convertAndSend("topic/cus_location" + orderId, chatMessage);//将客户位置信息转发给技师
     }
 
 
