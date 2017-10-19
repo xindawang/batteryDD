@@ -12,6 +12,7 @@ import com.iot.dd.service.indentAllocationService;
 import net.sf.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -153,6 +154,13 @@ public class WebsocketController {
         JSONObject jsonObject = JSONObject.fromObject(message);
         String orderId = jsonObject.getString("orderId");
         template.convertAndSend("/topic/order_finish" + orderId, message);//通知客户，技师已经接单
+        System.out.println(message);
+    }
+
+
+    @MessageMapping("/welcome")
+    @SendTo("/topic/getResponse")
+    public void test(String message) {
         System.out.println(message);
     }
 

@@ -55,7 +55,7 @@ function AddMsg() {
         border: [0, .5, "#666"],
         title: "添加汽车",
         dialog: {
-            msg: "<div>汽车品牌：" + '<input type="text" id="carBrand" name="carBrand">' + '<br/>' + "汽车型号：" + '<input type="text" id="carType" name="carType">' + '</div>',
+            msg: "<div>汽车品牌：" + '<input type="text" id="carBrand"  style="width:120px" name="carBrand">' + '<br/>' + "汽车型号：" + '<input type="text" id="carType" style="width: 120px" name="carType">' + '</div>',
             btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
             type: 1,   //1:对钩   2：问号  3：叹号
             btn: ["确定","取消"],  //自定义按钮

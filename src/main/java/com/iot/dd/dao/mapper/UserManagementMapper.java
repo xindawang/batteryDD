@@ -21,14 +21,21 @@ public interface UserManagementMapper {
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "loginName", column = "login_name")
     })
-    List<AdminEntity> findAdminAll() ;
+    List<AdminEntity> findAdminAll();
 
     @Select("select * from admin where login_name=#{loginName}")
     @Results({
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "loginName", column = "login_name")
     })
-    AdminEntity findAdminOne(String loginName) ;
+    AdminEntity findAdminOne(String loginName);
+
+    @Select("select * from admin where id_number=#{idNumber}")
+    @Results({
+            @Result(property = "idNumber", column = "id_number"),
+            @Result(property = "loginName", column = "login_name")
+    })
+    AdminEntity checkAdminIdNumber(String idNumber);
 
     //客服
     @Select("select * from staff")
@@ -37,7 +44,7 @@ public interface UserManagementMapper {
             @Result(property = "loginName", column = "login_name"),
             @Result(property = "organizationId", column = "organization_id")
     })
-    List<StaffEntity> findStaffAll() ;
+    List<StaffEntity> findStaffAll();
 
 
     @Select("select * from staff where login_name=#{loginName}")
@@ -46,7 +53,15 @@ public interface UserManagementMapper {
             @Result(property = "loginName", column = "login_name"),
             @Result(property = "organizationId", column = "organization_id")
     })
-    StaffEntity findStaffOne(String loginName) ;
+    StaffEntity findStaffOne(String loginName);
+
+    @Select("select * from staff where id_number=#{iDnumber}")
+    @Results({
+            @Result(property = "idNumber", column = "id_number"),
+            @Result(property = "loginName", column = "login_name"),
+            @Result(property = "organizationId", column = "organization_id")
+    })
+    StaffEntity checkStaffIdNumber(String iDnumber);
 
 
     //技师
@@ -71,7 +86,34 @@ public interface UserManagementMapper {
             @Result(property = "longitude", column = "technician_longitude"),
             @Result(property = "latitude", column = "technician_latitude"),
     })
-    TechnicianEntity findTechnicianOne(String loginName) ;
+    TechnicianEntity findTechnicianOne(String loginName);
+
+
+    @Select("select * from technician where technician_id=#{technicianId}")
+    @Results({
+            @Result(property = "loginName", column = "login_name"),
+            @Result(property = "technicianId", column = "technician_id"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "idNumber", column = "id_number"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "organizationId", column = "organization_id"),
+            @Result(property = "longitude", column = "technician_longitude"),
+            @Result(property = "latitude", column = "technician_latitude"),
+    })
+    TechnicianEntity checkTechnicianId(String technicianId);
+
+    @Select("select * from technician where id_number=#{idNumber}")
+    @Results({
+            @Result(property = "loginName", column = "login_name"),
+            @Result(property = "technicianId", column = "technician_id"),
+            @Result(property = "cityCode", column = "city_code"),
+            @Result(property = "idNumber", column = "id_number"),
+            @Result(property = "licensePlateNumber", column = "license_plate_number"),
+            @Result(property = "organizationId", column = "organization_id"),
+            @Result(property = "longitude", column = "technician_longitude"),
+            @Result(property = "latitude", column = "technician_latitude"),
+    })
+    TechnicianEntity checkTechnicianIdNumber(String idNumber);
 
 
     @Insert("insert into technician (LOGIN_NAME,PASSWORD,TECHNICIAN_ID,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL," +
@@ -81,24 +123,22 @@ public interface UserManagementMapper {
     boolean addTechnician(TechnicianEntity user);
 
 
-
     //客户
     @Select("select * from customer")
     @Results({
             @Result(property = "loginName", column = "login_name")
     })
-    List<CustomerEntity> findCustomerAll() ;
+    List<CustomerEntity> findCustomerAll();
 
     //客户
     @Select("select * from customer where login_name=#{loginName}")
     @Results({
             @Result(property = "loginName", column = "login_name")
     })
-    CustomerEntity findCustomerOne(String loginName) ;
+    CustomerEntity findCustomerOne(String loginName);
 
 
-
-   //删除
+    //删除
 
     @Delete("delete from customer where login_name=#{loginName}")
     int deleteCustomer(String loginName);
@@ -138,7 +178,7 @@ public interface UserManagementMapper {
 
     //更新技师经纬度
     @Update("update technician set technician_longitude=#{technicianLongitude},technician_latitude=#{technicianLatitude} where technician_id=#{technicianId}")
-    boolean updateTechnicianLocation(@Param("technicianId")String technicianId,@Param("technicianLongitude")double technicianLongitude,@Param("technicianLatitude")double technicianLatitude);
+    boolean updateTechnicianLocation(@Param("technicianId") String technicianId, @Param("technicianLongitude") double technicianLongitude, @Param("technicianLatitude") double technicianLatitude);
 
 
     @Select("select * from technician where city_code=#{cityCode}")
@@ -148,33 +188,33 @@ public interface UserManagementMapper {
             @Result(property = "idNumber", column = "id_number"),
             @Result(property = "licensePlateNumber", column = "license_plate_number"),
             @Result(property = "organizationId", column = "organization_id"),
-            @Result(property="cityCode", column="city_code")
+            @Result(property = "cityCode", column = "city_code")
     })
     TechnicianEntity selectTechMsgFromCity(String cityCode);
 
 
     @Update("update technician set name=#{name} where technician_id=#{technicianId}")
-    boolean updateName(@Param("technicianId") String technicianId,@Param("name") String name);
+    boolean updateName(@Param("technicianId") String technicianId, @Param("name") String name);
 
     @Update("update technician set sex=#{gender} where technician_id=#{technicianId}")
-    boolean updateGender(@Param("technicianId") String technicianId,@Param("gender") String gender);
+    boolean updateGender(@Param("technicianId") String technicianId, @Param("gender") String gender);
 
     @Update("update technician set cellphone=#{cellphone} where technician_id=#{technicianId}")
-    boolean updateCellphone(@Param("technicianId") String technicianId,@Param("cellphone") String cellphone);
+    boolean updateCellphone(@Param("technicianId") String technicianId, @Param("cellphone") String cellphone);
 
     @Update("update technician set telephone=#{telephone} where technician_id=#{technicianId}")
-    boolean updateTelephone(@Param("technicianId") String technicianId,@Param("telephone") String telephone);
+    boolean updateTelephone(@Param("technicianId") String technicianId, @Param("telephone") String telephone);
 
     @Update("update technician set email=#{email} where technician_id=#{technicianId}")
-    boolean updateEmail(@Param("technicianId") String technicianId,@Param("email") String email);
+    boolean updateEmail(@Param("technicianId") String technicianId, @Param("email") String email);
 
     @Update("update technician set id_number=#{idNumber} where technician_id=#{technicianId}")
-    boolean updateIdNumber(@Param("technicianId") String technicianId,@Param("idNumber") String idNumber);
+    boolean updateIdNumber(@Param("technicianId") String technicianId, @Param("idNumber") String idNumber);
 
     @Update("update technician set license_plate_number=#{carNumber} where technician_id=#{technicianId}")
-    boolean updateCarNumber(@Param("technicianId") String technicianId,@Param("carNumber") String carNumber);
+    boolean updateCarNumber(@Param("technicianId") String technicianId, @Param("carNumber") String carNumber);
 
     @Update("update technician set address=#{address},city_code=#{cityCode} where technician_id=#{technicianId}")
-    boolean updateAddress(@Param("technicianId") String technicianId,@Param("cityCode") String cityCode,@Param("address") String  address);
+    boolean updateAddress(@Param("technicianId") String technicianId, @Param("cityCode") String cityCode, @Param("address") String address);
 
 }

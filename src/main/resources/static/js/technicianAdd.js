@@ -27,19 +27,26 @@ $(function () {
 
     $("#finish").click(function () {
 
-        var ss = $("#province option:selected").text() + $("#city option:selected").text() +
-            $("#area option:selected").text() + $("#detailAddress").val();
+        var ss =  $("#detailAddress").val();
 
-        var city = $("#city option:selected").text();
         var province = $("#province option:selected").text();
-        if (province != "---请选择---") {
-            $("#address").val(ss);
-            $("#cityName").val(city);
+        var city = $("#city option:selected").text();
+        var code=$("#city option:selected").val();
+        var area= $("#area option:selected").text();
+
+        if (province=="---请选择--"||city=="---请选择--"||area=="---请选择--") {
+            alert("请设置地址！！！");
+           return;
         }
+        ss = province+ city+area+$("#detailAddress").val();
+        $("#address").val(ss);
+        $("#cityCode").val(code);
+
         $("#address2").hide();
         $("#address3").hide();
         $("#address1").show();
     });
+
     $("#cancel").click(function () {
         $("#address2").hide();
         $("#address3").hide();
@@ -66,6 +73,8 @@ $(function () {
         var tLoginName = $("#loginName").val();
         var tName = $("#name").val();
         var password = $("#password").val();
+        var address=$("#address").val();
+        var idNumber=$("#idNumber").val();
         if (tID == null || tID == "") {
             alert("编号不能为空！！！");
             return;
@@ -82,6 +91,14 @@ $(function () {
             alert("密码不能为空！！！");
             return;
         }
+        if (idNumber == null || idNumber == "") {
+            alert("身份证号不能为空！！！");
+            return;
+        }
+        if (address == null || address == "") {
+            alert("请设置地址！！！");
+            return;
+        }
         $.ajax({
                 type: "POST",
                 url: '/addTechnician',
@@ -93,7 +110,7 @@ $(function () {
                         alert("添加成功！！！")
                     }
                     else {
-                        alert("操作失败！！！")
+                        alert(data)
                     }
 
                 }

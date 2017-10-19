@@ -68,8 +68,14 @@ $(function () {
                 data: $("#form").serialize(),
                 //dataType:text,
                 success: function (data) {
-                    $("#submit").hide();
-                    alert("添加成功！！！")
+                    if(data=="ok"){
+                        $("#submit").hide();
+                        alert("添加成功！！！")
+                    }
+                  else{
+                        alert(data);
+                    }
+
                 }
             }
         );

@@ -77,7 +77,7 @@ public class UserInfoManageController {
     @RequestMapping(value = "/technician", method = RequestMethod.GET)
     public String findtechnician(int pageSize, int page) {
         PageHelper.startPage(page, pageSize);
-        List<TechnicianEntity> list= usermanageservice.findTechnicianall();
+        List<TechnicianEntity> list = usermanageservice.findTechnicianall();
         long total = ((Page<TechnicianEntity>) list).getTotal();
         Map<String, Object> map = new HashMap<>();
         map.put("list", list);
@@ -142,7 +142,10 @@ public class UserInfoManageController {
     }
 
     @RequestMapping(value = "/findOneAdmin", method = RequestMethod.POST)
-    public String findOneadmin(HttpServletRequest request) {
+    public String findOneadmin(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
+
         String loginName = request.getParameter("loginName");
 
         AdminEntity user = usermanageservice.findAdminOne(loginName);
@@ -153,7 +156,9 @@ public class UserInfoManageController {
     }
 
     @RequestMapping(value = "/findOneCustomer", method = RequestMethod.POST)
-    public String findOnecustomer(HttpServletRequest request) {
+    public String findOnecustomer(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
 
         String loginName = request.getParameter("loginName");
         CustomerEntity user = new CustomerEntity();
@@ -163,7 +168,9 @@ public class UserInfoManageController {
     }
 
     @RequestMapping(value = "/findOneTechnician", method = RequestMethod.POST)
-    public String findOnetechnician(HttpServletRequest request) {
+    public String findOnetechnician(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
+        request.setCharacterEncoding("UTF-8");
+        response.setCharacterEncoding("UTF-8");
         String loginName = request.getParameter("loginName");
         TechnicianEntity user = new TechnicianEntity();
         user = usermanageservice.findTechnicianOne(loginName);
@@ -216,7 +223,6 @@ public class UserInfoManageController {
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
         user.setRole(request.getParameter("role"));
-
 
         return usermanageservice.updateOneAdmin(user);
 
@@ -284,6 +290,22 @@ public class UserInfoManageController {
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
         user.setRole("admin");
+
+        //用户名唯一
+        String loginName = request.getParameter("loginName");
+        AdminEntity admin = usermanageservice.findAdminOne(loginName);
+        if (admin != null) {
+            return "该用户名已被使用！！";
+        }
+        //身份证号名唯一
+        String idNumber = request.getParameter("idNumber");
+        if (idNumber != null && idNumber.equals("") ) {
+            AdminEntity admin1 = usermanageservice.checkAdminIdNumber(idNumber);
+            if (admin1 != null) {
+                return "该身份证号已被使用！！";
+            }
+        }
+
         userService.addAdmin(user);
         return "ok";
 
@@ -293,7 +315,9 @@ public class UserInfoManageController {
     @RequestMapping(value = "/addStaff", method = RequestMethod.POST)
     public String addStaff(HttpServletRequest request, HttpServletResponse response) {
         StaffEntity user = new StaffEntity();
-        user.setLoginName(request.getParameter("loginName"));
+
+        String loginName = request.getParameter("loginName");
+        user.setLoginName(loginName);
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
@@ -302,6 +326,19 @@ public class UserInfoManageController {
         user.setEmail(request.getParameter("email"));
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
+
+        StaffEntity staff = usermanageservice.findStaffOne(loginName);
+        if (staff != null) {
+            return "该用户名已被使用！！";
+        }
+
+        String idNumber = request.getParameter("idNumber");
+        if (idNumber != null && idNumber.equals("")) {
+            StaffEntity staff1 = usermanageservice.checkStaffidNumber(request.getParameter("idNumber"));
+            if (staff1 != null) {
+                return "该身份证号已被使用！！";
+            }
+        }
 
         userService.addStaff(user);
 
@@ -313,8 +350,9 @@ public class UserInfoManageController {
     @RequestMapping(value = "/addTechnician", method = RequestMethod.POST)
     public String addTechnician(HttpServletRequest request, HttpServletResponse response) {
 
+        String technicianId = request.getParameter("technicianId");
         TechnicianEntity user = new TechnicianEntity();
-        user.setTechnicianId(request.getParameter("technicianId"));
+        user.setTechnicianId(technicianId);
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
@@ -325,18 +363,34 @@ public class UserInfoManageController {
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+        user.setIswork("0");
+        String cityCode = request.getParameter("cityCode");
+        user.setCityCode(cityCode);
 
-        String cityCode = null;
-        String cityName = request.getParameter("cityName");
-        if (cityName != null) {
-            cityCode = re.findCityCODE(cityName);
+        //用户名唯一
+
+        TechnicianEntity tech = usermanageservice.findTechnicianOne(request.getParameter("loginName"));
+        if (tech != null) {
+            return "该用户名已被使用！！";
+        }
+
+        String idNumber = request.getParameter("idNumber");
+        if (idNumber != null &&!idNumber.equals("")) {
+            TechnicianEntity tech1 = usermanageservice.checkTechnicianIdNumber(idNumber);
+            if (tech1 != null) {
+                return "该身份证号已被使用！！";
+            }
+        }
+
+        //用户编号唯一
+        //身份账号唯一
+        TechnicianEntity tech2 = usermanageservice.checkTechnicianId(technicianId);
+        if (tech2 != null) {
+            return "该编号已被使用！！";
         }
 
 
-        user.setCityCode(cityCode);
-
         Boolean t = userService.addTechnician(user);
-
         LastIdEntity entity = lastIdService.find();//技师可用编号
         int id = Integer.parseInt(entity.getIdNumber()) + 1;
         lastIdService.update(id + "");//设置下一个可用编号

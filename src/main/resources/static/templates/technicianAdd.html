@@ -88,7 +88,7 @@
             </div>
         </div>
         <div class="layui-form-item ">
-            <div class="layui-inline unrequired">
+            <div class="layui-inline required">
                 <label class="layui-form-label">身份证号</label>
                 <div class="layui-input-inline">
                     <input id="idNumber" name="idNumber" type="text" class="layui-input"/>
@@ -103,28 +103,28 @@
         </div>
         <div class="layui-form-item">
             <div id="address1">
-                <div class="layui-inline unrequired">
+                <div class="layui-inline required">
                     <label class="layui-form-label">地址</label>
                     <div class="layui-input-inline">
                         <input id="address" name="address" type="text" class="layui-input"/>
                     </div>
                 </div>
                 <div class="layui-inline unrequired " style="display: none">
-                    <label class="layui-form-label">地址</label>
+                    <label class="layui-form-label">城市编码</label>
                     <div class="layui-input-inline">
-                        <input id="cityName" name="cityName" type="text" class="layui-input"/>
+                        <input id="cityCode" name="cityCode" type="text" class="layui-input"/>
                     </div>
                 </div>
             </div>
 
             <div id="address2" style="display: none">
-                <div class="layui-inline unrequired">
+                <div class="layui-inline required">
                     <label class="layui-form-label">地址</label>
                     <div class="layui-input-inline">
                         <select id="province" name="province" style="display:  block  " class="layui-input"></select>
                     </div>
                 </div>
-                <div class="layui-inline unrequired">
+                <div class="layui-inline required">
                     <label class="layui-form-label">城市</label>
                     <div class="layui-input-inline">
                         <select id="city" name="city" style="display: block  " class="layui-input"></select>
@@ -133,7 +133,7 @@
             </div>
             <div id="address3" style="display: none">
                 <div class="layui-form-item">
-                    <div class="layui-inline unrequired">
+                    <div class="layui-inline required">
                         <label class="layui-form-label">县/区</label>
                         <div class="layui-input-inline">
                             <select id="area" name="area" style="display: block " class="layui-input"></select>
