@@ -94,13 +94,17 @@ $(function () {
 
         var provinceCode = $("#province option:selected").val();
         var citycode = $("#city option:selected").val();
+        var areacode = $("#area option:selected").val();
         if (provinceCode == '0') {
             alert("请选择省份！");
             return;
         }
         if (citycode == "0") {
-
             alert("请选择城市 ！");
+            return;
+        }
+        if (areacode == "0") {
+            alert("请选择市区/县 ！");
             return;
         }
         $("#cityCode").val(citycode);
@@ -136,6 +140,6 @@ $(function () {
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null)return unescape(r[2]);
+    if (r != null) return unescape(r[2]);
     return null;
 }

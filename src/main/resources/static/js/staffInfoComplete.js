@@ -28,7 +28,7 @@ $(function () {
             $("#idNumber").val(data.idNumber);
             $("#address").val(data.address);
             $("#role").val(data.role);
-            $("#organizationId").val(data.organizationId);
+            // $("#organizationId").val(data.organizationId);
 
         }
     });
@@ -57,11 +57,11 @@ $(function () {
                 data:$("#form").serialize(),
                 //dataType:text,
                 success:function (data) {
-                    document.getElementById("showMsg").innerHTML=data.toString();
+                alert(data);
                 }
             }
         );
-    })
+    });
 
 
     //地址规范化
@@ -75,13 +75,31 @@ $(function () {
 
         var ss = $("#province option:selected").text()+ $("#city option:selected").text()+
             $("#area option:selected").text()+ $("#detailAddress").val();
+
+        var provinceCode = $("#province option:selected").val();
+        var citycode = $("#city option:selected").val();
+        var areacode = $("#area option:selected").val();
+        if (provinceCode == '0') {
+            alert("请选择省份！");
+            return;
+        }
+        if (citycode == "0") {
+            alert("请选择城市 ！");
+            return;
+        }
+        if (areacode == "0") {
+            alert("请选择市区/县 ！");
+            return;
+        }
+
+
         $("#address").val(ss);
-        $("#address2").hide();
+        $("#address3").hide();
         $("#address2").hide();
         $("#address1").show();
     });
     $("#cancel").click(function () {
-        $("#address2").hide();
+        $("#address3").hide();
         $("#address2").hide();
         $("#address1").show();
     });

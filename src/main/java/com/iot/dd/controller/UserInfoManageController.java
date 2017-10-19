@@ -184,7 +184,7 @@ public class UserInfoManageController {
     public String staffmodify(HttpServletRequest request) {
 
         StaffEntity user = new StaffEntity();
-
+        String loginName = request.getParameter("loginName");
         user.setLoginName(request.getParameter("loginName"));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
@@ -196,13 +196,24 @@ public class UserInfoManageController {
         user.setAddress(request.getParameter("address"));
         user.setRole(request.getParameter("role"));
 
-        if (request.getParameter("organizationId") == "" || request.getParameter("organizationId") == null) {
-            user.setOrganizationId(0);
-        } else {
-            user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
+
+//
+//        if (request.getParameter("organizationId") == "" || request.getParameter("organizationId") == null) {
+//            user.setOrganizationId(0);
+//        } else {
+//            user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
+//        }
+
+        String idNumber = request.getParameter("idNumber");
+        StaffEntity staff = usermanageservice.findStaffOne(loginName);
+        if(!staff.getIdNumber().equals(idNumber)){
+            if (idNumber != null && !idNumber.equals("")) {
+                StaffEntity staff1 = usermanageservice.checkStaffidNumber(request.getParameter("idNumber"));
+                if (staff1 != null) {
+                    return "该身份证号已被使用！！";
+                }
+            }
         }
-
-
         return usermanageservice.updateOneStaff(user);
 
 
@@ -224,6 +235,18 @@ public class UserInfoManageController {
         user.setAddress(request.getParameter("address"));
         user.setRole(request.getParameter("role"));
 
+        //身份证号名唯一
+        String idNumber = request.getParameter("idNumber");
+
+        AdminEntity admin = usermanageservice.findAdminOne(request.getParameter("loginName"));
+        if (!admin.getIdNumber().equals(idNumber)) {
+            if (idNumber != null && !idNumber.equals("")) {
+                AdminEntity admin1 = usermanageservice.checkAdminIdNumber(idNumber);
+                if (admin1 != null) {
+                    return "该身份证号已被使用！！";
+                }
+            }
+        }
         return usermanageservice.updateOneAdmin(user);
 
 
@@ -243,8 +266,6 @@ public class UserInfoManageController {
         user.setEmail(request.getParameter("email"));
         user.setAddress(request.getParameter("address"));
         user.setPostcode(request.getParameter("postcode"));
-
-
         return usermanageservice.updateOneCustomer(user);
 
 
@@ -254,7 +275,7 @@ public class UserInfoManageController {
     public String technicianmodify(HttpServletRequest request) {
 
         TechnicianEntity user = new TechnicianEntity();
-
+        String technicianId = request.getParameter("technicianId");
         user.setTechnicianId(request.getParameter("technicianId"));
         user.setLoginName(request.getParameter("loginName"));
 
@@ -268,6 +289,19 @@ public class UserInfoManageController {
         user.setAddress(request.getParameter("address"));
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
         user.setCityCode(request.getParameter("cityCode"));
+
+
+        String idNumber = request.getParameter("idNumber");
+        TechnicianEntity tech = usermanageservice.findTechnicianOne(request.getParameter("loginName"));
+        if (!tech.getIdNumber().equals(idNumber)) {
+            if (idNumber != null && !idNumber.equals("")) {
+                TechnicianEntity tech1 = usermanageservice.checkTechnicianIdNumber(idNumber);
+                if (tech1 != null) {
+                    return "该身份证号已被使用！！";
+                }
+            }
+        }
+
 
         return usermanageservice.updateOneTechnician(user);
 
@@ -299,7 +333,7 @@ public class UserInfoManageController {
         }
         //身份证号名唯一
         String idNumber = request.getParameter("idNumber");
-        if (idNumber != null && idNumber.equals("") ) {
+        if (idNumber != null && !idNumber.equals("")) {
             AdminEntity admin1 = usermanageservice.checkAdminIdNumber(idNumber);
             if (admin1 != null) {
                 return "该身份证号已被使用！！";
@@ -326,6 +360,7 @@ public class UserInfoManageController {
         user.setEmail(request.getParameter("email"));
         user.setIdNumber(request.getParameter("idNumber"));
         user.setAddress(request.getParameter("address"));
+        user.setRole("客服");
 
         StaffEntity staff = usermanageservice.findStaffOne(loginName);
         if (staff != null) {
@@ -333,7 +368,7 @@ public class UserInfoManageController {
         }
 
         String idNumber = request.getParameter("idNumber");
-        if (idNumber != null && idNumber.equals("")) {
+        if (idNumber != null && !idNumber.equals("")) {
             StaffEntity staff1 = usermanageservice.checkStaffidNumber(request.getParameter("idNumber"));
             if (staff1 != null) {
                 return "该身份证号已被使用！！";
@@ -375,7 +410,7 @@ public class UserInfoManageController {
         }
 
         String idNumber = request.getParameter("idNumber");
-        if (idNumber != null &&!idNumber.equals("")) {
+        if (idNumber != null && !idNumber.equals("")) {
             TechnicianEntity tech1 = usermanageservice.checkTechnicianIdNumber(idNumber);
             if (tech1 != null) {
                 return "该身份证号已被使用！！";

@@ -52,13 +52,13 @@ public interface UserMapper {
     boolean addTechnician(TechnicianEntity user);
 
     //添加staff
-    @Insert("insert into  staff(LOGIN_NAME,PASSWORD,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS)" +
-            "values(#{loginName},#{password},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address})")
+    @Insert("insert into  staff(LOGIN_NAME,PASSWORD,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS,ROLE)" +
+            "values(#{loginName},#{password},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address},#{role})")
     boolean addStaff(StaffEntity entity);
 
     //添加管理员
-    @Insert("insert into admin(LOGIN_NAME,PASSWORD,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS)" +
-            "values(#{loginName},#{password},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address})")
+    @Insert("insert into admin(LOGIN_NAME,PASSWORD,NAME,SEX,CELLPHONE,TELEPHONE,EMAIL,ID_NUMBER,ADDRESS,role)" +
+            "values(#{loginName},#{password},#{name},#{sex},#{cellphone},#{telephone},#{email},#{idNumber},#{address},#{role})")
     boolean addAdmin(AdminEntity entity);
 
     //查询

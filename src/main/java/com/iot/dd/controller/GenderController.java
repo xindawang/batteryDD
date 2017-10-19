@@ -14,7 +14,7 @@ import java.util.List;
  * Created by admin on 2017/7/25.
  */
 @RestController
-public class SexController {
+public class GenderController {
     @Autowired
     private SexService  sexservice;
 

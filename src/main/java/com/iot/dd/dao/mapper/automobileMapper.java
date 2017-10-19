@@ -13,7 +13,7 @@ import java.util.List;
 public interface automobileMapper {
 
     @Select("select auto.ID, auto.NAME,auto.AUTOMOBILE_BRAND_ID,brand.BRAND_NAME" +
-            "        from automobile_type auto join automobile_brand brand on auto.AUTOMOBILE_BRAND_ID =brand.ID")
+            "        from automobile_type auto join automobile_brand brand on auto.AUTOMOBILE_BRAND_ID =brand.ID order by brand.ID")
     @Results({
             @Result(property = "id", column = "id"),
             @Result(property = "automobileBrand", column = "brand_name"),

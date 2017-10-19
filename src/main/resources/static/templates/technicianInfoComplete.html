@@ -75,13 +75,13 @@
             <div class="layui-inline unrequired">
                 <label class="layui-form-label">手机号</label>
                 <div class="layui-input-inline">
-                    <input id="cellphone" name="cellphone" type="text" class="layui-input"/>
+                    <input id="cellphone" name="cellphone" type="text" class="layui-input" maxlength="11" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();" />
                 </div>
             </div>
             <div class="layui-inline unrequired">
                 <label class="layui-form-label">固定电话</label>
                 <div class="layui-input-inline">
-                    <input id="telephone" name="telephone" type="text" class="layui-input"/>
+                    <input id="telephone" name="telephone" type="text" class="layui-input" maxlength="11" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();" />
                 </div>
             </div>
         </div>
@@ -96,7 +96,7 @@
             <div class="layui-inline required">
                 <label class="layui-form-label">身份证号</label>
                 <div class="layui-input-inline">
-                    <input id="idNumber" name="idNumber" type="text" class="layui-input"/>
+                    <input placeholder="用0替换字母" id="idNumber" name="idNumber" type="text" class="layui-input" maxlength="18" onkeyup="(this.v=function(){this.value=this.value.replace(/[^0-9-]+/,'');}).call(this)" onblur="this.v();" />
                 </div>
             </div>
         </div>

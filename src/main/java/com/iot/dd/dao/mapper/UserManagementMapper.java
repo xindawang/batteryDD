@@ -155,8 +155,11 @@ public interface UserManagementMapper {
     @Update("update admin set password=#{password}, name=#{name},sex=#{sex} ,cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName}")
     boolean modifyAdminInfo(AdminEntity user);
 
-    @Update("update staff set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role}, organization_id=#{organizationId} where login_name=#{loginName} ")
+    //    @Update("update staff set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role}, organization_id=#{organizationId} where login_name=#{loginName} ")
+//    boolean modifyStaffInfo(StaffEntity user);
+    @Update("update staff set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},id_number=#{idNumber},address=#{address},role=#{role} where login_name=#{loginName} ")
     boolean modifyStaffInfo(StaffEntity user);
+
 
     @Update("update customer set password=#{password}, name=#{name},sex=#{sex},cellphone=#{cellphone},telephone=#{telephone},email=#{email},address=#{address},postcode=#{postcode} where login_name=#{loginName}")
     boolean modifyCustomerInfo(CustomerEntity user);
