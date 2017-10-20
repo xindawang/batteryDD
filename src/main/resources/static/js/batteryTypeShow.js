@@ -103,8 +103,8 @@ function addBatteryType() {
         border: [0, .5, "#666"],
         title: "添加电池型号与品牌",
         dialog: {
-            msg: "<form>电池品牌<input type='text', id='batteryBrandName' ><br/>" +
-            "电池型号<input type='text', id='type' ></form>",
+            msg: "<form>电池品牌<input type='text' maxlength='8' id='batteryBrandName' ><br/>" +
+            "电池型号<input type='text'maxlength='12' id='type' ></form>",
             btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
             type: 2,   //1:对钩   2：问号  3：叹号
             btn: ["确认添加", "取消"],  //自定义按钮
@@ -112,7 +112,7 @@ function addBatteryType() {
                 var type = $("#type").val()
                 var batteryBrandName = $("#batteryBrandName").val()
                 insertBatteryType(type, batteryBrandName)
-                console.log(type + batteryBrandName)
+                //console.log(type + batteryBrandName)
             },
             no: function () {
 
@@ -128,8 +128,8 @@ function editBatteryType(batteryBrand, batteryType, batteryId) {
         border: [0, .5, "#666"],
         title: "修改电池型号与品牌",
         dialog: {
-            msg: "<form>电池品牌<input disabled='disabled' type='text', id='batteryBrandName' value=" + batteryBrand + "><br/>" +
-            "电池型号<input , type='text', id='type'  value=" + batteryType + "></form>" +
+            msg: "<form>电池品牌<input disabled='disabled' maxlength='8' type='text' id='batteryBrandName' value=" + batteryBrand + "><br/>" +
+            "电池型号<input  type='text' maxlength='12' id='type'  value=" + batteryType + "></form>" +
             "<label style='color:red'>提示：请勿修改电池品牌,如品牌变化请删除该电池品牌下的所有电池型号再重新添加</label>",
             btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
             type: 2,   //1:对钩   2：问号  3：叹号
@@ -178,9 +178,9 @@ function insertBatteryType(type, brandName) {
         data: {"batteryType": type, "batteryBrandName": brandName},
         dataType: "json",
         success: function (data) {
-            updateTable()
-            if (data == "电池型号已存在")
+
                 confirmMsg(data)
+                updateTable()
         }
     })
 }
@@ -194,8 +194,7 @@ function updateBatteryType(type, id) {
         dataType: "json",
         success: function (data) {
             updateTable()
-            if (data == "电池型号已存在")
-                confirmMsg(data)
+            confirmMsg(data)
         }
     })
 }
@@ -215,7 +214,7 @@ function deleteBatteryType(id) {
 
 function confirmMsg(msg) {
     $.mbox({
-        area: ["300px", "auto"], //弹框大小
+        area: ["400px", "auto"], //弹框大小
         border: [0, .5, "#666"],
         title: "提示",
         dialog: {

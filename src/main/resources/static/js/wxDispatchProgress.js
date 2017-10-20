@@ -22,8 +22,9 @@ for(var node in param){
 }
 
 var checkStatusID
-
+var stompClient
 $(function() {
+    var stompClient
     //首先上传一次用户位置方便派单
     setMsg();//订单状态查询初始化
 
@@ -195,24 +196,23 @@ function websocketStatusInit(indentId) {
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function () {
-        window.confirm('开始连接')
+        //window.confirm('开始连接')
 
         stompClient.subscribe('/topic/order_accept' + indentId, function (ex) {//技师已接单
 
             var status=JSON.parse(ex.body).status
-            confirm(status)
+            //confirm(status)
             if(status =="accept"){
                 bsStep(2)
                 indentAcceptedMsg()
             }
-
 
         });
 
         stompClient.subscribe('/topic/order_finish' + indentId, function (ex) {//订单完成
 
             var status=JSON.parse(ex.body).status
-            confirm(status)
+            //confirm(status)
             if(status =="finish"){
                 bsStep(3)
                 indentFinishedMsg()
@@ -220,6 +220,7 @@ function websocketStatusInit(indentId) {
 
 
         });
+
     })
 
 }

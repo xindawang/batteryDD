@@ -65,6 +65,15 @@ $(function () {
     });
 
 
+    $("#refresh").click(function () {//刷新订单
+        map.remove(userMarkers)
+        map.remove(techMarkers)
+        selectCityList();//重新导入存在未派发订单的城市，和订单以及技师
+
+        $("#indentDetail").hide()//隐藏订单详情按钮
+        $("#indentDetailShow").hide();//隐藏订单详情内容
+
+    })
     //-------建立所有控件的监控----------------
 
 
@@ -159,9 +168,12 @@ function websocketInit(){
     stompClient = Stomp.over(socket);
 
     stompClient.connect({}, function () {
-        console.log('开始连接')
-    })
+        //console.log('开始连接')
+        stompClient.subscribe('/topic/cus_newIndent', function (ex) {
+            window.confirm("订单编号为：" + JSON.parse(ex.body).orderId + "已从微信申请服务,请及时派发给技师")
 
+        })
+    })
 
 }
 

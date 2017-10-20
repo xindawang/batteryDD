@@ -118,13 +118,13 @@ $(function () {
         stompClient = Stomp.over(socket);
 
         stompClient.connect({}, function () {
-            window.confirm('开始连接')
+           // window.confirm('开始连接')
 
             stompClient.subscribe('/topic/tech_location' + indentId, function (ex) {//订单派发收到回复
 
                 techLongitude=JSON.parse(ex.body).longitude
                 techLatitude=JSON.parse(ex.body).latitude
-                confirm("tech:"+techLongitude+techLatitude+" user:"+userLongitude+userLatitude)
+                //confirm("tech:"+techLongitude+techLatitude+" user:"+userLongitude+userLatitude)
                 setDriving(userLongitude, userLatitude, techLongitude, techLatitude)
 
 
@@ -154,7 +154,7 @@ $(function () {
 
                 userLatitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
                 userLongitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                confirm(userLatitude+userLongitude)
+                //confirm(userLatitude+userLongitude)
                 sendLocationToTech(orderId,userLongitude,userLatitude)
 
 
