@@ -43,17 +43,19 @@ public class BatteyController {
     public String addBatteryType(HttpServletRequest request) {
         String batteryType = request.getParameter("batteryType");
         String batteryBrandName = request.getParameter("batteryBrandName");
-
+        batteryType=batteryBrandName.replaceAll("\\s","");
+        batteryBrandName=batteryBrandName.replaceAll("\\s","");
         return JsonTool.objectToJson(batteryService.insertBatteryType(batteryType, batteryBrandName));
     }
 
     @RequestMapping(value = "/updateBatteryType", method = RequestMethod.POST)
     public String updateBatteryType(HttpServletRequest request) {
         String batteryType = request.getParameter("batteryType");
+        batteryType=batteryType.replaceAll("\\s","");
         String id = request.getParameter("batteryId");
         Integer batteryId = Integer.parseInt(id);
-        batteryService.updateBatteryType(batteryType, batteryId);
-        return JsonTool.objectToJson("修改成功");
+        String result=batteryService.updateBatteryType(batteryType, batteryId);
+        return JsonTool.objectToJson(result);
     }
 
     @RequestMapping(value = "/deleteBatteryType", method = RequestMethod.POST)

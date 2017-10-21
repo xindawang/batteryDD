@@ -5,6 +5,7 @@ import com.iot.dd.Tools.TimeTool;
 import com.iot.dd.dao.entity.Indent.OrderEntity;
 import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.service.OrderService;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -34,7 +35,13 @@ public class ImportIndentController {
         String result=null;
 
         OrderEntity orderEntity=new OrderEntity();
-        orderEntity.setOrderId(request.getParameter("orderId"));
+        String orderId=request.getParameter("orderId");
+
+        orderId=orderId.replaceAll("\\s","");
+        if(orderService.selectOrderId(request.getParameter("orderId"))!=null){
+            return JsonTool.objectToJson("订单编号重复，请检测是否填写错误");
+        }
+        orderEntity.setOrderId(orderId);
         Integer batteryTypeId=Integer.valueOf(request.getParameter("batteryType"));
         String BatteryTypeName = resourceMapper.selectBatteryTypeNameById(batteryTypeId);
         orderEntity.setBatteryType(BatteryTypeName);
@@ -76,7 +83,7 @@ public class ImportIndentController {
         Integer wxStatus=Integer.parseInt(wechatStatus);
         orderEntity.setWechatStatus(wxStatus);
 
-        if(orderService.selectOrderId(request.getParameter("orderId"))==null) {
+        if(orderService.selectOrderId(request.getParameter("orderId"))==null) {//检测是否为空
             result = orderService.importOrder(orderEntity);
 
             //同时向订单转发表中插入订单编号

@@ -47,8 +47,16 @@ public class BatteryService {
         return result;
     }
 
-    public void updateBatteryType(String batteryType, Integer batteryId) {
-        resourceMapper.updateBattery(batteryType, batteryId);
+    public String updateBatteryType(String batteryType, Integer batteryId) {
+        //
+        String result="电池型号修改成功";
+        if (resourceMapper.selectBatteryTypeNameByType(batteryType) == null){
+            resourceMapper.updateBattery(batteryType, batteryId);
+        }else{
+            result="该电池型号已经存在";
+        }
+        return result;
+
     }
 
     public String deleteBatteryType(Integer batteryId) {

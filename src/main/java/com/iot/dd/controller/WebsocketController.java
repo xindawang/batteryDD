@@ -69,6 +69,15 @@ public class WebsocketController {
     }
 
 
+
+    @MessageMapping("/newIndent")
+    public void newIndent(String msg) {
+
+
+        System.out.println(msg);
+        template.convertAndSend("/topic/cus_newIndent", msg);//
+    }
+
     /*将具体的订单对应的客户的地理位置信息传给技师
     * 路经："/topic/dis_tech" + 技师编号+ 订单编号
     * 期望的数据格式：["latitude":纬度

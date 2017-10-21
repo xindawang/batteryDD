@@ -4,12 +4,16 @@ $(function () {
         var batterType = $("#batteryType").val()
         var stock = $("#batteryStock").val()
         var add = true
-        if (cityCode === null || cityCode === 0) {
+        if (cityCode == null || cityCode == 0) {
             window.confirm("请选择城市")
             add = false
         }
         if (stock == "") {
             window.confirm("库存不能为空")
+            add = false
+        }
+        if(parseInt(stock) == NaN){
+            window.confirm("请输入数字")
             add = false
         }
         if (isNaN(Number(stock))) {

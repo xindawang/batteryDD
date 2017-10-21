@@ -1,7 +1,7 @@
 /**
  * Created by huanglin on 2017/8/22.
  */
-
+var stompClient
 $(function () {
 
     var strMsg = window.location.search.substring(1)
@@ -14,6 +14,15 @@ $(function () {
             code=nodeDn[1]
 
     }
+
+    var socket = new SockJS('/endpointDCDD');
+    stompClient = Stomp.over(socket);
+
+    stompClient.connect({}, function () {
+            //window.confirm("开始连接")
+    })
+
+
     $("#main-btn").click(function () {
 
         $.ajax({
@@ -30,8 +39,14 @@ $(function () {
                     dealNoIndent()
                 }else
                 {
+                    //申请成功后，提示客服及时进行订单派送
+                        //window.confirm('开始连接')
+                    var msg = JSON.stringify({'orderId': data})
+                    stompClient.send("/app/newIndent", {}, msg)
+
                     var dispatchProgressUrl=basicUrl+"/templates/wxDispatchProgress.html?orderId="+data
-                    window.location.replace(dispatchProgressUrl)
+
+                    window.location.href=dispatchProgressUrl
                 }
 
             }

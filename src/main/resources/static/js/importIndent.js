@@ -142,6 +142,22 @@ $(function () {
             }
 
         })
+        if(isNaN(Number($("#cellphone").val()))){
+            window.confirm("移动电话存在非法字符，请检查")
+            submit=false
+        }
+
+        if(parseInt($("#telephone").val())==NaN){
+            window.confirm("固定电话存在非法字符，请检查")
+            submit=false
+        }
+        var re =  /^[0-9a-zA-Z]*$/g;  //判断字符串是否为数字和字母组合     //判断正整数 /^[1-9]+[0-9]*]*$/
+        if (!re.test($("#orderId").val()))
+        {
+            window.confirm("订单编号中存在非法字符，请检查")
+            submit=false
+        }
+
         if(submit) {
             $.ajax({
                 type: "POST",
