@@ -75,6 +75,10 @@ $(function () {
         var password = $("#password").val();
         var address=$("#address").val();
         var idNumber=$("#idNumber").val();
+
+        var cellphone= $("#cellphone").val();
+        var telephone=$("#telephone").val();
+
         if (tID == null || tID == "") {
             alert("编号不能为空！！！");
             return;
@@ -97,6 +101,14 @@ $(function () {
         }
         if (address == null || address == "") {
             alert("请设置地址！！！");
+            return;
+        }
+        if(cellphone!=""&&isNaN(cellphone)){
+            alert("手机号码应该是0~9之间的字符！！！");
+            return;
+        }
+        if(telephone!=""&&isNaN(telephone)){
+            alert("电话号码应该是0~9之间的字符！！！");
             return;
         }
         $.ajax({

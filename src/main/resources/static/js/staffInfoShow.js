@@ -34,7 +34,7 @@ $(function () {
             {
                 title: '姓名',
                 data: 'name',
-                width: '30px'
+                width: '60px'
             },
             {
                 title: '手机号码',

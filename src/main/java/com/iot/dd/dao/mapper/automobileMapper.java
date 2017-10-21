@@ -66,6 +66,12 @@ public interface automobileMapper {
     @Delete("delete from automobile_battery where automobile_type_id=#{automobileTypeId} and battery_type_id=#{batteryTypeId}")
     Boolean deleteAutomobileBatteryItem(@Param("automobileTypeId") int automobileTypeId, @Param("batteryTypeId") String batteryTypeId);
 
+    @Delete("delete from automobile_battery where automobile_type_id=#{automobileTypeId}")
+    Boolean deleteAutoBatteryByAutoId(@Param("automobileTypeId") int automobileTypeId);
+
+    @Delete("delete from automobile_battery where battery_type_id=#{batteryTypeId}")
+    Boolean deleteAutoBatteryByBatteryId(@Param("batteryTypeId") String batteryTypeId);
+
     @Delete("delete from automobile_brand where id=#{brandId}")
     Boolean deleteAutomobileBrand(int brandId);
 

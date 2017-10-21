@@ -178,21 +178,22 @@ public class UserInfoManageController {
 
     }
 
+  // 去除字串中所有的空格 replaceAll("\\s","")
 
     //管理员更新信息
     @RequestMapping(value = "/staffModify", method = RequestMethod.POST)
     public String staffmodify(HttpServletRequest request) {
 
         StaffEntity user = new StaffEntity();
-        String loginName = request.getParameter("loginName");
-        user.setLoginName(request.getParameter("loginName"));
+        String loginName = request.getParameter("loginName").replaceAll("\\s","");
+        user.setLoginName(loginName);
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
-        user.setCellphone(request.getParameter("cellphone"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
-        user.setIdNumber(request.getParameter("idNumber"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
+        user.setEmail(request.getParameter("email").replaceAll("\\s",""));
+        user.setIdNumber(request.getParameter("idNumber").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
         user.setRole(request.getParameter("role"));
 
@@ -224,14 +225,14 @@ public class UserInfoManageController {
 
         AdminEntity user = new AdminEntity();
 
-        user.setLoginName(request.getParameter("loginName"));
+        user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
-        user.setCellphone(request.getParameter("cellphone"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
-        user.setIdNumber(request.getParameter("idNumber"));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
+        user.setEmail(request.getParameter("email").replaceAll("\\s",""));
+        user.setIdNumber(request.getParameter("idNumber").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
         user.setRole(request.getParameter("role"));
 
@@ -257,13 +258,13 @@ public class UserInfoManageController {
 
         CustomerEntity user = new CustomerEntity();
 
-        user.setLoginName(request.getParameter("loginName"));
+        user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
-        user.setCellphone(request.getParameter("cellphone"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
+        user.setEmail(request.getParameter("email").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
         user.setPostcode(request.getParameter("postcode"));
         return usermanageservice.updateOneCustomer(user);
@@ -276,23 +277,23 @@ public class UserInfoManageController {
 
         TechnicianEntity user = new TechnicianEntity();
         String technicianId = request.getParameter("technicianId");
-        user.setTechnicianId(request.getParameter("technicianId"));
-        user.setLoginName(request.getParameter("loginName"));
+        user.setTechnicianId(request.getParameter("technicianId").replaceAll("\\s",""));
+        user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
 
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
-        user.setCellphone(request.getParameter("cellphone"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
-        user.setIdNumber(request.getParameter("idNumber"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
+        user.setEmail(request.getParameter("email").replaceAll("\\s",""));
+        user.setIdNumber(request.getParameter("idNumber").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
-        user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+        user.setLicensePlateNumber(request.getParameter("licensePlateNumber").replaceAll("\\s",""));
         user.setCityCode(request.getParameter("cityCode"));
 
 
         String idNumber = request.getParameter("idNumber");
-        TechnicianEntity tech = usermanageservice.findTechnicianOne(request.getParameter("loginName"));
+        TechnicianEntity tech = usermanageservice.findTechnicianOne(request.getParameter("loginName").replaceAll("\\s",""));
         if (!tech.getIdNumber().equals(idNumber)) {
             if (idNumber != null && !idNumber.equals("")) {
                 TechnicianEntity tech1 = usermanageservice.checkTechnicianIdNumber(idNumber);
@@ -315,13 +316,13 @@ public class UserInfoManageController {
 
         AdminEntity user = new AdminEntity();
 
-        user.setLoginName(request.getParameter("loginName"));
+        user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
-        user.setCellphone(request.getParameter("cellphone"));
-        user.setTelephone(request.getParameter("telephone"));
-        user.setEmail(request.getParameter("email"));
-        user.setIdNumber(request.getParameter("idNumber"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
+        user.setEmail(request.getParameter("email").replaceAll("\\s",""));
+        user.setIdNumber(request.getParameter("idNumber").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
         user.setRole("admin");
 
@@ -332,7 +333,7 @@ public class UserInfoManageController {
             return "该用户名已被使用！！";
         }
         //身份证号名唯一
-        String idNumber = request.getParameter("idNumber");
+        String idNumber = request.getParameter("idNumber").replaceAll("\\s","");
         if (idNumber != null && !idNumber.equals("")) {
             AdminEntity admin1 = usermanageservice.checkAdminIdNumber(idNumber);
             if (admin1 != null) {
@@ -350,15 +351,15 @@ public class UserInfoManageController {
     public String addStaff(HttpServletRequest request, HttpServletResponse response) {
         StaffEntity user = new StaffEntity();
 
-        String loginName = request.getParameter("loginName");
+        String loginName = request.getParameter("loginName").replaceAll("\\s","");
         user.setLoginName(loginName);
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
-        user.setCellphone(request.getParameter("cellphone"));
-        user.setTelephone(request.getParameter("telephone"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
         user.setEmail(request.getParameter("email"));
-        user.setIdNumber(request.getParameter("idNumber"));
+        user.setIdNumber(request.getParameter("idNumber").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
         user.setRole("客服");
 
@@ -367,9 +368,9 @@ public class UserInfoManageController {
             return "该用户名已被使用！！";
         }
 
-        String idNumber = request.getParameter("idNumber");
+        String idNumber = request.getParameter("idNumber").replaceAll("\\s","");
         if (idNumber != null && !idNumber.equals("")) {
-            StaffEntity staff1 = usermanageservice.checkStaffidNumber(request.getParameter("idNumber"));
+            StaffEntity staff1 = usermanageservice.checkStaffidNumber(idNumber);
             if (staff1 != null) {
                 return "该身份证号已被使用！！";
             }
@@ -385,17 +386,18 @@ public class UserInfoManageController {
     @RequestMapping(value = "/addTechnician", method = RequestMethod.POST)
     public String addTechnician(HttpServletRequest request, HttpServletResponse response) {
 
-        String technicianId = request.getParameter("technicianId");
+        String technicianId = request.getParameter("technicianId").replaceAll("\\s","");
+        String loginName=request.getParameter("loginName").replaceAll("\\s","");
         TechnicianEntity user = new TechnicianEntity();
         user.setTechnicianId(technicianId);
-        user.setLoginName(request.getParameter("loginName"));
+        user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
         user.setName(request.getParameter("name"));
         user.setSex(request.getParameter("sex"));
-        user.setCellphone(request.getParameter("cellphone"));
-        user.setTelephone(request.getParameter("telephone"));
+        user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
         user.setEmail(request.getParameter("email"));
-        user.setIdNumber(request.getParameter("idNumber"));
+        user.setIdNumber(request.getParameter("idNumber").replaceAll("\\s",""));
         user.setAddress(request.getParameter("address"));
         user.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
         user.setIswork("0");
@@ -404,12 +406,12 @@ public class UserInfoManageController {
 
         //用户名唯一
 
-        TechnicianEntity tech = usermanageservice.findTechnicianOne(request.getParameter("loginName"));
+        TechnicianEntity tech = usermanageservice.findTechnicianOne(loginName);
         if (tech != null) {
             return "该用户名已被使用！！";
         }
 
-        String idNumber = request.getParameter("idNumber");
+        String idNumber = request.getParameter("idNumber").replaceAll("\\s","");
         if (idNumber != null && !idNumber.equals("")) {
             TechnicianEntity tech1 = usermanageservice.checkTechnicianIdNumber(idNumber);
             if (tech1 != null) {

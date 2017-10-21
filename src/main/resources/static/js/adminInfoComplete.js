@@ -39,6 +39,9 @@ $(function () {
         var tLoginName = $("#loginName").val();
         var tName = $("#name").val();
         var password = $("#password").val();
+        var cellphone = $("#cellphone").val();
+        var telephone = $("#telephone").val();
+
         if (tLoginName == null || tLoginName == "") {
             alert("登陆名不能为空！！！");
             return;
@@ -49,6 +52,14 @@ $(function () {
         }
         if (password == null || password == "") {
             alert("密码不能为空！！！");
+            return;
+        }
+        if (cellphone != "" && isNaN(cellphone)) {
+            alert("手机号码应该是0~9之间的字符！！！");
+            return;
+        }
+        if (telephone != "" && isNaN(telephone)) {
+            alert("电话号码应该是0~9之间的字符！！！");
             return;
         }
         $.ajax({
@@ -124,7 +135,7 @@ $(function () {
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null)return unescape(r[2]);
+    if (r != null) return unescape(r[2]);
     return null;
 }
 

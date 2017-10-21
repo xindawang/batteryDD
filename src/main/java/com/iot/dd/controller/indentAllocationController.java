@@ -107,7 +107,7 @@ public class indentAllocationController {
                 map.put("licensePlateNumber", order.getLicensePlateNumber());
 
                 //经纬度转码
-               // location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+                // location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
 //                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
@@ -122,6 +122,7 @@ public class indentAllocationController {
                 map.put("customerLongitude", longitude + "");
                 map.put("technicianId", entity.getTechnicianId());
                 map.put("address", order.getAddress());
+                map.put("customerName",order.getCustomerName());
                 mapList.add(map);
             }
             if (order.getStatus() == 2) {
@@ -135,7 +136,7 @@ public class indentAllocationController {
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
 
                 //经纬度转码
-              //  location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+                //  location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
 //                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
@@ -181,9 +182,9 @@ public class indentAllocationController {
                 map1.put("customerCellphone", order.getCustomerCellphone());
                 map1.put("customerTelephone", order.getCustomerTelephone());
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
-
+                map1.put("customerName", order.getCustomerName());
                 //经纬度转码
-              //  JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+                //  JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
                 Float longitude = entity.getCustomerLongitude();
                 Float latitude = entity.getCustomerLatitude();
 //                if (location != null && longitude != null && latitude != null) {
@@ -255,7 +256,7 @@ public class indentAllocationController {
 
         IndentAllocationEntity entity = service.findPosition(orderId);
         //经纬度转码
-       // JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
+        // JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
         Float longitude = entity.getCustomerLongitude();
         Float latitude = entity.getCustomerLatitude();
 //        if (location != null && latitude != null && longitude != null) {

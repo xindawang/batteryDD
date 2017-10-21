@@ -106,7 +106,7 @@ public class AutomobileService {
     public String deleBattery(String brand, String carType, String[] batteryId) {
         AutomobileBrand automobileBrand = autoMapper.findAutomobileOne(brand);
         AutomobileType entity = autoMapper.findAutomobileType(carType, automobileBrand.getId());
-        int count = 0;
+        int count = 0;  //删除该汽车适用的电池记录
         if (batteryId != null) {
             for (int i = 0; i < batteryId.length; i++) {
                 boolean t = autoMapper.deleteAutomobileBatteryItem(entity.getId(), batteryId[i]);

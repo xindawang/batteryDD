@@ -2,7 +2,9 @@ package com.iot.dd.controller;
 
 import com.iot.dd.Tools.JsonTool;
 import com.iot.dd.dao.entity.Indent.IndentEvaluationEntity;
+import com.iot.dd.dao.entity.worker.CheckTokenEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
+import com.iot.dd.dao.mapper.CheckTokenMapper;
 import com.iot.dd.service.UserManageService;
 import com.iot.dd.service.indentAllocationService;
 import com.iot.dd.service.indentEvaluationService;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.UnsupportedEncodingException;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by admin on 2017/9/8.
@@ -30,9 +34,30 @@ public class TechnicianController {
     @Autowired
     private indentEvaluationService evaluation;
 
+    @Autowired
+    private CheckTokenMapper checkMapper;
+
     /*
     * android
     * */
+
+    //验证是否在多台设备登录
+    @RequestMapping(value = "/onOneCellphone", method = RequestMethod.GET)
+    public String checkTechnician(HttpServletRequest request, HttpServletResponse response) {
+        String loginName = request.getParameter("loginName");
+        String token=request.getParameter("token");
+        CheckTokenEntity entity=new CheckTokenEntity();
+        entity=checkMapper.findOne(loginName);
+        Map<String,String>map=new HashMap<>();
+        if(entity.getToken().equals(token)){
+            map.put("mask","OK");
+        }
+        else {
+            map.put("mask","reLogin");
+        }
+        return JsonTool.objectToJson(map);
+    }
+
 
     @RequestMapping(value = "/findOneTechnician", method = RequestMethod.GET)
     public String findeOneTechnician(HttpServletRequest request, HttpServletResponse response) {
@@ -169,12 +194,16 @@ public class TechnicianController {
         String technicianId = request.getParameter("technicianId");
         String cityCode = request.getParameter("cityCode");
         String address = request.getParameter("address");
+
+        Map<String, String> map = new HashMap<>();
         boolean t = usermanageservice.updateAddress(technicianId, cityCode, address);
         if (t) {
-            return "OK";
+            map.put("mask", "OK");
         } else {
-            return "ERROR";
+            map.put("mask", "ERROR");
         }
+
+        return JsonTool.objectToJson(map);
     }
 
 

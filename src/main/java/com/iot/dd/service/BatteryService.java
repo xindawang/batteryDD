@@ -3,6 +3,7 @@ package com.iot.dd.service;
 import com.iot.dd.dao.entity.resource.BatteryTypeEntity;
 import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.dao.mapper.StockMapper;
+import com.iot.dd.dao.mapper.automobileMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +23,9 @@ public class BatteryService {
 
     @Autowired
     private StockMapper stockMapper;
+
+    @Autowired
+    private automobileMapper autoMapper;
 
     public List<BatteryTypeEntity> getAllBatteryType() {
         return resourceMapper.selectAllBatteryType();
@@ -52,6 +56,7 @@ public class BatteryService {
             return "汽车型号不存在，请刷新试试。";
         } else {
             stockMapper.deleteAllStockByBatteryId(batteryId);//删除电池型号，同时删除该型号下的库存
+            autoMapper.deleteAutoBatteryByBatteryId(batteryId+"");//删除适用该型号电池的汽车记录（Automobile_Battery 表，注意不是删除汽车车型）
             resourceMapper.deleteBattery(batteryId);
 
             return "汽车型号成功删除";

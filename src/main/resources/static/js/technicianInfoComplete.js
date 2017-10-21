@@ -39,6 +39,10 @@ $(function () {
         var idNumber = $("#idNumber").val();
         var licensePlateNumber = $("#licensePlateNumber").val();
         var address = $("#address").val();
+
+        var cellphone= $("#cellphone").val();
+        var telephone=$("#telephone").val();
+
         if (tID == null || tID == "") {
             alert("编号不能为空！！！");
             return;
@@ -65,6 +69,14 @@ $(function () {
         }
         if (address == null || address == "") {
             alert("地址不能为空不能为空！！！");
+            return;
+        }
+        if(cellphone!=""&&isNaN(cellphone)){
+            alert("手机号码应该是0~9之间的字符！！！");
+            return;
+        }
+        if(telephone!=""&&isNaN(telephone)){
+            alert("电话号码应该是0~9之间的字符！！！");
             return;
         }
         $.ajax({

@@ -1,12 +1,20 @@
 package com.iot.dd.service;
 
+import com.iot.dd.Tools.JsonTool;
+import com.iot.dd.dao.entity.worker.CheckTokenEntity;
 import com.iot.dd.dao.entity.worker.TechnicianEntity;
+import com.iot.dd.dao.mapper.CheckTokenMapper;
 import com.iot.dd.dao.mapper.ResourceMapper;
 import com.iot.dd.dao.mapper.UserMapper;
 import com.iot.dd.dao.entity.worker.StaffEntity;
 import com.iot.dd.dao.entity.worker.AdminEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Random;
 
 /**
  * Created by huanglin on 2017/7/13.
@@ -16,6 +24,9 @@ public class UserService {
 
     @Autowired
     private UserMapper userMapper;
+
+    @Autowired
+    private CheckTokenMapper ckeckMapper;
 
 
     //管理员注册
@@ -81,12 +92,33 @@ public class UserService {
     //技师登陆
     public String technicianLogin(String name, String password) {
         TechnicianEntity dUser = userMapper.selectTechnician(name);
+        Map<String, String> map = new HashMap<>();
         if (dUser == null) {
-            return "该用户不存在！";
+            map.put("mask", "该用户不存在！！！");
+            return JsonTool.objectToJson(map);
         } else if (!dUser.getPassword().equals(password)) {
-            return "密码错误！";
+            map.put("mask", "密码错误！！！");
+            return JsonTool.objectToJson(map);
         } else {
-            return "OK,"+dUser.getTechnicianId();
+            String token = new Random().nextInt(99999) + "";//随机生成五位数作为token,保证同一时间只有一台设备能使用app请求数据
+            map.put("mask", "OK");
+            map.put("technicianId", dUser.getTechnicianId());
+            map.put("token", token);
+            //token保存数据库
+            CheckTokenEntity entity = new CheckTokenEntity();
+            entity = ckeckMapper.findOne(name);
+            if (entity != null) {
+                entity.setToken(token);
+                entity.setTime(new Date());
+                ckeckMapper.update(entity);
+            } else {
+                CheckTokenEntity entity1 = new CheckTokenEntity();
+                entity1.setLoginName(name);
+                entity1.setToken(token);
+                entity1.setTime(new Date());
+                ckeckMapper.addOneRecord(entity1);
+            }
+            return JsonTool.objectToJson(map);
         }
 
     }
@@ -136,7 +168,7 @@ public class UserService {
         return userMapper.addStaff(entity);
     }
 
-    public  Boolean addAdmin(AdminEntity entity){
+    public Boolean addAdmin(AdminEntity entity) {
         return userMapper.addAdmin(entity);
     }
 
