@@ -164,7 +164,7 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
     @Select("select order_id from indent where status=#{status} and (customer_cellphone=#{telephone} or customer_telephone=#{telephone})")
     String selectOrderIdbyPhone(@Param("telephone") String telephone, @Param("status") Integer status);
 
-    @Select("select order_id as orderId,status ,create_time as createTime, finish_time as finishTime ,battery_type as batteryType from indent where OPEN_ID=#{openId}")
+    @Select("select order_id as orderId,status ,create_time as createTime, finish_time as finishTime ,battery_type as batteryType from indent where OPEN_ID=#{openId} order by indent.create_time desc")
     List<OrderEntity> selectOrderIdByOpenId(String openId);
 
 

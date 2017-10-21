@@ -85,7 +85,9 @@ public class BatteryAmountController {
         String batteryStock = request.getParameter("batteryStock");
         Integer batteryInventory = null;
         if (batteryStock != null) {
-            batteryInventory = Integer.parseInt(batteryStock);
+
+            Float batteryInventoryF = Float.parseFloat(batteryStock);
+            batteryInventory= Math.round (batteryInventoryF);
         }
 
 

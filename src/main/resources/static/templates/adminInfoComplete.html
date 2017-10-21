@@ -48,7 +48,7 @@
             <div class="layui-inline required">
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
-                    <input id="name" name="name" type="text" class="layui-input" maxlength="20"/>
+                    <input id="name" name="name" type="text" class="layui-input" maxlength="10"/>
                 </div>
             </div>
             <div class="layui-inline unrequired">
@@ -82,13 +82,13 @@
             <div class="layui-inline unrequired">
                 <label class="layui-form-label">邮箱</label>
                 <div class="layui-input-inline">
-                    <input id="email" name="email" type="text" class="layui-input"/>
+                    <input id="email" name="email" type="email" maxlength="20" class="layui-input"/>
                 </div>
             </div>
             <div class="layui-inline unrequired">
                 <label class="layui-form-label">身份证号</label>
                 <div class="layui-input-inline">
-                    <input  id="idNumber" name="idNumber" type="text" class="layui-input" maxlength="11" />
+                    <input  id="idNumber" name="idNumber" type="text" class="layui-input" maxlength="18" />
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
             </div>
             <div id="address2" style="display: none">
                 <div class="layui-inline unrequired">
-                    <label class="layui-form-label">地址</label>
+                    <label class="layui-form-label">省份</label>
                     <div class="layui-input-inline">
                         <select id="province" name="province" style="display:  block  " class="layui-input"></select>
                     </div>
@@ -114,7 +114,6 @@
                         <select id="city" name="city" style="display: block  " class="layui-input"></select>
                     </div>
                 </div>
-
 
             </div>
         </div>
@@ -129,7 +128,7 @@
                 <div class="layui-inline unrequired">
                     <label class="layui-form-label">详细地址</label>
                     <div class="layui-input-inline">
-                        <input type="text" id="detailAddress" name="detailAddress" class="layui-input" placeholder="详细地址" maxlength="200"/>
+                        <input type="text" id="detailAddress" name="detailAddress" class="layui-input" placeholder="详细地址" maxlength="100"/>
                     </div>
                 </div>
                 <div class="layui-inline ">

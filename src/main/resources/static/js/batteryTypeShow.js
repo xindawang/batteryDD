@@ -78,7 +78,7 @@ function deleteInfo(obj) {
     var batteryBrand = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(2)').text();
     var batteryType = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(3)').text();
     var batteryId = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text();
-    dropBatteryType(batteryBrand, batteryType, batteryId)
+    dropBatteryType(batteryBrand, batteryType, batteryId,tr)
 };
 
 
@@ -104,7 +104,7 @@ function addBatteryType() {
         title: "添加电池型号与品牌",
         dialog: {
             msg: "<form>电池品牌<input type='text' maxlength='8' id='batteryBrandName' ><br/>" +
-            "电池型号<input type='text'maxlength='12' id='type' ></form>",
+            "电池型号<input type='text' maxlength='12' id='type' ></form>",
             btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
             type: 2,   //1:对钩   2：问号  3：叹号
             btn: ["确认添加", "取消"],  //自定义按钮
@@ -148,7 +148,7 @@ function editBatteryType(batteryBrand, batteryType, batteryId) {
     })
 }
 
-function dropBatteryType(batteryBrand, batteryType, batteryId) {
+function dropBatteryType(batteryBrand, batteryType, batteryId,tr) {
     $.mbox({
         area: ["300px", "auto"], //弹框大小
         border: [0, .5, "#666"],
@@ -161,7 +161,7 @@ function dropBatteryType(batteryBrand, batteryType, batteryId) {
             btn: ["确认删除", "取消"],  //自定义按钮
             yes: function () {  //点击左侧按钮：成功
 
-                deleteBatteryType(batteryId)
+                deleteBatteryType(batteryId,batteryBrand,tr)
             },
             no: function () {
 
@@ -199,15 +199,17 @@ function updateBatteryType(type, id) {
     })
 }
 
-function deleteBatteryType(id) {
+function deleteBatteryType(id,brand,tr) {
     $.ajax({
         url: "/deleteBatteryType",
         type: "POST",
-        data: {"batteryId": id},
+        data: {"batteryId": id,"batteryBrand":brand},
         dataType: "json",
         success: function (data) {
             confirmMsg(data)
-            updateTable()
+            //updateTable()
+
+            tr.parentNode.removeChild(tr);//在表格中删除这一行
         }
     })
 }
