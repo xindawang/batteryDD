@@ -57,8 +57,6 @@ public class TechnicianController {
         }
         return JsonTool.objectToJson(map);
     }
-
-
     @RequestMapping(value = "/findOneTechnician", method = RequestMethod.GET)
     public String findeOneTechnician(HttpServletRequest request, HttpServletResponse response) {
         String loginName = request.getParameter("loginName");
@@ -195,15 +193,13 @@ public class TechnicianController {
         String cityCode = request.getParameter("cityCode");
         String address = request.getParameter("address");
 
-        Map<String, String> map = new HashMap<>();
+
         boolean t = usermanageservice.updateAddress(technicianId, cityCode, address);
         if (t) {
-            map.put("mask", "OK");
+            return  "OK";
         } else {
-            map.put("mask", "ERROR");
+            return "ERROR";
         }
-
-        return JsonTool.objectToJson(map);
     }
 
 

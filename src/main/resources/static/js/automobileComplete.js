@@ -33,6 +33,7 @@ $(function () {
             for (var i = 0; i < data.length; i++) {
                 var id = data[i].id;
                 var TypeName = data[i].type;
+                TypeName = TypeName.replace(/\s/g, "");
                 var k = i + 1;
                 $('#show').append(k + '&nbsp;&nbsp;' + TypeName + '<p/>');
                 $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<p/>');
@@ -84,13 +85,12 @@ $(function () {
     //添加汽车适用的电池
     $("#addBattery").click(function () {
         var type = $("#batteryType option:selected").text();
-
         $.ajax({
                 type: "POST",
                 url: '/addBattery',
                 data: {
-                    brand: $("#brand").val(),
-                    carType: $("#type").val(),
+                    brand: $("#brand").val().replace(/\s/g, ""),
+                    carType: $("#type").val().replace(/\s/g, ""),
                     batteryId: $("#batteryType option:selected").val(),
                 },
                 success: function (data) {
@@ -115,6 +115,7 @@ $(function () {
 
     //删除汽车适用电池，显示复选框
     $("#deleteBattery").click(function () {
+
         $("#show1").text("");
         $.ajax({ //重新加载数据
             type: "POST",
@@ -129,8 +130,9 @@ $(function () {
                 for (var i = 0; i < data.length; i++) {
                     var id = data[i].id;
                     var TypeName = data[i].type;
+                    TypeName = TypeName.replace(/\s/g, "");//去空格
                     var k = i + 1;
-                    $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<p/>');
+                    $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<input id=' + id + ' type="text"  style="display: none"  value=' + TypeName + '>' + '<p/>');
                 }
             }
         });
@@ -163,40 +165,58 @@ $(function () {
     });
 
     $("#commit").click(function () {
-        $.ajax({
-                type: "POST",
-                url: '/deleteBattery',
-                data: $('#form').serialize(),
-                success: function (data) {
-                    alert(data);
-                    $("#BatteryArea").show();
-                    $("#BatteryArea1").hide();
-                    //显示删除后汽车使用的电池
-                    $.ajax({//重新加载数据
-                        type: "POST",
-                        url: "/BatteryShow",
-                        data: {
-                            brand: brand,
-                            carType: carType,
-                        },
-                        dataType: "json",
-                        success: function (data) {
-                            $("#show").empty()
-                            for (var i = 0; i < data.length; i++) {
-                                var id = data[i].id;
-                                var TypeName = data[i].type;
-                                var k = i + 1;
-                                $('#show').append(k + '&nbsp;&nbsp;' + TypeName + '<p/>');
-                                $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<p/>');
-                            }
-                        }
-                    });
 
+        var ss = "";
+        var battery = document.getElementsByName('battery');
+        var n = 0;//计算复选框选中的数目
+        for (var i = 0; i < battery.length; i++) {
+            if (battery[i].checked) {
+                n = n + 1;
+                ss += document.getElementById(battery[i].value).value ; //如果选中，将value添加到变量s中
+                if(i<battery.length-1){
+                    ss+= ','
                 }
             }
-        );
+        }
+        if (n <= 0) {
+            alert("请选择要删除的电池！")
+            return;
+        }
+        if (window.confirm("确定删除：" + ss + " 电池吗？")) {
+            $.ajax({
+                    type: "POST",
+                    url: '/deleteBattery',
+                    data: $('#form').serialize(),
+                    success: function (data) {
+                        alert(data);
+                        $("#BatteryArea").show();
+                        $("#BatteryArea1").hide();
+                        //显示删除后汽车使用的电池
+                        $.ajax({//重新加载数据
+                            type: "POST",
+                            url: "/BatteryShow",
+                            data: {
+                                brand: brand,
+                                carType: carType,
+                            },
+                            dataType: "json",
+                            success: function (data) {
+                                $("#show").empty()
+                                for (var i = 0; i < data.length; i++) {
+                                    var id = data[i].id;
+                                    var TypeName = data[i].type;
+                                    TypeName = TypeName.replace(/\s/g, "");
+                                    var k = i + 1;
+                                    $('#show').append(k + '&nbsp;&nbsp;' + TypeName + '<p/>');
+                                    $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<p/>');
+                                }
+                            }
+                        });
 
-
+                    }
+                }
+            );
+        }
     });
 
 
@@ -213,7 +233,7 @@ $(function () {
                 url: '/carTypeModify',
                 data: {
                     brand: $("#brand").val(),
-                    carType: $("#type").val(),
+                    carType: $("#type").val().replace(/\s/g, ""),
                     oldcarType: $("#oldtype").val()
                 },
                 success: function (data) {

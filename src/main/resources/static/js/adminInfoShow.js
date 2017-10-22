@@ -91,13 +91,12 @@ function getRowObj(obj) {
 
 //删除一个记录后，再返回剩下的所有记录
 function deleteInfo(obj) {
-
-    if (window.confirm("确定删除该用户吗？")) {
-        var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
-        var tr = getRowObj(obj);
-        var m = tr.rowIndex;
-        m = m - 1;
-        var loginName = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text();
+    var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
+    var tr = getRowObj(obj);
+    var m = tr.rowIndex;
+    m = m - 1;
+    var loginName = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text();
+    if (window.confirm("确定删除用户名为：" + loginName + " 的用户吗？")) {
         $.ajax({
             type: "post",
             url: "/delete",
@@ -122,21 +121,8 @@ function editInfo(obj) {
     var tr = getRowObj(obj);
     var m = tr.rowIndex;
     m = m - 1;
-    var loginName = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text();
-    if (personType == 'admin') {
-        window.location.href = "adminInfoComplete.html?loginName=" + loginName;
-    }
-    if (personType == 'staff') {
-        window.location.href = "staffInfoComplete.html?loginName=" + loginName;
+    var loginName = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text()+"";
 
-    }
-    if (personType == 'technician') {
-        window.location.href = "technicianInfoComplete.html?loginName=" + loginName;
-
-    }
-    if (personType == 'customer') {
-        window.location.href = "customerInfoComplete.html?loginName=" + loginName;
-
-    }
+    window.location.href = "adminInfoComplete.html?loginName=" + encodeURI(loginName);
 
 }

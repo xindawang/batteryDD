@@ -188,7 +188,7 @@ public class UserInfoManageController {
         String loginName = request.getParameter("loginName").replaceAll("\\s","");
         user.setLoginName(loginName);
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
@@ -205,7 +205,7 @@ public class UserInfoManageController {
 //            user.setOrganizationId(Integer.parseInt(request.getParameter("organizationId")));
 //        }
 
-        String idNumber = request.getParameter("idNumber");
+        String idNumber = request.getParameter("idNumber").replaceAll("\\s","");
         StaffEntity staff = usermanageservice.findStaffOne(loginName);
         if(!staff.getIdNumber().equals(idNumber)){
             if (idNumber != null && !idNumber.equals("")) {
@@ -227,7 +227,7 @@ public class UserInfoManageController {
 
         user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
@@ -237,7 +237,7 @@ public class UserInfoManageController {
         user.setRole(request.getParameter("role"));
 
         //身份证号名唯一
-        String idNumber = request.getParameter("idNumber");
+        String idNumber = request.getParameter("idNumber").replaceAll("\\s","");
 
         AdminEntity admin = usermanageservice.findAdminOne(request.getParameter("loginName"));
         if (!admin.getIdNumber().equals(idNumber)) {
@@ -260,7 +260,7 @@ public class UserInfoManageController {
 
         user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
@@ -276,12 +276,12 @@ public class UserInfoManageController {
     public String technicianmodify(HttpServletRequest request) {
 
         TechnicianEntity user = new TechnicianEntity();
-        String technicianId = request.getParameter("technicianId");
+        String technicianId = request.getParameter("technicianId").replaceAll("\\s","");
         user.setTechnicianId(request.getParameter("technicianId").replaceAll("\\s",""));
         user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
 
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
@@ -292,7 +292,7 @@ public class UserInfoManageController {
         user.setCityCode(request.getParameter("cityCode"));
 
 
-        String idNumber = request.getParameter("idNumber");
+        String idNumber = request.getParameter("idNumber").replaceAll("\\s","");
         TechnicianEntity tech = usermanageservice.findTechnicianOne(request.getParameter("loginName").replaceAll("\\s",""));
         if (!tech.getIdNumber().equals(idNumber)) {
             if (idNumber != null && !idNumber.equals("")) {
@@ -318,7 +318,7 @@ public class UserInfoManageController {
 
         user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
         user.setEmail(request.getParameter("email").replaceAll("\\s",""));
@@ -327,7 +327,7 @@ public class UserInfoManageController {
         user.setRole("admin");
 
         //用户名唯一
-        String loginName = request.getParameter("loginName");
+        String loginName = request.getParameter("loginName").replaceAll("\\s","");
         AdminEntity admin = usermanageservice.findAdminOne(loginName);
         if (admin != null) {
             return "该用户名已被使用！！";
@@ -354,7 +354,7 @@ public class UserInfoManageController {
         String loginName = request.getParameter("loginName").replaceAll("\\s","");
         user.setLoginName(loginName);
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));
@@ -392,7 +392,7 @@ public class UserInfoManageController {
         user.setTechnicianId(technicianId);
         user.setLoginName(request.getParameter("loginName").replaceAll("\\s",""));
         user.setPassword(request.getParameter("password"));
-        user.setName(request.getParameter("name"));
+        user.setName(request.getParameter("name").replaceAll("\\s",""));
         user.setSex(request.getParameter("sex"));
         user.setCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
         user.setTelephone(request.getParameter("telephone").replaceAll("\\s",""));

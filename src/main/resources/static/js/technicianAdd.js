@@ -27,18 +27,30 @@ $(function () {
 
     $("#finish").click(function () {
 
-        var ss =  $("#detailAddress").val();
-
+        var ss ="";
         var province = $("#province option:selected").text();
-        var city = $("#city option:selected").text();
         var code=$("#city option:selected").val();
-        var area= $("#area option:selected").text();
+        var cityName = $("#city option:selected").text();
+        var areaName = $("#area option:selected").text();
 
-        if (province=="---请选择--"||city=="---请选择--"||area=="---请选择--") {
-            alert("请设置地址！！！");
-           return;
+        if (province != "---请选择--") {
+            ss += province;
         }
-        ss = province+ city+area+$("#detailAddress").val();
+        else {
+            alert("请选择省份！");
+            return;
+        }
+        if (cityName != "---请选择--") {
+            ss += cityName;
+        }
+        else {
+            alert("请选择城市 ！");
+            return;
+        }
+        if (areaName != "---请选择--") {
+            ss += areaName;
+        }
+        ss += $("#detailAddress").val();
         $("#address").val(ss);
         $("#cityCode").val(code);
 
@@ -95,6 +107,14 @@ $(function () {
             alert("密码不能为空！！！");
             return;
         }
+        if (password.length < 6) {
+            alert("请输入6位~16位（含）字符组成的密码！！！");
+            return;
+        }
+        if(!numNndChar(password)) {
+            alert("请输入由数字或字母组成的密码！！！");
+            return;
+        }
         if (idNumber == null || idNumber == "") {
             alert("身份证号不能为空！！！");
             return;
@@ -103,13 +123,27 @@ $(function () {
             alert("请设置地址！！！");
             return;
         }
-        if(cellphone!=""&&isNaN(cellphone)){
+        if (cellphone == null || cellphone == "") {
+            alert("请输入手机号");
+            return;
+        }
+        if (cellphone.length < 11) {
+            alert("手机号码应该是11个数字字符！！！");
+            return;
+        }
+        if (!isNum(cellphone)) {
             alert("手机号码应该是0~9之间的字符！！！");
             return;
         }
-        if(telephone!=""&&isNaN(telephone)){
-            alert("电话号码应该是0~9之间的字符！！！");
-            return;
+
+        if (telephone != null && telephone != "") {
+            if (telephone.length < 11) {
+                alert("电话号码应该是11个数字字符！！！");
+            }
+            if (!isNum(telephone)) {
+                alert("电话号码应该是0~9之间的字符！！！");
+                return;
+            }
         }
         $.ajax({
                 type: "POST",
@@ -131,3 +165,25 @@ $(function () {
     })
 
 });
+
+function numNndChar(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+            if (str.charAt(i) < 'a' || str.charAt(i) > 'z') {
+                if (str.charAt(i) < 'A' || str.charAt(i) > 'Z') {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+function isNum(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+            return false;
+        }
+    }
+    return true;
+}

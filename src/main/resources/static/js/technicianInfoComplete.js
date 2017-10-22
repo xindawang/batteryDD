@@ -4,12 +4,12 @@
 
 $(function () {
     //显示初始信息
-    var userName = GetQueryString('loginName');
+    var userName = decodeURI(GetQueryString('loginName'));
     $.ajax({
-        type: "post",
+        type: "POST",
         url: "/findOneTechnician",
         data: {
-            loginName: userName,
+            "loginName": userName,
         },
         dataType: "json",
         success: function (data) {
@@ -23,6 +23,7 @@ $(function () {
             $("#email").val(data.email);
             $("#idNumber").val(data.idNumber);
             $("#address").val(data.address);
+            $("#cityCode").val(data.cityCode)
             $("#licensePlateNumber").val(data.licensePlateNumber);
             // $("#organizationId").val(data.organizationId);
 
@@ -40,8 +41,8 @@ $(function () {
         var licensePlateNumber = $("#licensePlateNumber").val();
         var address = $("#address").val();
 
-        var cellphone= $("#cellphone").val();
-        var telephone=$("#telephone").val();
+        var cellphone = $("#cellphone").val();
+        var telephone = $("#telephone").val();
 
         if (tID == null || tID == "") {
             alert("编号不能为空！！！");
@@ -59,6 +60,15 @@ $(function () {
             alert("密码不能为空！！！");
             return;
         }
+        if (password.length < 6) {
+            alert("请输入6位~16位（含）字符组成的密码！！！");
+            return;
+        }
+        if (!numNndChar(password)) {
+            alert("请输入由数字或字母组成的密码！！！");
+            return;
+        }
+
         if (idNumber == null || idNumber == "") {
             alert("身份证号不能为空！！！");
             return;
@@ -71,13 +81,28 @@ $(function () {
             alert("地址不能为空不能为空！！！");
             return;
         }
-        if(cellphone!=""&&isNaN(cellphone)){
+        if (cellphone == null || cellphone == "") {
+            alert("请输入手机号");
+            return;
+        }
+        if (cellphone.length < 11) {
+            alert("手机号码应该是11个数字字符！！！");
+            return;
+        }
+        if (!isNum(cellphone)) {
             alert("手机号码应该是0~9之间的字符！！！");
             return;
         }
-        if(telephone!=""&&isNaN(telephone)){
-            alert("电话号码应该是0~9之间的字符！！！");
-            return;
+
+        if (telephone != null && telephone != "") {
+            if (telephone.length < 11) {
+                alert("电话号码应该是11个数字字符！！！");
+                return;
+            }
+            if (!isNum(telephone)) {
+                alert("电话号码应该是0~9之间的字符！！！");
+                return;
+            }
         }
         $.ajax({
                 type: "POST",
@@ -101,24 +126,33 @@ $(function () {
 
     $("#finish").click(function () {
 
-        var ss = $("#province option:selected").text() + $("#city option:selected").text() +
-            $("#area option:selected").text() + $("#detailAddress").val();
-
-        var provinceCode = $("#province option:selected").val();
+        var province = $("#province option:selected").text();
         var citycode = $("#city option:selected").val();
-        var areacode = $("#area option:selected").val();
-        if (provinceCode == '0') {
+        var cityName = $("#city option:selected").text();
+        var areaName = $("#area option:selected").text();
+
+        var ss = "";
+        if (province != "---请选择--") {
+            ss += province;
+        }
+        else {
             alert("请选择省份！");
             return;
         }
-        if (citycode == "0") {
+        if (cityName != "---请选择--") {
+            ss += cityName;
+        }
+        else {
             alert("请选择城市 ！");
             return;
         }
-        if (areacode == "0") {
-            alert("请选择市区/县 ！");
-            return;
+        if (areaName != "---请选择--") {
+            ss += areaName;
         }
+
+        ss += $("#detailAddress").val();
+
+
         $("#cityCode").val(citycode);
         $("#address").val(ss);
         $("#address2").hide();
@@ -152,6 +186,28 @@ $(function () {
 function GetQueryString(name) {
     var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
     var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
+    if (r != null) return r[2];
     return null;
+}
+
+function numNndChar(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+            if (str.charAt(i) < 'a' || str.charAt(i) > 'z') {
+                if (str.charAt(i) < 'A' || str.charAt(i) > 'Z') {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+function isNum(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+            return false;
+        }
+    }
+    return true;
 }

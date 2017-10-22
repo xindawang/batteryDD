@@ -60,8 +60,8 @@ function AddMsg() {
             type: 1,   //1:对钩   2：问号  3：叹号
             btn: ["确定","取消"],  //自定义按钮
             yes: function () {  //点击左侧按钮：成功
-                var cBrand = $("#carBrand").val();
-                var cType = $("#carType").val();
+                var cBrand = $("#carBrand").val().replace(/\s/g, "");
+                var cType = $("#carType").val().replace(/\s/g, "");
                 submit(cBrand, cType);
             },
             no:function () {
@@ -112,13 +112,13 @@ function getRowObj(obj) {
 
 //删除一个记录后，再返回剩下的所有记录
 function deleteInfo(obj) {
-    if (window.confirm("确定删除项信息吗？")) {
-        var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
-        var tr = getRowObj(obj);
-        var m = tr.rowIndex;
-        m = m - 1;
-        var brand = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text();
-        var CarType = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(2)').text();
+    var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
+    var tr = getRowObj(obj);
+    var m = tr.rowIndex;
+    m = m - 1;
+    var brand = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(1)').text();
+    var CarType = $("#tb>tbody").find('tr:eq(' + m + ') td:eq(2)').text();
+    if (window.confirm("确定删除:"+brand+CarType+" 这个车型吗？")) {
         $.ajax({
             type: "post",
             url: "/automobileDelete",

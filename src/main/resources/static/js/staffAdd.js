@@ -11,13 +11,30 @@ $(function () {
 
     $("#finish").click(function () {
 
-        var ss = $("#province option:selected").text() + $("#city option:selected").text() +
-            $("#area option:selected").text() + $("#detailAddress").val();
-
         var province = $("#province option:selected").text();
-        if (province != "---请选择---") {
-            $("#address").val(ss);
+        var cityName = $("#city option:selected").text();
+        var areaName = $("#area option:selected").text();
+
+        var ss = "";
+        if (province != "---请选择--") {
+            ss += province;
         }
+        else {
+            alert("请选择省份！");
+            return;
+        }
+        if (cityName != "---请选择--") {
+            ss += cityName;
+        }
+        else {
+            alert("请选择城市 ！");
+            return;
+        }
+        if (areaName != "---请选择--") {
+            ss += areaName;
+        }
+        ss += $("#detailAddress").val();
+        $("#address").val(ss);
         $("#address2").hide();
         $("#address3").hide();
         $("#address1").show();
@@ -47,8 +64,8 @@ $(function () {
         var tLoginName = $("#loginName").val();
         var tName = $("#name").val();
         var password = $("#password").val();
-        var cellphone= $("#cellphone").val();
-        var telephone=$("#telephone").val();
+        var cellphone = $("#cellphone").val();
+        var telephone = $("#telephone").val();
 
         if (tLoginName == null || tLoginName == "") {
             alert("登陆名不能为空！！！");
@@ -62,13 +79,35 @@ $(function () {
             alert("密码不能为空！！！");
             return;
         }
-        if(cellphone!=""&&isNaN(cellphone)){
+        if (password.length < 6) {
+            alert("请输入6位~16位（含）字符组成的密码！！！");
+            return;
+        }
+        if (!numNndChar(password)) {
+            alert("请输入由数字或字母组成的密码！！！");
+            return;
+        }
+        if (cellphone == null || cellphone == "") {
+            alert("请输入手机号");
+            return;
+        }
+        if (cellphone.length < 11) {
+            alert("手机号码应该是11个数字字符！！！");
+            return;
+        }
+        if (!isNum(cellphone)) {
             alert("手机号码应该是0~9之间的字符！！！");
             return;
         }
-        if(telephone!=""&&isNaN(telephone)){
-            alert("电话号码应该是0~9之间的字符！！！");
-            return;
+
+        if (telephone != null && telephone != "") {
+            if (telephone.length < 11) {
+                alert("电话号码应该是11个数字字符！！！");
+            }
+            if (!isNum(telephone)) {
+                alert("电话号码应该是0~9之间的字符！！！");
+                return;
+            }
         }
         $.ajax({
                 type: "POST",
@@ -90,3 +129,25 @@ $(function () {
 
 
 });
+
+function numNndChar(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+            if (str.charAt(i) < 'a' || str.charAt(i) > 'z') {
+                if (str.charAt(i) < 'A' || str.charAt(i) > 'Z') {
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
+}
+
+function isNum(str) {
+    for (var i = 0; i < str.length; i++) {
+        if (str.charAt(i) < '0' || str.charAt(i) > '9') {
+            return false;
+        }
+    }
+    return true;
+}
