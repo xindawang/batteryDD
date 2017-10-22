@@ -66,7 +66,7 @@ $(function () {
         var password = $("#password").val();
         var cellphone = $("#cellphone").val();
         var telephone = $("#telephone").val();
-
+        var idNumber=$("#idNumber").val();
         if (tLoginName == null || tLoginName == "") {
             alert("登陆名不能为空！！！");
             return;
@@ -86,6 +86,12 @@ $(function () {
         if (!numNndChar(password)) {
             alert("请输入由数字或字母组成的密码！！！");
             return;
+        }
+        if(idNumber!=null && idNumber!=""){
+            if(idNumber.length<18){
+                alert("身份证号长度为18位！")
+                return;
+            }
         }
         if (cellphone == null || cellphone == "") {
             alert("请输入手机号");

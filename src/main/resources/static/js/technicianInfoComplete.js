@@ -73,6 +73,11 @@ $(function () {
             alert("身份证号不能为空！！！");
             return;
         }
+        if(idNumber.length<18){
+            alert("身份证号长度为18位！");
+            return;
+
+        }
         if (licensePlateNumber == null || licensePlateNumber == "") {
             alert("车牌号不能为空！！！");
             return;

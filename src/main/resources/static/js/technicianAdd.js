@@ -27,9 +27,9 @@ $(function () {
 
     $("#finish").click(function () {
 
-        var ss ="";
+        var ss = "";
         var province = $("#province option:selected").text();
-        var code=$("#city option:selected").val();
+        var code = $("#city option:selected").val();
         var cityName = $("#city option:selected").text();
         var areaName = $("#area option:selected").text();
 
@@ -85,11 +85,11 @@ $(function () {
         var tLoginName = $("#loginName").val();
         var tName = $("#name").val();
         var password = $("#password").val();
-        var address=$("#address").val();
-        var idNumber=$("#idNumber").val();
+        var address = $("#address").val();
+        var idNumber = $("#idNumber").val();
 
-        var cellphone= $("#cellphone").val();
-        var telephone=$("#telephone").val();
+        var cellphone = $("#cellphone").val();
+        var telephone = $("#telephone").val();
 
         if (tID == null || tID == "") {
             alert("编号不能为空！！！");
@@ -111,13 +111,18 @@ $(function () {
             alert("请输入6位~16位（含）字符组成的密码！！！");
             return;
         }
-        if(!numNndChar(password)) {
+        if (!numNndChar(password)) {
             alert("请输入由数字或字母组成的密码！！！");
             return;
         }
         if (idNumber == null || idNumber == "") {
             alert("身份证号不能为空！！！");
             return;
+        }
+        if (idNumber.length < 18) {
+            alert("身份证号长度为18位！");
+            return;
+
         }
         if (address == null || address == "") {
             alert("请设置地址！！！");

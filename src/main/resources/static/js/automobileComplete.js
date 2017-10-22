@@ -33,7 +33,7 @@ $(function () {
             for (var i = 0; i < data.length; i++) {
                 var id = data[i].id;
                 var TypeName = data[i].type;
-                TypeName = TypeName.replace(/\s/g, "");
+                TypeName = TypeName.replace(/\s/g, "");
                 var k = i + 1;
                 $('#show').append(k + '&nbsp;&nbsp;' + TypeName + '<p/>');
                 $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<p/>');
@@ -89,8 +89,8 @@ $(function () {
                 type: "POST",
                 url: '/addBattery',
                 data: {
-                    brand: $("#brand").val().replace(/\s/g, ""),
-                    carType: $("#type").val().replace(/\s/g, ""),
+                    brand: $("#brand").val().replace(/\s/g, ""),
+                    carType: $("#type").val().replace(/\s/g, ""),
                     batteryId: $("#batteryType option:selected").val(),
                 },
                 success: function (data) {
@@ -130,7 +130,7 @@ $(function () {
                 for (var i = 0; i < data.length; i++) {
                     var id = data[i].id;
                     var TypeName = data[i].type;
-                    TypeName = TypeName.replace(/\s/g, "");//去空格
+                    TypeName = TypeName.replace(/\s/g, "");//去空格
                     var k = i + 1;
                     $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<input id=' + id + ' type="text"  style="display: none"  value=' + TypeName + '>' + '<p/>');
                 }
@@ -172,9 +172,9 @@ $(function () {
         for (var i = 0; i < battery.length; i++) {
             if (battery[i].checked) {
                 n = n + 1;
-                ss += document.getElementById(battery[i].value).value ; //如果选中，将value添加到变量s中
-                if(i<battery.length-1){
-                    ss+= ','
+                ss += document.getElementById(battery[i].value).value; //如果选中，将value添加到变量s中
+                if (i < battery.length - 1) {
+                    ss += ','
                 }
             }
         }
@@ -205,7 +205,7 @@ $(function () {
                                 for (var i = 0; i < data.length; i++) {
                                     var id = data[i].id;
                                     var TypeName = data[i].type;
-                                    TypeName = TypeName.replace(/\s/g, "");
+                                    TypeName = TypeName.replace(/\s/g, "");
                                     var k = i + 1;
                                     $('#show').append(k + '&nbsp;&nbsp;' + TypeName + '<p/>');
                                     $("#show1").append('<input type="checkbox" name="battery" style="display: inline-block" value=' + id + '>' + '&nbsp;&nbsp;' + TypeName + '<p/>');
@@ -223,7 +223,12 @@ $(function () {
     //修改车型名称
     $("#editType").click(function () {
 
+        var oldType = $("#oldtype").val();
         var newtype = $("#type").val();
+        if (oldType == newtype) {
+            alert("请修改汽车型号后，提交！");
+            return;
+        }
         if (newtype == null || newtype == "") {
             alert("请输入车型名称！！")
             return;
@@ -233,7 +238,7 @@ $(function () {
                 url: '/carTypeModify',
                 data: {
                     brand: $("#brand").val(),
-                    carType: $("#type").val().replace(/\s/g, ""),
+                    carType: $("#type").val().replace(/\s/g, ""),
                     oldcarType: $("#oldtype").val()
                 },
                 success: function (data) {

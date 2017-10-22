@@ -105,21 +105,6 @@ public class indentAllocationController {
                 map.put("customerCellphone", order.getCustomerCellphone());
                 map.put("customerTelephone", order.getCustomerTelephone());
                 map.put("licensePlateNumber", order.getLicensePlateNumber());
-
-                //经纬度转码
-                // location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
-                Float longitude = entity.getCustomerLongitude();
-                Float latitude = entity.getCustomerLatitude();
-//                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
-//                    longitude = entity.getCustomerLongitude();
-//                    latitude = entity.getCustomerLatitude();
-//                    if (location != null) {
-//                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-//                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-//                    }
-//                }
-                map.put("customerLatitude", latitude + "");
-                map.put("customerLongitude", longitude + "");
                 map.put("technicianId", entity.getTechnicianId());
                 map.put("address", order.getAddress());
                 map.put("customerName",order.getCustomerName());
@@ -134,20 +119,7 @@ public class indentAllocationController {
                 map1.put("customerCellphone", order.getCustomerCellphone());
                 map1.put("customerTelephone", order.getCustomerTelephone());
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
-
-                //经纬度转码
-                //  location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
-                Float longitude = entity.getCustomerLongitude();
-                Float latitude = entity.getCustomerLatitude();
-//                if (entity.getCustomerLongitude() != null && entity.getCustomerLatitude() != null) {
-//                    if (location != null) {
-//                        longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-//                        latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-//                    }
-//                }
-                map1.put("customerLatitude", latitude + "");
-                map1.put("customerLongitude", longitude + "");
-
+                map1.put("customerName",order.getCustomerName());
                 map1.put("technicianId", entity.getTechnicianId());
                 map1.put("address", order.getAddress());
                 mapList.add(map1);
@@ -157,6 +129,40 @@ public class indentAllocationController {
         return result;
     }
 
+    @RequestMapping(value = "/indentHome", method = RequestMethod.GET)
+    public String findindent(HttpServletRequest request, HttpServletResponse response) {
+        JSONObject location;
+        String loginName = request.getParameter("loginName");
+        //查找technicianId
+        TechnicianEntity technician = user.findTechnicianOne(loginName);
+        //根据技师编号查早，接下的订单
+        List<IndentAllocationEntity> listAllocation = allocation.findAllocation(technician.getTechnicianId());
+
+        List<Map<String, String>> mapList = new ArrayList<>();
+        for (int i = 0; i < listAllocation.size(); i++) {
+            IndentAllocationEntity entity = listAllocation.get(i);
+            OrderEntity order = orderMapper.findOrder(entity.getOrderId());
+            String cityName = resourceService.findCityName(order.getCityCode());
+            if (order.getStatus() == 3) {//筛选该技师已接下的订单
+                Map<String, String> map = new HashMap<String, String>();
+                map.put("mask", "accept");
+                map.put("cityName", cityName);
+                map.put("customerLatitude", entity.getCustomerLatitude() + "");
+                map.put("customerLongitude", entity.getCustomerLongitude()+ "");
+                mapList.add(map);
+            }
+            if (order.getStatus() == 2) {
+                Map<String, String> map1 = new HashMap<String, String>();
+                map1.put("mask", "wait");
+                map1.put("cityName", cityName);
+                map1.put("customerLatitude",  entity.getCustomerLatitude()+ "");
+                map1.put("customerLongitude",entity.getCustomerLongitude() + "");
+                mapList.add(map1);
+            }
+        }
+        String result = JsonTool.listToJson(mapList).toString();
+        return result;
+    }
     //技师查看客服指派的订单(未接)
     @RequestMapping(value = "/Allocation", method = RequestMethod.GET)
     public String findAllocation(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -183,18 +189,11 @@ public class indentAllocationController {
                 map1.put("customerTelephone", order.getCustomerTelephone());
                 map1.put("licensePlateNumber", order.getLicensePlateNumber());
                 map1.put("customerName", order.getCustomerName());
-                //经纬度转码
-                //  JSONObject location = IndentService.turnLocation(entity.getCustomerLongitude(), entity.getCustomerLatitude());
-                Float longitude = entity.getCustomerLongitude();
-                Float latitude = entity.getCustomerLatitude();
-//                if (location != null && longitude != null && latitude != null) {
-//                    longitude = Float.parseFloat(location.getString("locations").split(",")[0]);
-//                    latitude = Float.parseFloat(location.getString("locations").split(",")[1]);
-//                }
-                map1.put("customerLatitude", latitude + "");
-                map1.put("customerLongitude", longitude + "");
-                map1.put("technicianId", entity.getTechnicianId());
                 map1.put("address", order.getAddress());
+                map1.put("customerLatitude", entity.getCustomerLatitude() + "");
+                map1.put("customerLongitude", entity.getCustomerLongitude()+ "");
+                map1.put("technicianId", entity.getTechnicianId());
+
                 mapList.add(map1);
             }
         }
