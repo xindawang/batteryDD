@@ -13,7 +13,12 @@ $(function () {
         //启动页面
         initPage(DistrictCluster);
     });
-    geocoder()
+    //geocoder()
+
+    $("#refresh").click(function () {
+        document.location.reload()
+    })
+
 
     function initPage(DistrictCluster) {
 

@@ -65,6 +65,9 @@ public interface ResourceMapper {
     @Select("select ID,TYPE from battery where BATTERY_BRAND_ID=#{brandId}")
     List<BatteryEntity> selectBatteryTypeById(Integer brandId);
 
+    @Select("select ID from battery where battery_brand_id=#{brandId}")
+    Integer selectBatteryIdByBrandId(Integer brandId);
+
     @Select("select BRAND_NAME from battery_brand where Brand_name=#{brandName}")
     String selectBatteryBrandNameByName(String brandName);
 
@@ -84,6 +87,8 @@ public interface ResourceMapper {
     @Select("select TYPE from battery where ID=#{id}")
     String selectBatteryTypeNameById(Integer id);
 
+    @Select("select battery_brand_id from battery where id=#{id}")
+    Integer selectBatteryBrandIdById(Integer id);
     @Select("select id from battery where type=#{type}")
     Integer selectBatteryTypeId(String type);
 
@@ -98,6 +103,9 @@ public interface ResourceMapper {
 
     @Delete("delete from battery where id=#{batteryId}")
     void deleteBattery(Integer batteryId);
+
+    @Delete("delete from battery_brand where id=#{brandId}")
+    void deleteBrand(Integer brandId);
 
     @Update("update battery_brand set brand_name=#{brandName}")
     void updateBatteryBrand(String brandName);

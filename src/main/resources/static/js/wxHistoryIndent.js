@@ -53,6 +53,8 @@ $(function () {
 
     })
 
+
+
     // -----------------事件监控-------------------------
 
     $.ajax({
@@ -226,10 +228,10 @@ function setIndentMsg(orderId,batteryType,createTime,finishTime,status,techId,te
 
         "<div class='indentDetail'>"+
         "<span class='detailTitle'>订单信息</span><br/>"+
-        "<span class='detailSpan'>编号:"+orderId+"</span>"+
-        "<span class='detailSpan'>型号:"+batteryType+"</span><br/>"+
-        "<span class='detailSpan'>下单时间:"+createTime+"</span>"+
-        "<span class='detailSpan'>安装时间:"+finishTime+"</span>"+
+        "<span class='detailSpan'><img src='../images/weixin/historyIndent/orderId.png'>订单编号:"+orderId+"</span><br/>"+
+        "<span class='detailSpan'><img src='../images/weixin/historyIndent/batteryType.png'>电池型号:"+batteryType+"</span><br/>"+
+        "<span class='detailSpan'><img src='../images/weixin/historyIndent/imortOrder.png'>下单时间:"+createTime+"</span><br/>"+
+        "<span class='detailSpan'><img src='../images/weixin/historyIndent/finish.png'>安装时间:"+finishTime+"</span>"+
         "</div>"+
         "<div class='techDetail'>"+
         "<span class='detailTitle'>技师信息</span><br/>"+
