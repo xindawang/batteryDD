@@ -29,6 +29,7 @@ public class UploadController {
     OrderService orderService;
 
 
+    //图片上传
     @RequestMapping(value = "/androidComplete4", method = RequestMethod.POST)
     public String multipleSaveAll(@RequestParam("img") MultipartFile[] files, @RequestParam("technicianId") String technicianId,
                                   @RequestParam("orderId") String orderId) {
@@ -82,6 +83,11 @@ public class UploadController {
 
         return "ok";
     }
+    //
+
+
+
+
 }
 
 

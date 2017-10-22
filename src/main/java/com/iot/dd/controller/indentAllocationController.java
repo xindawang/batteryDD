@@ -307,20 +307,7 @@ public class indentAllocationController {
         return "OK";
     }
 
-    //技师开工/手工
-    @RequestMapping(value = "/technicianWork", method = RequestMethod.GET)
-    public String StartOrEndWork(HttpServletRequest request, HttpServletResponse response) throws UnsupportedEncodingException {
-        request.setCharacterEncoding("utf-8");
-        response.setCharacterEncoding("utf-8");
-        String technicianId = request.getParameter("technicianId");
-        String state = request.getParameter("state");
-        boolean t = service.updateTechIsWork(technicianId, state);
-        if (t) {
-            return "ok";
-        } else {
-            return "error";
-        }
-    }
+
 
 
 }

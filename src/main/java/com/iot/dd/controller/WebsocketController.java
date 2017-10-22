@@ -63,9 +63,10 @@ public class WebsocketController {
 
         orderService.allocIndent(indentId, techId);
         String chatMessage = "{\"orderId\":\"" + indentId + "\"}";
-        System.out.println(chatMessage);
+        System.out.println("/topic/dis_tech" + allocationEntity.getTechnicianId());
         template.convertAndSend("/topic/dis_tech" + allocationEntity.getTechnicianId(), chatMessage);//将消息转发给技师
         template.convertAndSend("/topic/dis_res" + allocationEntity.getOrderId(), "订单派发成功");//通过客服订单派发成功
+
     }
 
 
