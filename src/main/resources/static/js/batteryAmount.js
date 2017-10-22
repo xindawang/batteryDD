@@ -173,15 +173,27 @@ function editBatteryStock(batteryType, cityName, province, stock) {
             msg: "<form class='layui-form'>当前省份<input class='layui-form-text' disabled='disabled' type='text'  value=" + province + "><br/>" +
             "当前城市<input class='layui-form-text' disabled='disabled' type='text'  value=" + cityName + "><br/>" +
             "电池型号<input class='layui-form-text' disabled='disabled' type='text'   value=" + batteryType + "><br/>" +
-            "库存数量<input  type='text' id='stock' value=" + stock + "></form>",
+            "库存数量<input  type='text' id='stock' maxlength='4' value=" + stock + "></form>",
 
             btns: 2,   //1: 只有一个按钮   2：两个按钮  3：没有按钮 提示框
             type: 2,   //1:对钩   2：问号  3：叹号
             btn: ["确认修改", "取消"],  //自定义按钮
             yes: function () {  //点击左侧按钮：成功
-
+                var modify=true
                 var stock = $("#stock").val()
-                updateBatteryStock(province, cityName, batteryType, stock)
+
+                if ( ! isNaN(Number(stock))) {
+                    if(parseInt(stock) != stock){
+                        window.confirm("请输入整数")
+                        modify = false
+                    }
+                }
+                else{
+                    window.confirm("请输入正确数值")
+                    modify = false
+                }
+                if(modify)
+                    updateBatteryStock(province, cityName, batteryType, stock)
 
             },
             no: function () {

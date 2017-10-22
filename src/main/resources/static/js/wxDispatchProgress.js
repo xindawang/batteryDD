@@ -85,6 +85,9 @@ function indentMsg(indentId,automobileType,licensePlateNumber,batteryType) {
             btn: ["确定"],  //自定义按钮
             yes: function () {  //点击左侧按钮：成功
 
+            },
+            no: function () {
+
             }
 
         }

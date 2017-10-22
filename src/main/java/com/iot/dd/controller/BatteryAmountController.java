@@ -57,7 +57,7 @@ public class BatteryAmountController {
         String province = request.getParameter("province");
         String cityName = request.getParameter("cityName");
         String batteryType = request.getParameter("batteryType");
-        String inventory = request.getParameter("stock");
+        String inventory = request.getParameter("stock").replaceAll("\\s","");
         String result = stock.updateBatteryStock(cityName, batteryType, province, inventory);
         return JsonTool.objectToJson(result);
 
@@ -82,7 +82,7 @@ public class BatteryAmountController {
         String id = request.getParameter("batteryType");
         Integer batteryId = Integer.parseInt(id);
         String cityCode = request.getParameter("cityCode");
-        String batteryStock = request.getParameter("batteryStock");
+        String batteryStock = request.getParameter("batteryStock").replaceAll("\\s","");
         Integer batteryInventory = null;
         if (batteryStock != null) {
 

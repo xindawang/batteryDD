@@ -147,7 +147,7 @@ $(function () {
             submit=false
         }
 
-        if(parseInt($("#telephone").val())==NaN){
+        if(parseInt($("#telephone").val())== NaN){
             window.confirm("固定电话存在非法字符，请检查")
             submit=false
         }
@@ -157,18 +157,22 @@ $(function () {
             window.confirm("订单编号中存在非法字符，请检查")
             submit=false
         }
-
-        if(submit) {
+        if(!( $("#wyes").attr("checked") || $("#wno").attr("checked"))){
+            window.confirm("请选择用户是否从微信端申请服务")
+            submit=false
+        }
+        var wechatStatus1=$("#wyes").attr("checked")?1:0
+            if(submit) {
             $.ajax({
                 type: "POST",
                 url: "/importOrder",
-                data: $('#form').serialize(),
+                data: $('#form').serialize()+"&wechatStatus1="+wechatStatus1,
                 dataType: "json",
                 success: function (data) {
                     //清空表清单
 
                     $(':input', '#form')
-                        .not(':button, :submit, :reset, :hidden')
+                        .not(':button, :submit, :reset, :hidden, :radio')
                         .val('')
                         .removeAttr('checked')
                         .removeAttr('selected');

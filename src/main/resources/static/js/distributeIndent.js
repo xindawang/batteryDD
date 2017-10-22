@@ -52,7 +52,12 @@ $(function () {
     $("#technician").change(function () {
         var selectedTechMsg = $("#technician option:selected").text()
         var selectedTechId = $("#technician option:selected").val()
-        confirmTech(selectedTechMsg, selectedTechId, disIndentId)
+        if(disIndentId != undefined  && disIndentId!=0){
+            confirmTech(selectedTechMsg, selectedTechId, disIndentId)
+        }else{
+            window.confirm("请选择待派发订单")
+        }
+
 
     })
 

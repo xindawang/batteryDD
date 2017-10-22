@@ -53,7 +53,8 @@ public class StockService {
     public String updateBatteryStock(String cityName, String batteryType, String provincenName, String stock) {
         String cityCode = resourcemapper.selectCityCode1(cityName, provincenName);
         Integer batteryId = resourcemapper.selectBatteryTypeId(batteryType);
-        Integer inventory = Integer.parseInt(stock);
+
+        Integer inventory = Math.round(Float.parseFloat(stock));
         boolean t = stockMapper.updateStock(inventory, batteryId, cityCode);
         if (t) {
             return "库存更新成功";

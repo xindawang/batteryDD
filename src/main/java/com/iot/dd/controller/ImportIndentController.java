@@ -46,16 +46,16 @@ public class ImportIndentController {
         String BatteryTypeName = resourceMapper.selectBatteryTypeNameById(batteryTypeId);
         orderEntity.setBatteryType(BatteryTypeName);
 
-        orderEntity.setCustomerName(request.getParameter("customerName"));
-        orderEntity.setCustomerCellphone(request.getParameter("cellphone"));
-        orderEntity.setCustomerTelephone(request.getParameter("telephone"));
+        orderEntity.setCustomerName(request.getParameter("customerName").replaceAll("\\s",""));
+        orderEntity.setCustomerCellphone(request.getParameter("cellphone").replaceAll("\\s",""));
+        orderEntity.setCustomerTelephone(request.getParameter("telephone").replaceAll("\\s",""));
 
 
 
         String address= resourceMapper.selectProvinceName(request.getParameter("province"))+
                 resourceMapper.selectCityName(request.getParameter("city"))+
                 resourceMapper.selectAreaName(request.getParameter("area"))+
-                request.getParameter("detailAddress");
+                request.getParameter("detailAddress").replaceAll("\\s","");
         orderEntity.setAddress(address);
 
         Integer automobileBrandId=Integer.valueOf(request.getParameter("automobileBrand"));
@@ -64,7 +64,9 @@ public class ImportIndentController {
         String autoTypeName= resourceMapper.selectAutoTypeName(automobileTypeId);
         String automobileType=autoBrandName+autoTypeName;
         orderEntity.setAutomobileType(automobileType);
-        orderEntity.setLicensePlateNumber(request.getParameter("licensePlateNumber"));
+
+        orderEntity.setLicensePlateNumber(request.getParameter("licensePlateNumber").replaceAll("\\s",""));//去除空格
+
         orderEntity.setCityCode(request.getParameter("city"));
 
         Date createTime=null;
@@ -77,10 +79,11 @@ public class ImportIndentController {
 
 
         orderEntity.setStatus(1);//状态：已录入
-        orderEntity.setRemark(request.getParameter("remark"));
+        orderEntity.setRemark(request.getParameter("remark").replaceAll("\\s",""));
 
         String wechatStatus=request.getParameter("wechatStatus");
-        Integer wxStatus=Integer.parseInt(wechatStatus);
+        String wechatStatus1=request.getParameter("wechatStatus1");
+        Integer wxStatus=Integer.parseInt(wechatStatus1);
         orderEntity.setWechatStatus(wxStatus);
 
         if(orderService.selectOrderId(request.getParameter("orderId"))==null) {//检测是否为空

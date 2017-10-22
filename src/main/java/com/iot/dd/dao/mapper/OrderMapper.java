@@ -121,7 +121,7 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
     //--------------------------------------查询管理Mapper 以上--------------------------------------------
 
     //根据城市和订单状态查询该城市所有订单的订单编号
-    @Select("select indent.order_id as orderId ,indent.wechat_status as wechatStatus  from indent  left join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} and (indent_allocation.CUSTOMER_LATITUDE IS NOT NULL or indent.wechat_status=0)")
+    @Select("select indent.order_id as orderId ,indent.wechat_status as wechatStatus  from indent  left join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent.CITY_CODE=#{cityCode} and (indent_allocation.CUSTOMER_LATITUDE IS NOT NULL and indent_allocation.CUSTOMER_LONGITUDE IS NOT NULL or indent.wechat_status=0)")
     List<OrderEntity> selectIndentIdByStatusAndCity(@Param("status")Integer status,@Param("cityCode")String cityCode);
 
 
