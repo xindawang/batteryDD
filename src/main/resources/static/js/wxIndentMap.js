@@ -47,6 +47,12 @@ $(function () {
         },
         10000)
 
+    window.setInterval(function () {
+        setDriving(userLongitude, userLatitude, techLongitude, techLatitude)
+    },60*1000)
+
+
+
 })
 
 
@@ -61,10 +67,18 @@ $(function () {
 
         });
         // 根据起终点名称规划驾车导航路线
-        driving.search(
-            [tLongitude, tLatitude],
-            [uLongitude, uLatitude]
-        );
+        if(tLongitude ==null || tLatitude==null){
+            driving.search(
+                [uLongitude, uLatitude]
+            );
+        }else{
+            driving.search(
+                [tLongitude, tLatitude],
+                [uLongitude, uLatitude]
+            );
+        }
+
+
         Maps.push(driving)
 
 

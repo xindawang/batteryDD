@@ -37,6 +37,8 @@ public interface StockMapper {
     @Insert("insert into battery_stock values(null,#{batteryId},#{cityCode},#{inventory})")
     Boolean InsertBatteryStock(@Param("batteryId") Integer batteryId, @Param("cityCode") String cityCode, @Param("inventory") Integer inventory);
 
+    @Select("select battery_id from battery_stock where battery_id=#{batteryId} and city_code=#{cityCode}")
+    Integer selectBatteryIdByCityAndId(@Param("batteryId") Integer batteryId,@Param("cityCode")String cityCode);
 
     @Update("update battery_stock set inventory=#{stock}  where battery_id=#{batteryId} and city_code=#{cityCode}")
     boolean updateStock(@Param("stock") Integer stock, @Param("batteryId") Integer batteryId, @Param("cityCode") String cityCode);

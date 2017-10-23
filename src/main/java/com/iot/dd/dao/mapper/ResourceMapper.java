@@ -65,8 +65,8 @@ public interface ResourceMapper {
     @Select("select ID,TYPE from battery where BATTERY_BRAND_ID=#{brandId}")
     List<BatteryEntity> selectBatteryTypeById(Integer brandId);
 
-    @Select("select ID from battery where battery_brand_id=#{brandId}")
-    Integer selectBatteryIdByBrandId(Integer brandId);
+    @Select("select ID from battery_brand where id=#{brandId}")
+    Integer selectBatteryBrandIdByBrandId(Integer brandId);
 
     @Select("select BRAND_NAME from battery_brand where Brand_name=#{brandName}")
     String selectBatteryBrandNameByName(String brandName);

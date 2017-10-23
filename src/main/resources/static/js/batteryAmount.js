@@ -193,7 +193,7 @@ function editBatteryStock(batteryType, cityName, province, stock) {
                     modify = false
                 }
                 if(modify)
-                    updateBatteryStock(province, cityName, batteryType, stock)
+                updateBatteryStock(province, cityName, batteryType, stock)
 
             },
             no: function () {

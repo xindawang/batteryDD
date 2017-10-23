@@ -68,7 +68,7 @@ public class BatteryService {
             autoMapper.deleteAutoBatteryByBatteryId(batteryId+"");//删除适用该型号电池的汽车记录（Automobile_Battery 表，注意不是删除汽车车型）
             resourceMapper.deleteBattery(batteryId);
 
-            if(resourceMapper.selectBatteryIdByBrandId(brandId) ==null){
+            if(resourceMapper.selectBatteryBrandIdByBrandId(brandId) ==null){
                  resourceMapper.deleteBrand(brandId);
             }
             return "汽车型号成功删除";

@@ -67,10 +67,14 @@ public class StockService {
     }
 
     public String addBatteryStock(Integer batteryId, String cityCode, Integer stock) {
+        if(stockMapper.selectBatteryIdByCityAndId(batteryId,cityCode)==null){
         if (stockMapper.InsertBatteryStock(batteryId, cityCode, stock)) {
             return "库存添加成功";
         } else {
             return "库存添加失败，请重新添加";
+        }
+        }else{
+            return "该城市的当前电池型号库存数据已经存在，无需重复添加";
         }
     }
 }

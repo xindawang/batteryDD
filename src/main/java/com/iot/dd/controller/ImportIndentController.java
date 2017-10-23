@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Date;
 import java.text.ParseException;
+import java.util.Calendar;
 
 /**
  * Created by huanglin on 2017/7/21.
@@ -35,10 +36,8 @@ public class ImportIndentController {
         String result=null;
 
         OrderEntity orderEntity=new OrderEntity();
-        String orderId=request.getParameter("orderId");
-
-        orderId=orderId.replaceAll("\\s","");
-        if(orderService.selectOrderId(request.getParameter("orderId"))!=null){
+        String orderId=request.getParameter("orderId").replaceAll("\\s","");
+        if(orderService.selectOrderId(orderId)!=null){
             return JsonTool.objectToJson("订单编号重复，请检测是否填写错误");
         }
         orderEntity.setOrderId(orderId);
@@ -70,6 +69,13 @@ public class ImportIndentController {
         orderEntity.setCityCode(request.getParameter("city"));
 
         Date createTime=null;
+
+        Calendar c = Calendar.getInstance();//可以对每个时间域单独修改
+
+        int hour = c.get(Calendar.HOUR_OF_DAY);
+        int minute = c.get(Calendar.MINUTE);
+        int second = c.get(Calendar.SECOND);
+
         try {
             createTime=TimeTool.stringToSqlDate(request.getParameter("createTime"));
         } catch (ParseException e) {
@@ -83,14 +89,14 @@ public class ImportIndentController {
 
         String wechatStatus=request.getParameter("wechatStatus");
         String wechatStatus1=request.getParameter("wechatStatus1");
-        Integer wxStatus=Integer.parseInt(wechatStatus1);
+        Integer wxStatus=Integer.parseInt(wechatStatus);
         orderEntity.setWechatStatus(wxStatus);
 
-        if(orderService.selectOrderId(request.getParameter("orderId"))==null) {//检测是否为空
+        if(orderService.selectOrderId(orderId)==null) {//检测是否为空
             result = orderService.importOrder(orderEntity);
 
             //同时向订单转发表中插入订单编号
-            orderService.InsertOrderId(request.getParameter("orderId"));
+            orderService.InsertOrderId(orderId);
         }
 
 

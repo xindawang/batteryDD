@@ -161,7 +161,7 @@ $(function () {
             window.confirm("请选择用户是否从微信端申请服务")
             submit=false
         }
-        var wechatStatus1=$("#wyes").attr("checked")?1:0
+        var wechatStatus1=$("#no").attr("checked")?1:0
             if(submit) {
             $.ajax({
                 type: "POST",

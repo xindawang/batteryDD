@@ -40,7 +40,7 @@ $(function () {
         }else if(disIndentText.lastIndexOf("非微信申请")>0) {
             $("#indentDetail").show()
             setCusMsg(disIndentId)
-
+            map.remove(userMarkers)
         }else{
             $("#indentDetail").show()
             setCusMsg(disIndentId)

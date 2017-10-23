@@ -125,11 +125,11 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
     List<OrderEntity> selectIndentIdByStatusAndCity(@Param("status")Integer status,@Param("cityCode")String cityCode);
 
 
-    @Select("select  DISTINCT indent.CITY_CODE  as cityCode from indent join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL")
+    @Select("select  DISTINCT indent.CITY_CODE  as cityCode from indent join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and indent_allocation.CUSTOMER_LATITUDE IS NOT NULL and indent_allocation.CUSTOMER_LONGITUDE IS NOT NULL")
     List<CityEntity> selectCityCodeByStatus(Integer status);
 
     @Select("select  DISTINCT indent.CITY_CODE  as cityCode from indent   "+
-            "join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and (indent_allocation.CUSTOMER_LATITUDE IS NOT NULL  or indent.wechat_status =0)")
+            "join indent_allocation on indent.ORDER_ID = indent_allocation.ORDER_ID where indent.STATUS=#{status} and (indent_allocation.CUSTOMER_LATITUDE IS NOT NULL  and indent_allocation.CUSTOMER_LONGITUDE IS NOT NULL or indent.wechat_status =0)")
     List<CityEntity> selectDisCityCodeByStatus(Integer status);
 
     @Select("select  DISTINCT CITY_CODE  as cityCode from indent ")
