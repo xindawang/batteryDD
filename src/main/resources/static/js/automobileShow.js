@@ -112,7 +112,7 @@ function getRowObj(obj) {
 
 //删除一个记录后，再返回剩下的所有记录
 function deleteInfo(obj) {
-    var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
+   //var personType = $("#type").val();// 获取类型 customer/admin/staff/technician
     var tr = getRowObj(obj);
     var m = tr.rowIndex;
     m = m - 1;

@@ -86,7 +86,7 @@ public interface automobileMapper {
     Boolean AddAutomobileBrand(@Param("brandName") String brandName);
 
     @Insert("insert into automobile_type(name,automobile_brand_id) values(#{name},#{brandId})")
-    Boolean AddAutomobileType(@Param("name") String name,@Param("brandId") String brandId);
+    Boolean AddAutomobileType(@Param("name") String name,@Param("brandId") int brandId);
 
 
 }
