@@ -25,12 +25,16 @@ public class AutomobileService {
         List<AutomobileBrand> brandList = autoMapper.findAutomobileBrandList(brandName);
         boolean t = false;
         if (brandList.size() > 0) { //存在该品牌，则在该品牌下添加车型
-            String brandId = brandList.get(0).getId() + "";
+            int brandId = brandList.get(0).getId();
+            AutomobileType type = autoMapper.findAutomobileType(typeName,brandId);//判断该型号汽车是否存在
+            if(type!=null){
+                return "该型号汽车已存在！";
+            }
             t = autoMapper.AddAutomobileType(typeName, brandId);
         } else { //先添加品牌，再添加车型
             autoMapper.AddAutomobileBrand(brandName);
             AutomobileBrand entity = autoMapper.findAutomobileOne(brandName);
-            String brandId = entity.getId() + "";
+            int brandId = entity.getId();
             t = autoMapper.AddAutomobileType(typeName, brandId);
         }
         if (t) {
