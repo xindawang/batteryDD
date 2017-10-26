@@ -65,7 +65,7 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
     //根据订单状态查询所有订单信息--添加了时间限制
     @Select("select indent.order_id as orderId ,indent.battery_type as batteryType, indent.customer_name as customerName ,indent.customer_cellphone as customerCellphone," +
             " indent.automobile_type as automobileType ,indent.license_plate_number as licensePlateNumber ,indent.create_time as createTime ,indent.finish_time as finishTime ," +
-            " indent_state.state  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
+            " indent.address,indent_state.state  ,indent.REMARK,technician.name as technicianName,technician.cellphone as technicianPhone from indent left join indent_allocation on indent.order_id=indent_allocation.order_id " +
             " left join technician on indent_allocation.technician_id=technician.technician_id  left join  indent_state on indent.status=indent_state.id where indent.status=#{status} and indent.create_time > #{date} order by indent.create_time desc ")
 
     List<IndentShowEntity> selectIndentMsg1(@Param("status") Integer status, @Param("date") String date);
@@ -161,12 +161,17 @@ List<IndentShowEntity> selectIndentMsg(Integer status);
 
 
     //通过电话号码查询订单状态是已录入的订单编号
-    @Select("select order_id from indent where status=#{status} and (customer_cellphone=#{telephone} or customer_telephone=#{telephone})")
-    String selectOrderIdbyPhone(@Param("telephone") String telephone, @Param("status") Integer status);
+    @Select("select order_id from indent where status<#{status} and customer_cellphone=#{cellphone} order by create_time desc ")
+    List<String> selectOrderIdByPhone(@Param("cellphone") String cellphone, @Param("status") Integer status);
 
     @Select("select order_id as orderId,status ,create_time as createTime, finish_time as finishTime ,battery_type as batteryType from indent where OPEN_ID=#{openId} order by indent.create_time desc")
     List<OrderEntity> selectOrderIdByOpenId(String openId);
 
+    @Select("select customer_cellphone from indent where open_id=#{openId} limit 1")
+    String selectCellphoneByOpenId(String openId);
+
+    @Update("update indent set open_id=#{openId} where customer_cellphone=#{cellphone} and open_id is null or open_id=''")
+    void updateOpenIdByCellphone(@Param("openId")String openId,@Param("cellphone")String userCellphone);
 
     @Select("select open_id from indent where order_id=#{orderId}")
     String selectOpenIdByOrderId(String orderId);

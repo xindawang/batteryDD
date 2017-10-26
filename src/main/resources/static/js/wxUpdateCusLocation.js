@@ -4,35 +4,7 @@
 document.write('<script type="text/javascript" src="http://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>')
 
 
-function configVerify(orderId) {//每个html页面验证一次就可以了--完成后并且更新一次地理位置
-    var targetUrl = location.href.split("#")[0]
-    targetUrl = encodeURIComponent(encodeURIComponent(targetUrl))
-    $.ajax({
-        type: "POST",
-        url: "/getWXJsMsg",
-        data: {"targetUrl": targetUrl},
-        dataType: "json",
-        success: function (msg) {
-            wx.config({
-                debug: false,
-                appId: msg.appId + '',
-                timestamp: msg.timestamp + '',
-                nonceStr: msg.nonceStr + '',
-                signature: msg.signature + '',
-                jsApiList: ['openLocation', 'getLocation']
-            });
 
-            wx.error(function (res) {
-                alert(JSON.stringify(res));//返回errMsg.
-            });
-            wx.ready(function () {
-                getLocationAjax(orderId)
-            })
-
-
-        }
-    })
-}
 
 
 function getLocationAjax(orderId) {//通过ajax来更新地理位置

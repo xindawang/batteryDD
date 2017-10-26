@@ -36,18 +36,51 @@
             /*text-align: justify;*/
             text-indent: 2em;
         }
+
+        .orderSelect {
+            font-size: 18px;
+            width: 50%;
+            position: absolute;
+            z-index: 1;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+
+        .orderChooseLabel {
+            width: 50%;
+            height: 8%;
+            margin-left: 10px;
+            font-size: 18px;
+            color: #337ab7;
+
+        }
+
+        .orderChooseSpan {
+            display: inline-block;
+            width: 80%;
+            height: 8%;
+            vertical-align: middle;
+            margin-top: 10px;
+            font-family: "Microsoft YaHei", "宋体", "黑体", sans-serif;
+            margin-right: 2%;
+        }
     </style>
     <script type="text/javascript" src="../js/data.js"></script>
     <script type="text/javascript" src="../js/commonPlugin.js"></script>
     <script type="text/javascript" src="../plugin/jm-qi.js"></script>
-    <script type="text/javascript" src="../js/wxUpdateCusLocation.js"></script>
-    <script type="text/javascript" src="../js/wxIndentMap.js"></script>
+    <script type="text/javascript" src="../js/wxPublicFunction.js"></script>
     <script type="text/javascript" src="../js/wxDispatchProgress.js"></script>
 </head>
 
 <body style="">
 
 <!--在data-step 中输入你想展示的默认步骤 若不填写 则默认为1-->
+<div>
+    <span class="orderChooseSpan">
+    <label class="orderChooseLabel">正在派发中的订单</label>
+    <select id="orderList" class="orderSelect"></select>
+    </span>
+</div>
 <div class="container">
     <ul class="nav nav-pills nav-justified step step-arrow">
         <li class="active">

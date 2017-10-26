@@ -52,8 +52,10 @@ import com.iot.dd.dao.entity.weixin.AccessToken;
 public class WeixinInitService extends TimerTask {
 
     private static Logger log = LoggerFactory.getLogger(WeixinInitService.class);
-    public static final String APPID = "wx653f3498190e7c80";
-    // public static  final String APPSECRET="819ecd32b3a55c86539f9ae9e455d431";
+    public static final String APPID = "wx653f3498190e7c80";//微信公众号测试号AppId
+    //public static final String APPID="wxb76c5141fea9648d";//电池更换测试号APPID
+
+     //public static  final String APPSECRET="c60bd40d923bbce177210c2acd912bc9";//电池滴滴测号APPSECRET
 
     public static final String APPSECRET = "365c06031424c5e9d5e93e40910a8975";
     //获取access的接口地址（GET）

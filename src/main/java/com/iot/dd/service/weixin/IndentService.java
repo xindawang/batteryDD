@@ -41,35 +41,53 @@ public class IndentService {
         return ret;
     }
 
-    public  String getIndentOrderIdByCellphone(String cellphone,String code) {
-        Integer status=1;//查询已导入的订单
-        String IndentId = orderMapper.selectOrderIdbyPhone(cellphone,status);
-
+    public  List<String> getIndentOrderIdByCellphone(String cellphone,String code) {
+        String openId="";
         if (code != null) {
             // 获取网页授权access_token
             WeixinOauth2Token weixinOauth2Token = WeixinInitService.getOauth2AccessToken(code);
             //String accessToken = weixinOauth2Token.getAccessToken();
             // 用户标识
             if (weixinOauth2Token != null) {
-                String openId = weixinOauth2Token.getOpenId();
-                if(orderMapper.selectOpenIdByOrderId(IndentId)==null || orderMapper.selectOpenIdByOrderId(IndentId).equals("") )
-                    orderMapper.updateOpenId(openId,IndentId);
+                openId = weixinOauth2Token.getOpenId();
 
             }
+        }
+        Integer status=4;//查询已导入的订单--除此之外，还有未完成的订单。
+        List<String> indentIdList = orderMapper.selectOrderIdByPhone(cellphone,status);
 
+        for(String indentId : indentIdList) {
+            if (orderMapper.selectOpenIdByOrderId(indentId) == null || orderMapper.selectOpenIdByOrderId(indentId).length()==0)//不可以用这个电话号码在其它微信号上申请
+                if(openId==null || openId.length()==0)
+                orderMapper.updateOpenId(openId, indentId);
         }
 
-        return IndentId;
+        return indentIdList;
+    }
+
+    public  List<String> getIndentOrderIdByCellphoneTest(String cellphone) {
+        String openId="";
+
+        Integer status=4;//查询已导入的订单--除此之外，还有未完成的订单。
+        List<String> indentIdList = orderMapper.selectOrderIdByPhone(cellphone,status);
+
+        return indentIdList;
     }
 
     public List<OrderEntity> getOrderIdByOpenId(String openId){
         return orderMapper.selectOrderIdByOpenId(openId);
     }
 
+    public void setOpenIdOnIndent(String openId){
+            String userCellphone=orderMapper.selectCellphoneByOpenId(openId);
+            orderMapper.updateOpenIdByCellphone(openId,userCellphone);
+    }
+
 
     public Integer getStatusByOrderId(String orderId){
         //返回订单状态
-        return Integer.parseInt(orderMapper.selectStautsByOrderId(orderId));
+        String statusStr=orderMapper.selectStautsByOrderId(orderId);
+        return Integer.parseInt(statusStr);
 
     }
 

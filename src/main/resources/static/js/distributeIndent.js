@@ -27,6 +27,7 @@ $(function () {
         map.setCity(cityName);
         map.remove(userMarkers)
         importTechMsgFromCity(cityCode)
+        $("#indentDetail").hide()
     })
 
 
@@ -162,7 +163,7 @@ function selectIndentMsgByCityCode(cityCode) {
                 //document.getElementById("undoneIndent").options[ii] = new Option(data[i].orderId, data[i].orderId);
 
             }
-
+            disIndentId = $("#undoneIndent option:selected").val()
 
         }
     })

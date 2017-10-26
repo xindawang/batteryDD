@@ -41,8 +41,12 @@ $(function () {
                 {
                     //申请成功后，提示客服及时进行订单派送
                         //window.confirm('开始连接')
-                    var msg = JSON.stringify({'orderId': data})
-                    stompClient.send("/app/newIndent", {}, msg)
+                        for(var i in  data){//向后台发现消息，告诉客服用户申请了服务
+
+                            var msg = JSON.stringify({'orderId': data[i]})
+                            stompClient.send("/app/newIndent", {}, msg)
+                        }
+
 
                     var dispatchProgressUrl=basicUrl+"/templates/wxDispatchProgress.html?orderId="+data
 
@@ -78,5 +82,7 @@ $(function () {
             }
         })
     }
+
+
 
 })

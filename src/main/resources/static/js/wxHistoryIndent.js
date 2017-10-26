@@ -16,7 +16,7 @@ $(function () {
             code=nodeDn[1]
         if(nodeDn[0]==='showStyle')
             showStyle=nodeDn[1]
-
+        //window.confirm(code+showStyle)
     }
 
     var batteryType
@@ -77,7 +77,7 @@ $(function () {
 
 
                     //window.confirm(orderId)
-                    if(showStyle==null || showStyle=="all") {
+                    if(showStyle==null || showStyle=="" || showStyle=="all") {
 
                         $('#allIndent').addClass("Acolor")
                         $("#workingIndent").removeClass("Acolor")

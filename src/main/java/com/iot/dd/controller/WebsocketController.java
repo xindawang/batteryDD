@@ -87,7 +87,7 @@ public class WebsocketController {
     @MessageMapping("/customer_position")
     public void sendPosition(String msg) {
         String result;
-
+        System.out.println(msg);
         JSONObject jsonObject = JSONObject.fromObject(msg);
 
         String orderId = jsonObject.getString("orderId");

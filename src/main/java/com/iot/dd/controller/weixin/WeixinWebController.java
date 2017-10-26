@@ -81,6 +81,7 @@ public class WeixinWebController {
                 if (weixinOauth2Token != null) {
                     openId = weixinOauth2Token.getOpenId();
                     session.setAttribute("openId", openId);
+                    indentService.setOpenIdOnIndent(openId);
                     indentList = indentService.getOrderIdByOpenId(openId);
                 }
 
@@ -88,18 +89,13 @@ public class WeixinWebController {
 
         }else{
             openId=session.getAttribute("openId").toString();
+            indentService.setOpenIdOnIndent(openId);
             indentList = indentService.getOrderIdByOpenId(openId);
         }
 
 
         return JsonTool.objectToJson(indentList);
     }
-
-
-
-
-
-
 
 
     @RequestMapping(value="/applyServiceValidate",method=RequestMethod.POST)
@@ -112,8 +108,8 @@ public class WeixinWebController {
         if(cellphone==null ||cellphone.length()!=11){
             result=JsonTool.objectToJson("0");//电话号码不能少于11位或者为空
         }else{
-            String indentId =indentService.getIndentOrderIdByCellphone(cellphone,code);
-            if(indentId==null){
+            List<String> indentId =indentService.getIndentOrderIdByCellphone(cellphone,code);
+            if(indentId.size()==0){
                 result= JsonTool.objectToJson("1");//订单不存在,请检查电话号码
             }else{//telephone与订单对应
                 result= JsonTool.objectToJson(indentId);
@@ -124,6 +120,28 @@ public class WeixinWebController {
         return result;
     }
 
+
+    @RequestMapping(value="/applyServiceValidateTest",method=RequestMethod.POST)
+    public String serviceValidateTest(HttpServletRequest request) throws UnsupportedEncodingException {
+        String result;
+        String cellphone=request.getParameter("cellphone");
+
+
+
+        if(cellphone==null ||cellphone.length()!=11){
+            result=JsonTool.objectToJson("0");//电话号码不能少于11位或者为空
+        }else{
+            List<String> indentId =indentService.getIndentOrderIdByCellphoneTest(cellphone);
+            if(indentId.size()==0){
+                result= JsonTool.objectToJson("1");//订单不存在,请检查电话号码
+            }else{//telephone与订单对应
+                result= JsonTool.objectToJson(indentId);
+            }
+
+        }
+
+        return result;
+    }
 
     @RequestMapping(value="/getWXJsMsg",method=RequestMethod.POST)
     String getLocationMsg(HttpServletRequest request){

@@ -21,7 +21,7 @@ var userLongitude
 
 var techLatitude
 var techLongitude
-
+var stompClient
 var map
 var Maps = []
 $(function () {
@@ -49,7 +49,7 @@ $(function () {
 
     window.setInterval(function () {
         setDriving(userLongitude, userLatitude, techLongitude, techLatitude)
-    },60*1000)
+    },30*1000)
 
 
 
@@ -68,9 +68,7 @@ $(function () {
         });
         // 根据起终点名称规划驾车导航路线
         if(tLongitude ==null || tLatitude==null){
-            driving.search(
-                [uLongitude, uLatitude]
-            );
+            map.setCenter([uLongitude,uLatitude]);
         }else{
             driving.search(
                 [tLongitude, tLatitude],
@@ -148,37 +146,9 @@ $(function () {
 
     }
 
-    function sendLocationToTech(orderId,uLongitude,uLatitude) {
 
 
-        var msg = JSON.stringify({'orderId': orderId,'longitude':uLongitude,'latitude':uLatitude})
-        stompClient.send("/app/customer_position", {}, msg)
 
 
-    }
-
-
-    function getGPSLocation(orderId) {//通过ajax来更新地理位置
-
-
-        wx.getLocation({
-            type: 'gcj02', // 默认为wgs84的gps坐标，如果要返回直接给openLocation用的火星坐标，可传入'gcj02'
-            success: function (res) {
-
-
-                userLatitude = res.latitude; // 纬度，浮点数，范围为90 ~ -90
-                userLongitude = res.longitude; // 经度，浮点数，范围为180 ~ -180。
-                //confirm(userLatitude+userLongitude)
-                sendLocationToTech(orderId,userLongitude,userLatitude)
-
-
-            },
-            error: function (err) {
-                alert(err)
-            }
-        });
-
-
-    }
 
 
